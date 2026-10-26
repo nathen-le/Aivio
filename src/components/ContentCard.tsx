@@ -72,15 +72,15 @@ export const ContentCard: React.FC<ContentCardProps> = ({ block, onContinue }) =
           </div>
         )}
 
-        {/* Mascot Fox Pro Tip */}
+        {/* Mascot Cat Pro Tip */}
         {block.mascotTip && (
-          <div className="my-4 p-4 rounded-3xl bg-[#0f1d38] border-2 border-[#1cb0f6]/40 flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-[#1cb0f6] bg-slate-900 shrink-0 shadow-md">
-              <img src="/mascot-fox-avatar.jpg" alt="Aivo" className="w-full h-full object-cover" />
+          <div className="my-4 p-4 rounded-3xl bg-[#0f1d38] border-2 border-[#1cb0f6]/40 flex items-center gap-3.5 shadow-md">
+            <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-[#1cb0f6] bg-white shrink-0 shadow-md flex items-center justify-center">
+              <img src="/mascot-cat-avatar.png" alt="Aivo" className="w-full h-full object-cover" />
             </div>
-            <div className="text-xs text-sky-200 leading-relaxed">
+            <div className="text-xs text-sky-200 leading-relaxed font-medium">
               <span className="font-black text-[#1cb0f6] block mb-0.5 uppercase tracking-wider text-[11px]">
-                Aivo's Pro Tip:
+                Aivo's Insight:
               </span>
               {block.mascotTip}
             </div>

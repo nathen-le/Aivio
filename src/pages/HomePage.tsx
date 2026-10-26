@@ -104,20 +104,20 @@ export const HomePage: React.FC<HomePageProps> = ({
           {/* Right Column: Cool Blue Mascot Character Card */}
           <div className="lg:col-span-5 flex flex-col items-center">
             <div className="relative w-full max-w-sm rounded-3xl p-5 bg-[#0f1d38] border-2 border-[#1cb0f6] shadow-[0_15px_40px_rgba(28,176,246,0.35)] flex flex-col items-center text-center">
-              {/* Fox Mascot Artwork */}
-              <div className="w-64 h-64 rounded-2xl overflow-hidden mb-4 shadow-xl border-2 border-white/20 bg-slate-900 relative group">
+              {/* Cat Mascot Artwork */}
+              <div className="w-64 h-64 rounded-2xl overflow-hidden mb-4 shadow-xl border-2 border-white/20 bg-white relative group flex items-center justify-center p-2">
                 <img
-                  src="/mascot-blue-fox.jpg"
-                  alt="Aivo the Cool Blue Cyber Fox"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  src="/mascot-cat-celebrate.png"
+                  alt="Aivo the Cool Blue Cyber Cat"
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute top-2 right-2 px-2.5 py-1 rounded-full bg-slate-950/80 border border-cyan-400 text-[10px] font-black uppercase text-cyan-300">
-                  MEET AIVO 🦊
+                <div className="absolute top-2 right-2 px-2.5 py-1 rounded-full bg-slate-950/80 border border-cyan-400 text-[10px] font-black uppercase text-cyan-300 shadow-md">
+                  MEET AIVO 🐱
                 </div>
               </div>
 
               {/* Speech bubble */}
-              <div className="p-3.5 rounded-2xl bg-[#142344] border border-[#1f3764] text-xs font-bold text-slate-200 mb-3 text-left w-full">
+              <div className="p-3.5 rounded-2xl bg-[#142344] border border-[#1f3764] text-xs font-bold text-slate-200 mb-3 text-left w-full shadow-md">
                 <span className="text-[#1cb0f6] font-black block mb-0.5">
                   Aivo says:
                 </span>

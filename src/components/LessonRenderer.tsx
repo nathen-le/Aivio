@@ -49,7 +49,7 @@ export const LessonRenderer: React.FC<LessonRendererProps> = ({
 
   return (
     <div className="w-full min-h-screen bg-[#0a1224] flex flex-col justify-between py-5 px-4 sm:px-6 max-w-4xl mx-auto select-none">
-      {/* Top Header Bar (Duolingo Style) */}
+      {/* Top Header Bar */}
       <div className="flex items-center gap-3 sm:gap-4 pb-4 border-b-2 border-[#1c325c]">
         {/* Exit Button */}
         <button
@@ -64,7 +64,7 @@ export const LessonRenderer: React.FC<LessonRendererProps> = ({
           <X className="w-6 h-6 stroke-[3]" />
         </button>
 
-        {/* Thick Duolingo Progress Bar */}
+        {/* Thick Progress Bar */}
         <div className="flex-1">
           <ProgressBar progressPercent={progressPercent} height="lg" color="cyan" />
         </div>

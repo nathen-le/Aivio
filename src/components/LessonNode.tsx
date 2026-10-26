@@ -96,7 +96,7 @@ export const LessonNode: React.FC<LessonNodeProps> = ({
         </div>
       )}
 
-      {/* Chunky 3D Duolingo Stepping Stone Button */}
+      {/* Chunky 3D Stepping Stone Button */}
       <button
         onClick={handleClick}
         className={`relative z-10 w-22 h-22 sm:w-24 sm:h-24 rounded-full flex flex-col items-center justify-center transition-all duration-150 outline-none ${styles.btn} ${styles.halo} ${

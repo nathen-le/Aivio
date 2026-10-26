@@ -43,7 +43,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
           className={`h-full rounded-full transition-all duration-300 ease-out relative overflow-hidden ${colorStyles}`}
           style={{ width: `${clamped}%` }}
         >
-          {/* Top glossy glare reflection (Duolingo signature tactile shine) */}
+          {/* Top glossy glare reflection (signature tactile shine) */}
           <div className="absolute top-0 left-0 right-0 h-1/2 bg-white/30 rounded-t-full pointer-events-none" />
         </div>
       </div>

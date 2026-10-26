@@ -54,9 +54,9 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
             {/* Mascot Avatar Portrait */}
-            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl overflow-hidden border-4 border-[#1cb0f6] bg-slate-900 shrink-0 shadow-lg">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl overflow-hidden border-4 border-[#1cb0f6] bg-white shrink-0 shadow-lg flex items-center justify-center">
               <img
-                src="/mascot-fox-avatar.jpg"
+                src="/mascot-cat-avatar.png"
                 alt="Aivo Avatar"
                 className="w-full h-full object-cover"
               />

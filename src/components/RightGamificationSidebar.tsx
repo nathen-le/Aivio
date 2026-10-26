@@ -1,12 +1,14 @@
 import React from 'react';
-import { Flame, Zap, Trophy, Target, Check, ChevronRight } from 'lucide-react';
+import { Flame, Zap, Users, Target, Check, ChevronRight, UserPlus, Sparkles } from 'lucide-react';
 import { sound } from '../utils/sound';
+import { useFriends } from '../hooks/useFriends';
 
 interface RightGamificationSidebarProps {
   streakDays: number;
   totalXP: number;
   completedLessonsCount: number;
   onNavigateProgress: () => void;
+  onNavigateFriends?: () => void;
 }
 
 export const RightGamificationSidebar: React.FC<RightGamificationSidebarProps> = ({
@@ -14,19 +16,35 @@ export const RightGamificationSidebar: React.FC<RightGamificationSidebarProps> =
   totalXP,
   completedLessonsCount,
   onNavigateProgress,
+  onNavigateFriends,
 }) => {
+  const { friends } = useFriends();
+
   // Days of week for streak tracker: Mon to Sun
   const weekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
   const todayDayIndex = (new Date().getDay() + 6) % 7; // 0 = Mon, 6 = Sun
 
-  // Mock Cobalt League peers
-  const leaderboardPeers = [
-    { rank: 1, name: 'Maya S.', xp: 320, isUser: false, avatar: '👩‍💻' },
-    { rank: 2, name: 'Alex (You)', xp: Math.max(totalXP, 180), isUser: true, avatar: '🦊' },
-    { rank: 3, name: 'Jordan K.', xp: 160, isUser: false, avatar: '⚡' },
-    { rank: 4, name: 'Liam T.', xp: 120, isUser: false, avatar: '🤖' },
-    { rank: 5, name: 'Sophia R.', xp: 90, isUser: false, avatar: '🚀' },
-  ];
+  // Combine user and friends, then rank by XP
+  const allPeers = [
+    {
+      id: 'current-user',
+      name: 'You (Alex)',
+      xp: totalXP,
+      isUser: true,
+      avatar: '🐱',
+      streak: streakDays,
+      isOnline: true,
+    },
+    ...friends.map((f) => ({
+      id: f.id,
+      name: f.name.split(' ')[0] + ' ' + (f.name.split(' ')[1]?.[0] || '') + '.',
+      xp: f.xp,
+      isUser: false,
+      avatar: f.avatar,
+      streak: f.streak,
+      isOnline: f.isOnline,
+    })),
+  ].sort((a, b) => b.xp - a.xp);
 
   return (
     <aside className="w-80 shrink-0 space-y-5 select-none">
@@ -44,7 +62,7 @@ export const RightGamificationSidebar: React.FC<RightGamificationSidebarProps> =
         {/* Data Crystals / Gems */}
         <div
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-cyan-950/60 border border-cyan-400/40 text-[#1cb0f6] font-black text-sm"
-          title="Data Crystals (Gems)"
+          title="Data Crystals"
         >
           <span className="text-base">💎</span>
           <span className="font-mono">{Math.floor(totalXP * 1.5) + 100}</span>
@@ -93,7 +111,7 @@ export const RightGamificationSidebar: React.FC<RightGamificationSidebarProps> =
             );
           })}
         </div>
-        <p className="text-[11px] text-slate-400 mt-3 text-center">
+        <p className="text-[11px] text-slate-400 mt-3 text-center font-medium">
           Practice a lesson every day to keep your streak glowing! 🔥
         </p>
       </div>
@@ -165,54 +183,93 @@ export const RightGamificationSidebar: React.FC<RightGamificationSidebarProps> =
         </div>
       </div>
 
-      {/* Cobalt League Card */}
+      {/* Friends Stats & Leaderboard Card (Replaces Cobalt League) */}
       <div className="p-5 rounded-3xl bg-[#0f1d38] border-2 border-[#1c325c] shadow-lg">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <Trophy className="w-5 h-5 text-cyan-400" />
+            <div className="w-8 h-8 rounded-xl bg-[#1b3464] border border-[#1cb0f6]/50 flex items-center justify-center text-[#1cb0f6]">
+              <Users className="w-4 h-4" />
+            </div>
             <div>
               <h4 className="font-black text-sm text-white uppercase tracking-wider">
-                Cobalt League
+                Friends Stats
               </h4>
-              <span className="text-[10px] text-cyan-300 font-bold">Top 3 advance</span>
+              <span className="text-[10px] text-cyan-300 font-bold flex items-center gap-1">
+                <Sparkles className="w-2.5 h-2.5" /> Weekly Leaderboard
+              </span>
             </div>
           </div>
-          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-950 border border-cyan-500/40 text-cyan-300">
-            3 days left
-          </span>
+          <button
+            onClick={() => {
+              sound.playClick();
+              onNavigateFriends?.();
+            }}
+            className="text-[10px] font-bold px-2.5 py-1 rounded-xl bg-[#1b3464] hover:bg-[#254888] border border-[#1cb0f6]/40 text-[#1cb0f6] flex items-center gap-1 transition-colors"
+          >
+            <UserPlus className="w-3 h-3" /> Friends
+          </button>
         </div>
 
         <div className="space-y-1.5 mt-3">
-          {leaderboardPeers.map((peer) => (
-            <div
-              key={peer.rank}
-              className={`p-2.5 rounded-xl flex items-center justify-between text-xs font-bold border transition-all ${
-                peer.isUser
-                  ? 'bg-[#1b3464] border-[#1cb0f6] text-white shadow-md'
-                  : 'bg-[#132344]/60 border-transparent text-slate-300'
-              }`}
-            >
-              <div className="flex items-center gap-2.5">
-                <span
-                  className={`w-5 text-center font-mono font-black ${
-                    peer.rank === 1
-                      ? 'text-amber-400'
-                      : peer.rank === 2
-                      ? 'text-cyan-300'
-                      : peer.rank === 3
-                      ? 'text-emerald-400'
-                      : 'text-slate-500'
-                  }`}
-                >
-                  {peer.rank}
-                </span>
-                <span>{peer.avatar}</span>
-                <span className={peer.isUser ? 'text-[#1cb0f6]' : ''}>{peer.name}</span>
+          {allPeers.slice(0, 5).map((peer, idx) => {
+            const rank = idx + 1;
+            return (
+              <div
+                key={peer.id}
+                className={`p-2.5 rounded-2xl flex items-center justify-between text-xs font-bold border transition-all ${
+                  peer.isUser
+                    ? 'bg-[#1b3464] border-[#1cb0f6] text-white shadow-md'
+                    : 'bg-[#132344]/60 border-transparent text-slate-300 hover:border-[#1f3764]'
+                }`}
+              >
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span
+                    className={`w-4 text-center font-mono font-black shrink-0 ${
+                      rank === 1
+                        ? 'text-amber-400'
+                        : rank === 2
+                        ? 'text-slate-300'
+                        : rank === 3
+                        ? 'text-amber-600'
+                        : 'text-slate-500'
+                    }`}
+                  >
+                    {rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank}
+                  </span>
+                  <div className="relative shrink-0">
+                    <span className="text-base">{peer.avatar}</span>
+                    {peer.isOnline && (
+                      <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 border border-[#0f1d38]" />
+                    )}
+                  </div>
+                  <span className={`truncate ${peer.isUser ? 'text-[#1cb0f6] font-black' : ''}`}>
+                    {peer.name}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="text-[10px] text-orange-400 font-bold flex items-center">
+                    <Flame className="w-3 h-3 fill-orange-400" />
+                    {peer.streak}
+                  </span>
+                  <span className="font-mono text-slate-300 text-[11px] font-bold bg-[#0c162c] px-2 py-0.5 rounded-lg border border-[#1c325c]">
+                    {peer.xp} XP
+                  </span>
+                </div>
               </div>
-              <span className="font-mono text-slate-400 text-[11px]">{peer.xp} XP</span>
-            </div>
-          ))}
+            );
+          })}
         </div>
+
+        <button
+          onClick={() => {
+            sound.playClick();
+            onNavigateFriends?.();
+          }}
+          className="w-full mt-3 py-2 text-[11px] font-black uppercase tracking-wider text-slate-400 hover:text-white bg-[#132344] hover:bg-[#1a2e58] rounded-xl border border-[#1f3764] transition-colors flex items-center justify-center gap-1"
+        >
+          <span>View All Friends & Activity</span>
+          <ChevronRight className="w-3 h-3" />
+        </button>
       </div>
     </aside>
   );

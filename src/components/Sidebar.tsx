@@ -2,8 +2,7 @@ import React from 'react';
 import {
   Compass,
   Trophy,
-  Target,
-  Shield,
+  Users,
   User,
   Volume2,
   VolumeX,
@@ -12,15 +11,15 @@ import {
 import { sound } from '../utils/sound';
 import type { AppView } from '../App';
 
-interface DuolingoSidebarProps {
+interface SidebarProps {
   currentView: AppView;
-  onNavigate: (view: 'home' | 'dashboard' | 'progress') => void;
+  onNavigate: (view: AppView) => void;
   activeTab?: string;
   onSelectTab?: (tab: string) => void;
   totalXP: number;
 }
 
-export const DuolingoSidebar: React.FC<DuolingoSidebarProps> = ({
+export const Sidebar: React.FC<SidebarProps> = ({
   currentView,
   onNavigate,
   activeTab = 'learn',
@@ -45,29 +44,7 @@ export const DuolingoSidebar: React.FC<DuolingoSidebarProps> = ({
         onNavigate('dashboard');
         onSelectTab?.('learn');
       },
-      isActive: currentView === 'dashboard' || currentView === 'home',
-    },
-    {
-      id: 'quests',
-      label: 'QUESTS',
-      icon: <Target className="w-6 h-6 stroke-[2.5]" />,
-      action: () => {
-        sound.playClick();
-        onNavigate('progress');
-        onSelectTab?.('quests');
-      },
-      isActive: currentView === 'progress' && activeTab === 'quests',
-    },
-    {
-      id: 'badges',
-      label: 'BADGES',
-      icon: <Shield className="w-6 h-6 stroke-[2.5]" />,
-      action: () => {
-        sound.playClick();
-        onNavigate('progress');
-        onSelectTab?.('badges');
-      },
-      isActive: currentView === 'progress' && activeTab === 'badges',
+      isActive: currentView === 'dashboard' && activeTab === 'learn',
     },
     {
       id: 'leaderboard',
@@ -78,7 +55,18 @@ export const DuolingoSidebar: React.FC<DuolingoSidebarProps> = ({
         onNavigate('dashboard');
         onSelectTab?.('leaderboard');
       },
-      isActive: activeTab === 'leaderboard',
+      isActive: currentView === 'dashboard' && activeTab === 'leaderboard',
+    },
+    {
+      id: 'friends',
+      label: 'FRIENDS',
+      icon: <Users className="w-6 h-6 stroke-[2.5]" />,
+      action: () => {
+        sound.playClick();
+        onNavigate('friends');
+        onSelectTab?.('friends');
+      },
+      isActive: currentView === 'friends',
     },
     {
       id: 'profile',
@@ -86,10 +74,10 @@ export const DuolingoSidebar: React.FC<DuolingoSidebarProps> = ({
       icon: <User className="w-6 h-6 stroke-[2.5]" />,
       action: () => {
         sound.playClick();
-        onNavigate('progress');
+        onNavigate('profile');
         onSelectTab?.('profile');
       },
-      isActive: currentView === 'progress' && activeTab === 'profile',
+      isActive: currentView === 'profile',
     },
   ];
 
@@ -106,9 +94,9 @@ export const DuolingoSidebar: React.FC<DuolingoSidebarProps> = ({
             }}
             className="flex items-center gap-3 px-3 py-4 w-full text-left group transition-transform active:scale-95"
           >
-            <div className="w-11 h-11 rounded-2xl overflow-hidden border-2 border-[#1cb0f6] bg-slate-900 shadow-[0_4px_12px_rgba(28,176,246,0.4)] shrink-0">
+            <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-[#1cb0f6] bg-[#0f1d38] shadow-[0_4px_12px_rgba(28,176,246,0.4)] shrink-0 flex items-center justify-center">
               <img
-                src="/mascot-fox-avatar.jpg"
+                src="/mascot-cat-avatar.png"
                 alt="Aivio Mascot"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform"
               />
@@ -120,8 +108,8 @@ export const DuolingoSidebar: React.FC<DuolingoSidebarProps> = ({
                 </span>
                 <span className="w-2 h-2 rounded-full bg-[#1cb0f6] animate-pulse" />
               </div>
-              <span className="text-[10px] font-black uppercase tracking-wider text-sky-400 block -mt-1">
-                AI Duolingo Edition
+              <span className="text-[10px] font-black uppercase tracking-wider text-sky-400 block -mt-0.5">
+                AI Learning Platform
               </span>
             </div>
           </button>
@@ -169,14 +157,14 @@ export const DuolingoSidebar: React.FC<DuolingoSidebarProps> = ({
             </button>
           </div>
 
-          <div className="text-[10px] text-slate-400 text-center font-bold">
+          <div className="text-[10px] text-slate-400 text-center font-bold tracking-wider">
             HIGH SCHOOL AI LITERACY
           </div>
         </div>
       </aside>
 
-      {/* Mobile Sticky Bottom Bar (Duolingo Style) */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0c162c] border-t-2 border-[#1c325c] px-2 py-2 flex items-center justify-around select-none shadow-[0_-10px_20px_rgba(0,0,0,0.5)]">
+      {/* Mobile Sticky Bottom Bar */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0c162c] border-t-2 border-[#1c325c] px-3 py-2 flex items-center justify-around select-none shadow-[0_-10px_20px_rgba(0,0,0,0.5)]">
         {navItems.map((item) => (
           <button
             key={item.id}

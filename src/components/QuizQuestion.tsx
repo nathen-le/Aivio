@@ -103,7 +103,7 @@ export const QuizQuestion: React.FC<QuizQuestionProps> = ({
           {block.question}
         </h3>
 
-        {/* Duolingo 3D Options List */}
+        {/* Interactive 3D Options List */}
         <div className="space-y-3">
           {block.options.map((option, index) => {
             const isSelected = selectedOptionId === option.id;
@@ -185,7 +185,7 @@ export const QuizQuestion: React.FC<QuizQuestionProps> = ({
         </div>
       </div>
 
-      {/* Bottom Feedback Banner (Duolingo Style) */}
+      {/* Bottom Feedback Banner */}
       <div className="mt-8 pt-4 border-t-2 border-[#1c325c]">
         {!isSubmitted ? (
           <div className="flex items-center justify-between">
@@ -214,9 +214,9 @@ export const QuizQuestion: React.FC<QuizQuestionProps> = ({
             }`}
           >
             <div className="flex items-center gap-3.5">
-              <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-white/60 bg-slate-900 shrink-0 shadow-md">
+              <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-white/60 bg-white shrink-0 shadow-md flex items-center justify-center">
                 <img
-                  src="/mascot-fox-avatar.jpg"
+                  src="/mascot-cat-avatar.png"
                   alt="Aivo"
                   className="w-full h-full object-cover"
                 />

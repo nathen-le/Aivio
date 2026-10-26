@@ -1,4 +1,4 @@
-// Procedural Web Audio API sound generator for Duolingo-like auditory feedback
+// Procedural Web Audio API sound generator for auditory feedback
 class SoundManager {
   private ctx: AudioContext | null = null;
   public isMuted: boolean = false;
@@ -19,7 +19,7 @@ class SoundManager {
     }
   }
 
-  // Cheerful two-tone ascending chime (like Duolingo's iconic correct answer sound)
+  // Cheerful two-tone ascending chime for correct answers
   playCorrect() {
     const ctx = this.getContext();
     if (!ctx) return;

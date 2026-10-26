@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useProgress } from './hooks/useProgress';
-import { DuolingoSidebar } from './components/DuolingoSidebar';
+import { Sidebar } from './components/Sidebar';
 import { DraggableMascot } from './components/DraggableMascot';
 import { HomePage } from './pages/HomePage';
 import { DashboardPage } from './pages/DashboardPage';
 import { LessonPage } from './pages/LessonPage';
 import { ProgressPage } from './pages/ProgressPage';
+import { ProfilePage } from './pages/ProfilePage';
+import { FriendsPage } from './pages/FriendsPage';
 import { getLessonById } from './data/lessons';
 
-export type AppView = 'home' | 'dashboard' | 'progress' | 'lesson';
+export type AppView = 'home' | 'dashboard' | 'progress' | 'profile' | 'friends' | 'lesson';
 
 export function App() {
   const {
@@ -17,6 +19,7 @@ export function App() {
     getLessonStatus,
     completeLesson,
     resetProgress,
+    updateUserName,
     getPathCompletionPercent,
     getNextAvailableLesson,
   } = useProgress();
@@ -30,7 +33,7 @@ export function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentView, activeLessonId]);
 
-  const handleNavigate = (view: 'home' | 'dashboard' | 'progress') => {
+  const handleNavigate = (view: AppView) => {
     setActiveLessonId(null);
     setCurrentView(view);
   };
@@ -57,9 +60,9 @@ export function App() {
 
   return (
     <div className="min-h-screen bg-[#0a1224] text-slate-100 flex flex-col lg:flex-row selection:bg-[#1cb0f6] selection:text-slate-950">
-      {/* Duolingo Left Persistent Sidebar (Hidden during lesson immersion) */}
+      {/* Left Persistent Navigation Sidebar */}
       {currentView !== 'lesson' && (
-        <DuolingoSidebar
+        <Sidebar
           currentView={currentView}
           onNavigate={handleNavigate}
           activeTab={activeTab}
@@ -72,7 +75,10 @@ export function App() {
       <main className="flex-1 w-full min-w-0">
         {currentView === 'home' && (
           <HomePage
-            onStartLearning={() => setCurrentView('dashboard')}
+            onStartLearning={() => {
+              setCurrentView('dashboard');
+              setActiveTab('learn');
+            }}
           />
         )}
 
@@ -84,6 +90,11 @@ export function App() {
             getLessonStatus={getLessonStatus}
             onSelectLesson={handleStartLesson}
             onNavigateProgress={() => setCurrentView('progress')}
+            onNavigateFriends={() => {
+              setCurrentView('friends');
+              setActiveTab('friends');
+            }}
+            activeTab={activeTab}
           />
         )}
 
@@ -97,6 +108,22 @@ export function App() {
           />
         )}
 
+        {currentView === 'friends' && (
+          <FriendsPage />
+        )}
+
+        {currentView === 'profile' && (
+          <ProfilePage
+            progress={progress}
+            levelInfo={levelInfo}
+            onUpdateUserName={updateUserName}
+            onNavigateFriends={() => {
+              setCurrentView('friends');
+              setActiveTab('friends');
+            }}
+          />
+        )}
+
         {currentView === 'lesson' && activeLesson && (
           <LessonPage
             lesson={activeLesson}
@@ -107,7 +134,7 @@ export function App() {
         )}
       </main>
 
-      {/* Draggable Cool Blue Mascot Widget (Always available on screen!) */}
+      {/* Draggable Blue Cat Mascot Widget */}
       <DraggableMascot />
     </div>
   );
