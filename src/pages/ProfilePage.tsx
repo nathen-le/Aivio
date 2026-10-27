@@ -89,7 +89,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 py-6 pb-24 lg:pb-12 animate-fade-in select-none">
+    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 pt-3 sm:pt-5 pb-24 lg:pb-12 animate-fade-in select-none">
       {/* Save confirmation toast */}
       {showSaved && (
         <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-2xl bg-emerald-500 text-slate-950 font-black text-sm uppercase tracking-wider shadow-2xl shadow-emerald-500/30 animate-fade-in flex items-center gap-2">
@@ -110,11 +110,11 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           <div className="flex flex-col sm:flex-row items-start sm:items-end gap-5">
             {/* Avatar */}
             <div className="relative group">
-              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl overflow-hidden border-4 border-[#0f1d38] bg-white shadow-2xl ring-4 ring-[#1cb0f6]/40 flex items-center justify-center">
+              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl overflow-hidden border-4 border-[#0f1d38] bg-[#0c1a30] p-2 shadow-2xl ring-4 ring-[#1cb0f6]/40 flex items-center justify-center">
                 <img
                   src={formData.avatarUrl}
                   alt="Profile Avatar"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
               </div>
               <button
@@ -601,8 +601,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                       : 'bg-[#142344] border-[#1f3764] hover:border-slate-400'
                   }`}
                 >
-                  <div className="w-16 h-16 rounded-xl overflow-hidden bg-white shadow-md">
-                    <img src={opt.src} alt={opt.label} className="w-full h-full object-cover" />
+                  <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#0c1a30] p-1.5 shadow-md flex items-center justify-center">
+                    <img src={opt.src} alt={opt.label} className="w-full h-full object-contain" />
                   </div>
                   <span className="text-[10px] font-black text-slate-300 text-center">
                     {opt.label}

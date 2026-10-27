@@ -1,4 +1,3 @@
-// Procedural Web Audio API sound generator for auditory feedback
 class SoundManager {
   private ctx: AudioContext | null = null;
   public isMuted: boolean = false;

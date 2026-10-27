@@ -68,11 +68,11 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
   return (
     <div className="w-full max-w-xl mx-auto py-8 px-4 flex flex-col items-center text-center animate-fade-in select-none">
       {/* Celebrating Cat Mascot Character Artwork */}
-      <div className="w-44 h-44 sm:w-52 sm:h-52 rounded-3xl overflow-hidden border-4 border-[#1cb0f6] shadow-[0_15px_40px_rgba(28,176,246,0.5)] mb-5 bg-[#0f1d38] animate-bounce-subtle flex items-center justify-center">
+      <div className="w-44 h-44 sm:w-52 sm:h-52 rounded-3xl overflow-hidden border-4 border-[#1cb0f6] shadow-[0_15px_40px_rgba(28,176,246,0.5)] mb-5 bg-[#0f1d38] animate-bounce-subtle flex items-center justify-center p-2">
         <img
           src="/mascot-cat-celebrate.png"
           alt="Celebrating Cat Mascot"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
         />
       </div>
 

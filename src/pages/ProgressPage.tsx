@@ -48,17 +48,17 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
   });
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-6 pb-24 lg:pb-12 animate-fade-in select-none">
+    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-3 sm:pt-5 pb-24 lg:pb-12 animate-fade-in select-none">
       {/* Top Profile Banner */}
       <div className="p-6 sm:p-8 rounded-3xl bg-[#0f1d38] border-2 border-[#1c325c] shadow-2xl mb-8">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
             {/* Mascot Avatar Portrait */}
-            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl overflow-hidden border-4 border-[#1cb0f6] bg-white shrink-0 shadow-lg flex items-center justify-center">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl overflow-hidden border-4 border-[#1cb0f6] bg-[#142344] p-1.5 shrink-0 shadow-lg flex items-center justify-center">
               <img
                 src="/mascot-cat-avatar.png"
                 alt="Aivo Avatar"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
             </div>
             <div>

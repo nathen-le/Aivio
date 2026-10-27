@@ -92,13 +92,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
               sound.playClick();
               onNavigate('home');
             }}
-            className="flex items-center gap-3 px-3 py-4 w-full text-left group transition-transform active:scale-95"
+            className="flex items-center gap-3 px-3 py-3 w-full text-left group transition-transform active:scale-95"
           >
-            <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-[#1cb0f6] bg-[#0f1d38] shadow-[0_4px_12px_rgba(28,176,246,0.4)] shrink-0 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl border-2 border-[#1cb0f6] bg-[#0f1d38]/40 shadow-[0_4px_12px_rgba(28,176,246,0.3)] shrink-0 flex items-center justify-center p-1 relative overflow-hidden group-hover:border-cyan-300 transition-colors">
+              <div className="absolute inset-0 bg-cyan-400/10 rounded-2xl pointer-events-none" />
               <img
                 src="/mascot-cat-avatar.png"
                 alt="Aivio Mascot"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+                className="w-full h-full object-contain group-hover:scale-110 transition-transform relative z-10 drop-shadow"
               />
             </div>
             <div>
@@ -140,7 +141,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Bottom Sidebar Info & Sound Toggle */}
-        <div className="pt-4 border-t-2 border-[#1c325c] space-y-3">
+        <div className="pt-4 border-t-2 border-[#1c325c]">
           <div className="p-3 rounded-2xl bg-[#132344] border-2 border-[#1f3764] flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-amber-400" />
@@ -155,10 +156,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
             >
               {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
             </button>
-          </div>
-
-          <div className="text-[10px] text-slate-400 text-center font-bold tracking-wider">
-            HIGH SCHOOL AI LITERACY
           </div>
         </div>
       </aside>

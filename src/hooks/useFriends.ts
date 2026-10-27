@@ -154,7 +154,7 @@ export function useFriends() {
     const exists = friends.some((f) => f.username.toLowerCase() === clean);
     if (exists) return { success: false, message: `@${clean} is already on your friends list!` };
 
-    // Create a new friend
+
     const newFriend: Friend = {
       id: `friend_${Date.now()}`,
       name: clean.charAt(0).toUpperCase() + clean.slice(1).replace(/_/g, ' '),

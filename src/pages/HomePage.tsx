@@ -37,15 +37,9 @@ export const HomePage: React.FC<HomePageProps> = ({
   return (
     <div className="w-full flex flex-col items-center select-none pb-24 lg:pb-12 animate-fade-in">
       {/* Hero Section */}
-      <section className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 sm:pt-16 sm:pb-24 flex flex-col items-center text-center">
+      <section className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-12 sm:pt-8 sm:pb-20 flex flex-col items-center text-center">
         {/* Glow ambient background effects */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-[#1cb0f6]/20 via-[#0284c7]/15 to-transparent blur-3xl pointer-events-none -z-10" />
-
-        {/* Audience Pill */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#132344] border-2 border-[#1cb0f6]/50 text-[#1cb0f6] text-xs font-black uppercase tracking-wider shadow-lg shadow-cyan-950/40 mb-6">
-          <Sparkles className="w-4 h-4 text-cyan-400" />
-          <span>The Free, Fun, Science-Backed Way to Master AI</span>
-        </div>
 
         {/* Hero Grid with Big Cool Blue Mascot Artwork */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-left my-4 w-full max-w-6xl">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   BookOpen,
   Sparkles,
@@ -21,6 +21,7 @@ import { LessonNode } from '../components/LessonNode';
 import { MilestoneChest } from '../components/MilestoneChest';
 import { UnitGuidebookModal } from '../components/UnitGuidebookModal';
 import { RightGamificationSidebar } from '../components/RightGamificationSidebar';
+import { ConnectingRoadmap } from '../components/ConnectingRoadmap';
 import { sound } from '../utils/sound';
 import { useFriends } from '../hooks/useFriends';
 import type { LessonNodeStatus } from '../types/lesson';
@@ -50,6 +51,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   const [claimedChests, setClaimedChests] = useState<string[]>([]);
   const [expandedUnitId, setExpandedUnitId] = useState<string | null>(null);
   const [lockedToast, setLockedToast] = useState<string | null>(null);
+
+  const roadmapContainerRef = useRef<HTMLDivElement | null>(null);
+  const checkpointRefs = useRef<(HTMLElement | null)[]>([]);
 
   const { friends } = useFriends();
 
@@ -163,7 +167,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   ].sort((a, b) => b.xp - a.xp);
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 py-6 pb-24 lg:pb-12 animate-fade-in select-none">
+    <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 pt-3 sm:pt-5 pb-24 lg:pb-12 animate-fade-in select-none">
       {/* Toast Notification */}
       {lockedToast && (
         <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-2xl bg-amber-500 text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wider shadow-2xl shadow-amber-500/30 animate-fade-in flex items-center gap-2 max-w-md text-center">
@@ -282,7 +286,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             {/* ================= UNIT 1 (ACTIVE) ================= */}
             <div>
               {/* Unit Header Banner */}
-              <div className="rounded-3xl bg-gradient-to-r from-[#0284c7] via-[#1cb0f6] to-[#0284c7] p-5 sm:p-6 border-b-[6px] border-[#0369a1] shadow-[0_12px_30px_rgba(28,176,246,0.3)] mb-10 text-slate-950 relative overflow-hidden">
+              <div className="rounded-3xl bg-gradient-to-r from-[#0284c7] via-[#1cb0f6] to-[#0284c7] p-5 sm:p-6 border-b-[6px] border-[#0369a1] shadow-[0_12px_30px_rgba(28,176,246,0.3)] mb-6 sm:mb-8 text-slate-950 relative overflow-hidden">
                 <div className="absolute -right-6 -bottom-6 w-32 h-32 opacity-15 pointer-events-none">
                   <Sparkles className="w-full h-full text-white" />
                 </div>
@@ -318,41 +322,63 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 </div>
               </div>
 
-              {/* Unit 1 Lesson Path */}
-              <div className="relative py-4 flex flex-col items-center">
-                <div className="space-y-12 sm:space-y-14 w-full flex flex-col items-center relative z-10">
-                  {unit1Lessons.map((lesson, idx) => (
-                    <React.Fragment key={lesson.id}>
-                      <div className={`transition-transform duration-300 ${offsets[idx % offsets.length]}`}>
-                        <LessonNode
-                          id={lesson.id}
-                          order={lesson.order}
-                          title={lesson.title}
-                          status={getLessonStatus(lesson.id)}
-                          xpReward={lesson.xpReward}
-                          estimatedMinutes={lesson.estimatedMinutes}
-                          onSelect={onSelectLesson}
-                          showMascotHint={completedCount === idx}
-                        />
-                      </div>
+              {/* Unit 1 Lesson Path with Curved Connecting Roadmap */}
+              <div
+                ref={roadmapContainerRef}
+                className="relative py-4 flex flex-col items-center w-full max-w-lg mx-auto"
+              >
+                {/* Connecting Curved Roadmap SVG Track */}
+                <ConnectingRoadmap
+                  containerRef={roadmapContainerRef}
+                  itemRefs={checkpointRefs}
+                  completedCount={completedCount}
+                />
 
-                      {/* Mid-Way Chest */}
-                      {idx === 1 && (
-                        <div className="my-2">
-                          <MilestoneChest
-                            isUnlocked={completedCount >= 2}
-                            isClaimed={claimedChests.includes('chest-1')}
-                            gemReward={50}
-                            xpReward={25}
-                            onClaim={() => handleClaimChest('chest-1')}
+                <div className="space-y-12 sm:space-y-14 w-full flex flex-col items-center relative z-10">
+                  {unit1Lessons.map((lesson, idx) => {
+                    const checkpointIdx = idx <= 1 ? idx : idx + 1;
+                    return (
+                      <React.Fragment key={lesson.id}>
+                        <div
+                          ref={(el) => (checkpointRefs.current[checkpointIdx] = el)}
+                          className={`transition-transform duration-300 ${offsets[idx % offsets.length]}`}
+                        >
+                          <LessonNode
+                            id={lesson.id}
+                            order={lesson.order}
+                            title={lesson.title}
+                            status={getLessonStatus(lesson.id)}
+                            xpReward={lesson.xpReward}
+                            estimatedMinutes={lesson.estimatedMinutes}
+                            onSelect={onSelectLesson}
+                            showMascotHint={completedCount === idx}
                           />
                         </div>
-                      )}
-                    </React.Fragment>
-                  ))}
+
+                        {/* Mid-Way Chest */}
+                        {idx === 1 && (
+                          <div
+                            ref={(el) => (checkpointRefs.current[2] = el)}
+                            className="my-2"
+                          >
+                            <MilestoneChest
+                              isUnlocked={completedCount >= 2}
+                              isClaimed={claimedChests.includes('chest-1')}
+                              gemReward={50}
+                              xpReward={25}
+                              onClaim={() => handleClaimChest('chest-1')}
+                            />
+                          </div>
+                        )}
+                      </React.Fragment>
+                    );
+                  })}
 
                   {/* Final Boss Trophy Chest */}
-                  <div className="mt-4">
+                  <div
+                    ref={(el) => (checkpointRefs.current[6] = el)}
+                    className="mt-4"
+                  >
                     <MilestoneChest
                       isUnlocked={completedCount === 5}
                       isClaimed={claimedChests.includes('chest-trophy-unit-1')}

@@ -224,11 +224,11 @@ export const DraggableMascot: React.FC = () => {
           <div className="absolute inset-0 rounded-full bg-cyan-400 blur-sm opacity-50 group-hover:opacity-80 transition-opacity pointer-events-none" />
 
           {/* Cat Avatar Face */}
-          <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-full overflow-hidden border-2 border-slate-900 bg-white relative">
+          <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-full border-2 border-cyan-400 bg-[#0f1d38]/90 backdrop-blur-md relative flex items-center justify-center p-1.5 shadow-xl">
             <img
               src="/mascot-cat-avatar.png"
               alt="Aivo the Cat"
-              className="w-full h-full object-cover pointer-events-none"
+              className="w-full h-full object-contain pointer-events-none drop-shadow"
             />
           </div>
 
@@ -255,11 +255,11 @@ export const DraggableMascot: React.FC = () => {
             className="px-4 py-3 bg-gradient-to-r from-[#0284c7] via-[#1cb0f6] to-[#0284c7] border-b-2 border-[#1899d6] flex items-center justify-between cursor-grab active:cursor-grabbing text-slate-950"
           >
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-white bg-white shrink-0 shadow-md">
+              <div className="w-10 h-10 rounded-full border-2 border-white bg-slate-900/40 shrink-0 shadow-md flex items-center justify-center p-1">
                 <img
                   src="/mascot-cat-avatar.png"
                   alt="Aivo"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
               </div>
               <div>
@@ -284,7 +284,7 @@ export const DraggableMascot: React.FC = () => {
               <button
                 onClick={toggleSound}
                 className="p-1.5 rounded-lg bg-black/10 hover:bg-black/20 text-slate-950 transition-colors"
-                title={isMuted ? 'Unmute sounds' : 'Mute sounds'}
+                title={isMuted ? 'Turn Sound On' : 'Turn Sound Off'}
               >
                 {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
               </button>
@@ -325,11 +325,11 @@ export const DraggableMascot: React.FC = () => {
                 className={`flex gap-2.5 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {msg.sender === 'aivo' && (
-                  <div className="w-7 h-7 rounded-full overflow-hidden border border-cyan-400 shrink-0 bg-white mt-1">
+                  <div className="w-8 h-8 rounded-full border border-cyan-400/80 shrink-0 bg-[#0c1a36] mt-1 flex items-center justify-center p-0.5 shadow-sm">
                     <img
                       src="/mascot-cat-avatar.png"
                       alt="Aivo"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                   </div>
                 )}
