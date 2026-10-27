@@ -376,7 +376,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
                   {/* Final Boss Trophy Chest */}
                   <div
-                    ref={(el) => (checkpointRefs.current[6] = el)}
+                    ref={(el) => void (checkpointRefs.current[6] = el)}
                     className="mt-4"
                   >
                     <MilestoneChest
