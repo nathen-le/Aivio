@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import {
   BookOpen,
-  Sparkles,
   Flame,
   Zap,
   Lock,
@@ -176,18 +175,18 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       )}
 
       {/* Top Mobile Quick Stats Bar */}
-      <div className="lg:hidden flex items-center justify-between p-3 rounded-2xl bg-[#0f1d38] border-2 border-[#1c325c] mb-6 shadow-md">
-        <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-orange-950/60 border border-orange-500/40 text-orange-400 font-black text-xs">
-          <Flame className="w-4 h-4 fill-orange-400" />
-          <span>{streakDays}d streak</span>
+      <div className="lg:hidden flex items-center justify-between p-2.5 rounded-2xl bg-[#0c1830] border border-[#1c325c]/70 mb-5 shadow-lg gap-2">
+        <div className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-orange-950/40 border border-orange-500/30 text-orange-400 font-black text-xs">
+          <Flame className="w-4 h-4 fill-orange-400 animate-fire-flicker" />
+          <span>{streakDays}d</span>
         </div>
-        <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-cyan-950/60 border border-cyan-400/40 text-[#1cb0f6] font-black text-xs">
+        <div className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-cyan-950/40 border border-cyan-400/25 text-[#1cb0f6] font-black text-xs">
           <span>💎</span>
           <span className="font-mono">{Math.floor(totalXP * 1.5) + 100}</span>
         </div>
-        <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-amber-950/60 border border-amber-400/40 text-amber-300 font-black text-xs">
+        <div className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-amber-950/40 border border-amber-400/25 text-amber-300 font-black text-xs">
           <Zap className="w-4 h-4 fill-amber-400" />
-          <span className="font-mono">{totalXP} XP</span>
+          <span className="font-mono">{totalXP}</span>
         </div>
       </div>
 
@@ -286,26 +285,34 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             {/* ================= UNIT 1 (ACTIVE) ================= */}
             <div>
               {/* Unit Header Banner */}
-              <div className="rounded-3xl bg-gradient-to-r from-[#0284c7] via-[#1cb0f6] to-[#0284c7] p-5 sm:p-6 border-b-[6px] border-[#0369a1] shadow-[0_12px_30px_rgba(28,176,246,0.3)] mb-6 sm:mb-8 text-slate-950 relative overflow-hidden">
-                <div className="absolute -right-6 -bottom-6 w-32 h-32 opacity-15 pointer-events-none">
-                  <Sparkles className="w-full h-full text-white" />
-                </div>
+              <div className="rounded-3xl bg-gradient-to-br from-[#0369a1] via-[#0e8fd4] to-[#1cb0f6] p-5 sm:p-6 border-b-[5px] border-[#025a87] shadow-[0_16px_40px_rgba(28,176,246,0.35)] mb-6 sm:mb-8 text-white relative overflow-hidden">
+                {/* Decorative background circles */}
+                <div className="absolute -right-10 -top-10 w-44 h-44 rounded-full bg-white/5 pointer-events-none" />
+                <div className="absolute -right-2 -bottom-8 w-28 h-28 rounded-full bg-white/8 pointer-events-none" />
+                <div className="absolute top-3 right-16 w-3 h-3 rounded-full bg-white/30 pointer-events-none" />
+                <div className="absolute top-8 right-28 w-1.5 h-1.5 rounded-full bg-white/20 pointer-events-none" />
 
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative">
                   <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-[11px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-950/20 text-slate-950 border border-slate-950/20">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full bg-white/20 text-white border border-white/30 backdrop-blur-sm">
                         UNIT 1 OF 6 • ACTIVE
                       </span>
-                      <span className="text-xs font-bold text-slate-900">
-                        {completedCount} / 5 Done
-                      </span>
+                      {/* Progress dots */}
+                      <div className="flex gap-1 items-center">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <div key={i} className={`w-2 h-2 rounded-full border border-white/40 transition-all ${i < completedCount ? 'bg-white' : 'bg-white/20'}`} />
+                        ))}
+                      </div>
                     </div>
-                    <h1 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight leading-tight">
+                    <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight drop-shadow-sm">
                       AI Foundations
                     </h1>
-                    <p className="text-xs sm:text-sm font-bold text-sky-950 mt-1 max-w-md">
-                      Demystify neural networks, machine learning algorithms, and pattern recognition.
+                    <p className="text-xs sm:text-sm font-bold text-white/80 mt-1.5 max-w-md">
+                      Demystify neural networks, machine learning, and pattern recognition.
+                    </p>
+                    <p className="text-[11px] font-black text-white/60 mt-1">
+                      {completedCount} / 5 lessons complete
                     </p>
                   </div>
 
@@ -314,7 +321,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                       sound.playClick();
                       setShowGuidebook(true);
                     }}
-                    className="px-5 py-3 rounded-2xl bg-[#0f1d38] hover:bg-[#16274a] text-white font-black text-xs uppercase tracking-wider border-b-4 border-[#091224] active:translate-y-1 active:border-b-0 transition-all flex items-center gap-2 shadow-lg shrink-0"
+                    className="px-5 py-3 rounded-2xl bg-[#0a1e3c] hover:bg-[#112447] text-white font-black text-xs uppercase tracking-wider border-b-4 border-[#06111f] active:translate-y-1 active:border-b-0 transition-all flex items-center gap-2 shadow-xl shrink-0 border border-white/10"
                   >
                     <BookOpen className="w-4 h-4 text-[#1cb0f6] stroke-[2.5]" />
                     <span>GUIDEBOOK</span>
@@ -325,8 +332,11 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               {/* Unit 1 Lesson Path with Curved Connecting Roadmap */}
               <div
                 ref={roadmapContainerRef}
-                className="relative py-4 flex flex-col items-center w-full max-w-lg mx-auto"
+                className="relative py-6 flex flex-col items-center w-full max-w-lg mx-auto rounded-3xl bg-gradient-to-b from-[#0a1628]/60 to-transparent"
               >
+                {/* Ambient glow blobs behind the path */}
+                <div className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-[#1cb0f6]/4 blur-3xl pointer-events-none" />
+                <div className="absolute bottom-1/4 right-1/4 w-28 h-28 rounded-full bg-purple-600/4 blur-3xl pointer-events-none" />
                 {/* Connecting Curved Roadmap SVG Track */}
                 <ConnectingRoadmap
                   containerRef={roadmapContainerRef}

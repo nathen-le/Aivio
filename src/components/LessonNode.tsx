@@ -89,10 +89,11 @@ export const LessonNode: React.FC<LessonNodeProps> = ({
     >
       {/* Floating Mascot Callout if this is the active node */}
       {showMascotHint && status === 'available' && (
-        <div className="absolute -top-16 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-[#0f1d38] border-2 border-[#1cb0f6] text-white text-xs font-black uppercase tracking-wider shadow-xl shadow-cyan-950/50 whitespace-nowrap animate-float">
-          <span>START HERE!</span>
-          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-          <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 w-2 h-2 bg-[#0f1d38] border-r-2 border-b-2 border-[#1cb0f6] rotate-45" />
+        <div className="absolute -top-14 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-[#1cb0f6] text-slate-950 text-xs font-black uppercase tracking-wider shadow-xl shadow-cyan-950/60 whitespace-nowrap animate-bounce-subtle">
+          <span className="drop-shadow-sm">START HERE!</span>
+          <span className="w-2 h-2 rounded-full bg-slate-950/40 animate-ping" />
+          {/* Arrow pointing down */}
+          <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-0.5 w-3 h-3 bg-[#1cb0f6] rotate-45" />
         </div>
       )}
 
@@ -131,9 +132,9 @@ export const LessonNode: React.FC<LessonNodeProps> = ({
         </div>
       </div>
 
-      {/* Tooltip Dialog */}
-      {showTooltip && (
-        <div className="absolute bottom-full mb-3 z-30 w-64 p-3.5 rounded-2xl bg-[#0f1d38] border-2 border-[#1cb0f6] shadow-2xl backdrop-blur-md text-left animate-fade-in pointer-events-none">
+      {/* Tooltip Dialog — shows to the right to avoid overlapping START HERE above */}
+      {showTooltip && !(showMascotHint && status === 'available') && (
+        <div className="absolute left-[calc(100%+14px)] top-1/2 -translate-y-1/2 z-30 w-56 p-3.5 rounded-2xl bg-[#0f1d38] border-2 border-[#1cb0f6] shadow-2xl backdrop-blur-md text-left animate-fade-in pointer-events-none">
           <div className="flex items-center justify-between mb-1.5">
             <span className="text-[10px] font-black uppercase tracking-wider text-sky-400">
               Lesson {order}
@@ -151,17 +152,18 @@ export const LessonNode: React.FC<LessonNodeProps> = ({
             </span>
             {status === 'completed' ? (
               <span className="text-cyan-300 font-bold flex items-center gap-1">
-                <RotateCcw className="w-3 h-3" /> Practice review
+                <RotateCcw className="w-3 h-3" /> Review
               </span>
             ) : status === 'locked' ? (
-              <span className="text-slate-400 italic">Complete Lesson {order - 1} first</span>
+              <span className="text-slate-400 italic text-[10px]">Complete lesson {order - 1} first</span>
             ) : (
               <span className="text-[#1cb0f6] font-black flex items-center gap-1">
                 <BookOpen className="w-3 h-3" /> Click to play
               </span>
             )}
           </div>
-          <div className="absolute top-full -mt-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-[#0f1d38] border-r-2 border-b-2 border-[#1cb0f6] rotate-45" />
+          {/* Arrow pointing left */}
+          <div className="absolute top-1/2 -translate-y-1/2 right-full -mr-[1px] w-2.5 h-2.5 bg-[#0f1d38] border-l-2 border-b-2 border-[#1cb0f6] rotate-45" />
         </div>
       )}
     </div>

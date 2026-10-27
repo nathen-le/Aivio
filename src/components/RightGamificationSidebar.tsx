@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flame, Zap, Users, Target, Check, ChevronRight, UserPlus, Sparkles } from 'lucide-react';
+import { Flame, Zap, Users, Target, Check, ChevronRight, UserPlus, Star, Shield } from 'lucide-react';
 import { sound } from '../utils/sound';
 import { useFriends } from '../hooks/useFriends';
 
@@ -20,11 +20,9 @@ export const RightGamificationSidebar: React.FC<RightGamificationSidebarProps> =
 }) => {
   const { friends } = useFriends();
 
-  // Days of week for streak tracker: Mon to Sun
   const weekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-  const todayDayIndex = (new Date().getDay() + 6) % 7; // 0 = Mon, 6 = Sun
+  const todayDayIndex = (new Date().getDay() + 6) % 7;
 
-  // Combine user and friends, then rank by XP
   const allPeers = [
     {
       id: 'current-user',
@@ -46,195 +44,217 @@ export const RightGamificationSidebar: React.FC<RightGamificationSidebarProps> =
     })),
   ].sort((a, b) => b.xp - a.xp);
 
+  // Quest config
+  const quests = [
+    {
+      label: 'Earn 50 XP',
+      current: Math.min(50, totalXP),
+      target: 50,
+      color: 'from-[#0284c7] to-[#1cb0f6]',
+      textColor: 'text-[#1cb0f6]',
+      glow: 'rgba(28,176,246,0.5)',
+    },
+    {
+      label: 'Complete 1 Lesson',
+      current: Math.min(1, completedLessonsCount),
+      target: 1,
+      color: 'from-emerald-600 to-teal-400',
+      textColor: 'text-emerald-400',
+      glow: 'rgba(52,211,153,0.45)',
+    },
+    {
+      label: 'Score 100% on a Quiz',
+      current: completedLessonsCount > 0 ? 1 : 0,
+      target: 1,
+      color: 'from-amber-500 to-yellow-400',
+      textColor: 'text-amber-400',
+      glow: 'rgba(251,191,36,0.45)',
+    },
+  ];
+
   return (
-    <aside className="w-80 shrink-0 space-y-5 select-none">
-      {/* Top Stats Widget Row */}
-      <div className="flex items-center justify-between p-3 rounded-2xl bg-[#0f1d38] border-2 border-[#1c325c] shadow-md">
+    <aside className="w-[300px] shrink-0 space-y-4 select-none">
+
+      {/* ── Top Stats Row ── */}
+      <div className="flex items-stretch gap-2">
         {/* Streak Flame */}
         <div
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-950/60 border border-orange-500/40 text-orange-400 font-black text-sm"
-          title={`${streakDays} Day Learning Streak`}
+          className="flex-1 flex flex-col items-center gap-1 px-3 py-3 rounded-2xl bg-[#0f1d38] border border-[#1c325c]/80 text-orange-400 relative overflow-hidden"
+          title={`${streakDays} Day Streak`}
         >
-          <Flame className="w-5 h-5 fill-orange-400 animate-pulse-subtle" />
-          <span>{streakDays}</span>
+          <div className="absolute inset-0 bg-gradient-to-b from-orange-500/5 to-transparent pointer-events-none" />
+          <Flame className="w-6 h-6 fill-orange-400 animate-fire-flicker relative z-10" />
+          <span className="font-black text-lg leading-none relative z-10">{streakDays}</span>
+          <span className="text-[9px] font-bold text-orange-400/70 uppercase tracking-wider relative z-10">Streak</span>
         </div>
 
-        {/* Data Crystals / Gems */}
+        {/* Gems */}
         <div
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-cyan-950/60 border border-cyan-400/40 text-[#1cb0f6] font-black text-sm"
+          className="flex-1 flex flex-col items-center gap-1 px-3 py-3 rounded-2xl bg-[#0f1d38] border border-[#1c325c]/80 text-[#1cb0f6] relative overflow-hidden"
           title="Data Crystals"
         >
-          <span className="text-base">💎</span>
-          <span className="font-mono">{Math.floor(totalXP * 1.5) + 100}</span>
+          <div className="absolute inset-0 bg-gradient-to-b from-sky-500/5 to-transparent pointer-events-none" />
+          <span className="text-xl relative z-10">💎</span>
+          <span className="font-black text-base leading-none font-mono relative z-10">{Math.floor(totalXP * 1.5) + 100}</span>
+          <span className="text-[9px] font-bold text-sky-400/70 uppercase tracking-wider relative z-10">Gems</span>
         </div>
 
         {/* Total XP */}
         <div
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-950/60 border border-amber-400/40 text-amber-300 font-black text-sm"
+          className="flex-1 flex flex-col items-center gap-1 px-3 py-3 rounded-2xl bg-[#0f1d38] border border-[#1c325c]/80 text-amber-300 relative overflow-hidden"
           title="Total XP"
         >
-          <Zap className="w-5 h-5 fill-amber-400" />
-          <span className="font-mono">{totalXP}</span>
+          <div className="absolute inset-0 bg-gradient-to-b from-amber-500/5 to-transparent pointer-events-none" />
+          <Zap className="w-6 h-6 fill-amber-400 relative z-10" />
+          <span className="font-black text-lg leading-none font-mono relative z-10">{totalXP}</span>
+          <span className="text-[9px] font-bold text-amber-400/70 uppercase tracking-wider relative z-10">XP</span>
         </div>
       </div>
 
-      {/* Streak Calendar Card */}
-      <div className="p-4 rounded-3xl bg-[#0f1d38] border-2 border-[#1c325c] shadow-lg">
-        <div className="flex items-center justify-between mb-3">
-          <h4 className="font-black text-sm text-white uppercase tracking-wider flex items-center gap-1.5">
-            <Flame className="w-4 h-4 text-orange-400 fill-orange-400" />
+      {/* ── Streak Calendar Card ── */}
+      <div className="p-4 rounded-3xl bg-[#0f1d38] border border-[#1c325c]/80 shadow-lg overflow-hidden relative">
+        {/* Glow accent */}
+        {streakDays > 0 && (
+          <div className="absolute -top-8 -right-8 w-28 h-28 rounded-full bg-orange-500/10 blur-2xl pointer-events-none" />
+        )}
+
+        <div className="flex items-center justify-between mb-3 relative">
+          <h4 className="font-black text-sm text-white flex items-center gap-2">
+            <Flame className="w-4 h-4 fill-orange-400 text-orange-400 animate-fire-flicker" />
             Daily Streak
           </h4>
-          <span className="text-xs font-bold text-orange-400 font-mono">
-            {streakDays} {streakDays === 1 ? 'day' : 'days'}
-          </span>
+          <div className="flex items-center gap-1.5">
+            {streakDays >= 3 && (
+              <div className="flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-orange-950/70 border border-orange-500/30 text-[9px] font-black text-orange-300">
+                <Shield className="w-2.5 h-2.5" /> Streak Shield
+              </div>
+            )}
+            <span className="text-xs font-black text-orange-400 font-mono">
+              {streakDays}d
+            </span>
+          </div>
         </div>
 
-        <div className="grid grid-cols-7 gap-1.5 text-center">
+        <div className="grid grid-cols-7 gap-1 text-center">
           {weekDays.map((day, idx) => {
             const isCompleted = idx <= todayDayIndex;
             const isToday = idx === todayDayIndex;
-
             return (
               <div key={idx} className="flex flex-col items-center gap-1">
-                <span className="text-[10px] font-bold text-slate-400">{day}</span>
+                <span className="text-[9px] font-bold text-slate-500">{day}</span>
                 <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs border-2 transition-transform ${
+                  className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold border transition-all ${
                     isCompleted
-                      ? 'bg-orange-500 border-orange-400 text-slate-950 shadow-md shadow-orange-500/30'
-                      : 'bg-[#142344] border-[#1e3460] text-slate-500'
-                  } ${isToday ? 'scale-110 ring-2 ring-orange-400/50' : ''}`}
+                      ? isToday
+                        ? 'bg-orange-500 border-orange-400 text-white animate-streak-glow scale-110'
+                        : 'bg-orange-500/80 border-orange-600/50 text-white shadow-sm'
+                      : 'bg-[#0c1830] border-[#1c3060]/60 text-slate-600'
+                  }`}
                 >
-                  {isCompleted ? <Check className="w-4 h-4 stroke-[3]" /> : '•'}
+                  {isCompleted ? <Check className="w-3.5 h-3.5 stroke-[3]" /> : '·'}
                 </div>
               </div>
             );
           })}
         </div>
-        <p className="text-[11px] text-slate-400 mt-3 text-center font-medium">
-          Practice a lesson every day to keep your streak glowing! 🔥
+
+        <p className="text-[10px] text-slate-500 mt-3 text-center font-medium italic">
+          Practice every day to keep your streak alive 🔥
         </p>
       </div>
 
-      {/* Daily Quests Card */}
-      <div className="p-5 rounded-3xl bg-[#0f1d38] border-2 border-[#1c325c] shadow-lg">
+      {/* ── Daily Quests ── */}
+      <div className="p-4 rounded-3xl bg-[#0f1d38] border border-[#1c325c]/80 shadow-lg">
         <div className="flex items-center justify-between mb-4">
-          <h4 className="font-black text-sm text-white uppercase tracking-wider flex items-center gap-1.5">
+          <h4 className="font-black text-sm text-white flex items-center gap-2">
             <Target className="w-4 h-4 text-[#1cb0f6]" />
             Daily Quests
           </h4>
           <button
-            onClick={() => {
-              sound.playClick();
-              onNavigateProgress();
-            }}
-            className="text-[11px] font-bold text-[#1cb0f6] hover:underline flex items-center"
+            onClick={() => { sound.playClick(); onNavigateProgress(); }}
+            className="text-[10px] font-bold text-[#1cb0f6] hover:text-sky-300 flex items-center gap-0.5 transition-colors"
           >
             VIEW ALL <ChevronRight className="w-3 h-3" />
           </button>
         </div>
 
-        <div className="space-y-3.5">
-          {/* Quest 1 */}
-          <div>
-            <div className="flex justify-between text-xs font-bold text-slate-200 mb-1">
-              <span>Earn 50 XP</span>
-              <span className="text-[#1cb0f6] font-mono">{Math.min(50, totalXP)} / 50</span>
-            </div>
-            <div className="w-full bg-[#132344] h-3 rounded-full overflow-hidden border border-[#1f3764]">
-              <div
-                className="bg-gradient-to-r from-[#0284c7] to-[#1cb0f6] h-full rounded-full transition-all duration-500"
-                style={{ width: `${Math.min(100, (totalXP / 50) * 100)}%` }}
-              />
-            </div>
-          </div>
-
-          {/* Quest 2 */}
-          <div>
-            <div className="flex justify-between text-xs font-bold text-slate-200 mb-1">
-              <span>Complete 1 Lesson</span>
-              <span className="text-emerald-400 font-mono">
-                {Math.min(1, completedLessonsCount)} / 1
-              </span>
-            </div>
-            <div className="w-full bg-[#132344] h-3 rounded-full overflow-hidden border border-[#1f3764]">
-              <div
-                className="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full transition-all duration-500"
-                style={{ width: `${completedLessonsCount >= 1 ? 100 : 0}%` }}
-              />
-            </div>
-          </div>
-
-          {/* Quest 3 */}
-          <div>
-            <div className="flex justify-between text-xs font-bold text-slate-200 mb-1">
-              <span>Score 100% on a Quiz</span>
-              <span className="text-amber-400 font-mono">
-                {completedLessonsCount > 0 ? '1 / 1' : '0 / 1'}
-              </span>
-            </div>
-            <div className="w-full bg-[#132344] h-3 rounded-full overflow-hidden border border-[#1f3764]">
-              <div
-                className="bg-gradient-to-r from-amber-500 to-yellow-400 h-full rounded-full transition-all duration-500"
-                style={{ width: `${completedLessonsCount > 0 ? 100 : 0}%` }}
-              />
-            </div>
-          </div>
+        <div className="space-y-4">
+          {quests.map((quest, i) => {
+            const pct = Math.min(100, (quest.current / quest.target) * 100);
+            const done = pct >= 100;
+            return (
+              <div key={i}>
+                <div className="flex justify-between items-center text-xs font-bold text-slate-200 mb-1.5">
+                  <span className="flex items-center gap-1.5">
+                    {done && <Star className="w-3 h-3 fill-amber-400 text-amber-400" />}
+                    <span className={done ? 'line-through text-slate-500' : ''}>{quest.label}</span>
+                  </span>
+                  <span className={`${quest.textColor} font-mono text-[11px]`}>
+                    {quest.current} / {quest.target}
+                  </span>
+                </div>
+                <div className="relative w-full bg-[#0a1628] h-3 rounded-full overflow-hidden border border-[#142240]">
+                  <div
+                    className={`bg-gradient-to-r ${quest.color} h-full rounded-full transition-all duration-700`}
+                    style={{
+                      width: `${pct}%`,
+                      boxShadow: done ? `0 0 10px ${quest.glow}` : undefined,
+                    }}
+                  />
+                  {/* Shimmer overlay when complete */}
+                  {done && (
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
+
+        {/* All done celebration */}
+        {quests.every(q => q.current >= q.target) && (
+          <div className="mt-4 p-2.5 rounded-2xl bg-amber-950/40 border border-amber-500/30 text-center animate-fade-in">
+            <p className="text-xs font-black text-amber-300">🎉 All quests done! Come back tomorrow!</p>
+          </div>
+        )}
       </div>
 
-      {/* Friends Stats & Leaderboard Card (Replaces Cobalt League) */}
-      <div className="p-5 rounded-3xl bg-[#0f1d38] border-2 border-[#1c325c] shadow-lg">
+      {/* ── Friends Leaderboard ── */}
+      <div className="p-4 rounded-3xl bg-[#0f1d38] border border-[#1c325c]/80 shadow-lg">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-[#1b3464] border border-[#1cb0f6]/50 flex items-center justify-center text-[#1cb0f6]">
+            <div className="w-8 h-8 rounded-xl bg-[#142344] border border-[#1cb0f6]/30 flex items-center justify-center text-[#1cb0f6]">
               <Users className="w-4 h-4" />
             </div>
             <div>
-              <h4 className="font-black text-sm text-white uppercase tracking-wider">
-                Friends Stats
-              </h4>
-              <span className="text-[10px] text-cyan-300 font-bold flex items-center gap-1">
-                <Sparkles className="w-2.5 h-2.5" /> Weekly Leaderboard
-              </span>
+              <h4 className="font-black text-sm text-white leading-tight">Friends</h4>
+              <span className="text-[9px] text-sky-400 font-bold uppercase tracking-wide">Weekly Board</span>
             </div>
           </div>
           <button
-            onClick={() => {
-              sound.playClick();
-              onNavigateFriends?.();
-            }}
-            className="text-[10px] font-bold px-2.5 py-1 rounded-xl bg-[#1b3464] hover:bg-[#254888] border border-[#1cb0f6]/40 text-[#1cb0f6] flex items-center gap-1 transition-colors"
+            onClick={() => { sound.playClick(); onNavigateFriends?.(); }}
+            className="flex items-center gap-1 text-[10px] font-bold px-2.5 py-1.5 rounded-xl bg-[#142344] hover:bg-[#1b3464] border border-[#1cb0f6]/25 text-[#1cb0f6] transition-all"
           >
-            <UserPlus className="w-3 h-3" /> Friends
+            <UserPlus className="w-3 h-3" /> Add
           </button>
         </div>
 
-        <div className="space-y-1.5 mt-3">
+        <div className="space-y-1.5">
           {allPeers.slice(0, 5).map((peer, idx) => {
             const rank = idx + 1;
+            const medalEmoji = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : null;
             return (
               <div
                 key={peer.id}
-                className={`p-2.5 rounded-2xl flex items-center justify-between text-xs font-bold border transition-all ${
+                className={`px-3 py-2.5 rounded-2xl flex items-center justify-between text-xs font-bold border transition-all ${
                   peer.isUser
-                    ? 'bg-[#1b3464] border-[#1cb0f6] text-white shadow-md'
-                    : 'bg-[#132344]/60 border-transparent text-slate-300 hover:border-[#1f3764]'
+                    ? 'bg-[#1cb0f6]/10 border-[#1cb0f6]/35 text-white shadow-[0_0_12px_rgba(28,176,246,0.1)]'
+                    : 'bg-[#0c1830]/60 border-transparent text-slate-300 hover:border-[#1c3060]'
                 }`}
               >
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <span
-                    className={`w-4 text-center font-mono font-black shrink-0 ${
-                      rank === 1
-                        ? 'text-amber-400'
-                        : rank === 2
-                        ? 'text-slate-300'
-                        : rank === 3
-                        ? 'text-amber-600'
-                        : 'text-slate-500'
-                    }`}
-                  >
-                    {rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank}
+                  <span className="w-5 text-center font-mono font-black shrink-0 text-xs">
+                    {medalEmoji || <span className="text-slate-600">{rank}</span>}
                   </span>
                   <div className="relative shrink-0">
                     <span className="text-base">{peer.avatar}</span>
@@ -242,17 +262,16 @@ export const RightGamificationSidebar: React.FC<RightGamificationSidebarProps> =
                       <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 border border-[#0f1d38]" />
                     )}
                   </div>
-                  <span className={`truncate ${peer.isUser ? 'text-[#1cb0f6] font-black' : ''}`}>
+                  <span className={`truncate text-[11px] ${peer.isUser ? 'text-[#1cb0f6] font-black' : ''}`}>
                     {peer.name}
                   </span>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
-                  <span className="text-[10px] text-orange-400 font-bold flex items-center">
-                    <Flame className="w-3 h-3 fill-orange-400" />
-                    {peer.streak}
+                  <span className="text-[10px] text-orange-400 flex items-center">
+                    <Flame className="w-2.5 h-2.5 fill-orange-400" />{peer.streak}
                   </span>
-                  <span className="font-mono text-slate-300 text-[11px] font-bold bg-[#0c162c] px-2 py-0.5 rounded-lg border border-[#1c325c]">
-                    {peer.xp} XP
+                  <span className="font-mono text-[11px] font-black text-amber-300 tabular-nums">
+                    {peer.xp}
                   </span>
                 </div>
               </div>
@@ -261,14 +280,10 @@ export const RightGamificationSidebar: React.FC<RightGamificationSidebarProps> =
         </div>
 
         <button
-          onClick={() => {
-            sound.playClick();
-            onNavigateFriends?.();
-          }}
-          className="w-full mt-3 py-2 text-[11px] font-black uppercase tracking-wider text-slate-400 hover:text-white bg-[#132344] hover:bg-[#1a2e58] rounded-xl border border-[#1f3764] transition-colors flex items-center justify-center gap-1"
+          onClick={() => { sound.playClick(); onNavigateFriends?.(); }}
+          className="w-full mt-3 py-2 text-[10px] font-black uppercase tracking-wider text-slate-500 hover:text-white bg-[#0c1830] hover:bg-[#142344] rounded-xl border border-[#1c325c]/60 transition-all flex items-center justify-center gap-1"
         >
-          <span>View All Friends & Activity</span>
-          <ChevronRight className="w-3 h-3" />
+          View All Activity <ChevronRight className="w-3 h-3" />
         </button>
       </div>
     </aside>
