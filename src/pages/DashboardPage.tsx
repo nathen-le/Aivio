@@ -340,7 +340,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                     return (
                       <React.Fragment key={lesson.id}>
                         <div
-                          ref={(el) => (checkpointRefs.current[checkpointIdx] = el)}
+                          ref={(el) => void (checkpointRefs.current[checkpointIdx] = el)}
                           className={`transition-transform duration-300 ${offsets[idx % offsets.length]}`}
                         >
                           <LessonNode
@@ -358,7 +358,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                         {/* Mid-Way Chest */}
                         {idx === 1 && (
                           <div
-                            ref={(el) => (checkpointRefs.current[2] = el)}
+                            ref={(el) => void (checkpointRefs.current[2] = el)}
                             className="my-2"
                           >
                             <MilestoneChest
