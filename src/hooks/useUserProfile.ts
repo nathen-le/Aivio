@@ -27,15 +27,15 @@ export interface UserProfile {
 const STORAGE_KEY = 'aivio_user_profile_v1';
 
 export const DEFAULT_PROFILE: UserProfile = {
-  displayName: 'Alex',
-  username: 'alex_ai',
-  email: 'alex@student.edu',
+  displayName: 'Kenny Vo',
+  username: 'kenny_vo',
+  email: 'kdvdoodoogaming@gmail.com',
   bio: 'Exploring neural networks & AI literacy one lesson at a time 🚀',
-  location: 'San Francisco, CA',
-  grade: '10th Grade',
-  school: 'Lincoln High School',
+  location: 'Lilburn, GA',
+  grade: '12th Grade',
+  school: 'Parkview High School',
   birthday: '2008-04-12',
-  website: 'https://github.com/alex-student',
+  website: '',
   avatarUrl: '/mascot-cat-avatar.png',
   dailyGoalXP: 50,
   difficulty: 'Normal',
