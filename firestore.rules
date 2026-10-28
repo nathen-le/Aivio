@@ -1,0 +1,125 @@
+rules_version = '2';
+
+// Aivio Firestore security rules.
+//
+// Default-deny: anything not matched below is refused. A learner can only
+// touch their own users/{uid} document and username reservations they own.
+// Paste into Firebase Console > Firestore Database > Rules > Publish.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Exactly the fields src/lib/userProfile.ts writes. hasOnly() rejects any
+    // extra key, so a tampered client cannot smuggle in fields of its own.
+    function hasOnlyProfileFields() {
+      return request.resource.data.keys().hasOnly([
+        'uid', 'email', 'displayName', 'username', 'bio', 'location',
+        'grade', 'school', 'birthday', 'website', 'avatarUrl',
+        'dailyGoalXP', 'createdAt', 'updatedAt', 'schemaVersion'
+      ]);
+    }
+
+    function isValidUsernameValue(name) {
+      return name is string
+        && (name == '' || name.matches('^[a-z0-9_]{3,20}$'));
+    }
+
+    // A non-empty username is only accepted when a reservation document with
+    // that exact ID exists AND belongs to this user. This is what stops a
+    // learner writing a name someone else holds by editing the client.
+    function ownsUsernameReservation(name) {
+      return name == ''
+        || (
+          exists(/databases/$(database)/documents/usernames/$(name))
+          && get(/databases/$(database)/documents/usernames/$(name)).data.uid == request.auth.uid
+        );
+    }
+
+    function isWellFormedProfile(userId) {
+      return hasOnlyProfileFields()
+        && request.resource.data.uid == userId
+        && request.resource.data.email is string
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() <= 60
+        && isValidUsernameValue(request.resource.data.username)
+        && ownsUsernameReservation(request.resource.data.username)
+        && request.resource.data.bio is string
+        && request.resource.data.bio.size() <= 300
+        && request.resource.data.location is string
+        && request.resource.data.location.size() <= 100
+        && request.resource.data.grade is string
+        && request.resource.data.school is string
+        && request.resource.data.school.size() <= 120
+        && request.resource.data.birthday is string
+        && request.resource.data.website is string
+        && request.resource.data.website.size() <= 200
+        && request.resource.data.avatarUrl is string
+        && request.resource.data.dailyGoalXP is int
+        && request.resource.data.dailyGoalXP >= 0
+        && request.resource.data.dailyGoalXP <= 1000
+        && request.resource.data.schemaVersion is int
+        && request.resource.data.updatedAt is timestamp;
+    }
+
+    match /users/{userId} {
+      // Read only your own document. `list` stays denied, so the user
+      // collection cannot be enumerated even by a signed-in learner.
+      allow get: if isOwner(userId);
+      allow list: if false;
+
+      allow create: if isOwner(userId)
+        && isWellFormedProfile(userId)
+        && request.resource.data.createdAt is timestamp
+        // The stored email must match the verified token claim, so nobody can
+        // write someone else's address onto their own profile.
+        && request.resource.data.email == request.auth.token.email;
+
+      allow update: if isOwner(userId)
+        && isWellFormedProfile(userId)
+        // Identity fields are immutable after creation. Email changes belong
+        // to Firebase Auth, not to a client-side profile edit.
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.email == resource.data.email
+        && request.resource.data.createdAt == resource.data.createdAt;
+
+      // Account deletion should go through a reviewed server-side flow.
+      allow delete: if false;
+    }
+
+    // Username reservations. The document ID *is* the normalized username, so
+    // Firestore's one-document-per-ID guarantee is what enforces uniqueness.
+    match /usernames/{username} {
+      // A signed-in learner may check whether one specific name is free.
+      // list stays denied, so the full directory cannot be harvested.
+      allow get: if isSignedIn();
+      allow list: if false;
+
+      allow create: if isSignedIn()
+        && request.resource.data.keys().hasOnly(['uid', 'createdAt'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.createdAt is timestamp
+        && username.matches('^[a-z0-9_]{3,20}$');
+
+      // Never updatable: a create against an existing document is evaluated
+      // as an update, so the second claimant of a name is always rejected.
+      allow update: if false;
+
+      // Only the holder may release their own name.
+      allow delete: if isSignedIn() && resource.data.uid == request.auth.uid;
+    }
+
+    // Everything else is denied, including collections added later that have
+    // not been given explicit rules here.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

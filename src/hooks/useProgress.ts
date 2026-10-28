@@ -6,7 +6,7 @@ import { ALL_LESSONS } from '../data/lessons';
 const STORAGE_KEY = 'aivio_user_progress_v1';
 
 const DEFAULT_PROGRESS: UserProgress = {
-  userName: 'Kenny',
+  userName: 'Learner',
   totalXP: 0,
   currentStreak: 1,
   lastActiveDate: new Date().toISOString().split('T')[0],
@@ -91,7 +91,7 @@ export function useProgress() {
   const updateUserName = useCallback((name: string) => {
     setProgress((prev) => ({
       ...prev,
-      userName: name.trim() || 'Kenny',
+      userName: name.trim() || 'Learner',
     }));
   }, []);
 

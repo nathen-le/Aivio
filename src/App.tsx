@@ -8,11 +8,14 @@ import { LessonPage } from './pages/LessonPage';
 import { ProgressPage } from './pages/ProgressPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { FriendsPage } from './pages/FriendsPage';
+import { AuthPage } from './pages/AuthPage';
+import { useAuth } from './hooks/useAuth';
 import { getLessonById } from './data/lessons';
 
 export type AppView = 'home' | 'dashboard' | 'progress' | 'profile' | 'friends' | 'lesson';
 
 export function App() {
+  const { user, loading } = useAuth();
   const {
     progress,
     levelInfo,
@@ -27,11 +30,54 @@ export function App() {
   const [currentView, setCurrentView] = useState<AppView>('dashboard');
   const [activeTab, setActiveTab] = useState<string>('learn');
   const [activeLessonId, setActiveLessonId] = useState<string | null>(null);
+  const [publicView, setPublicView] = useState<'home' | 'auth'>('home');
 
   // Scroll to top on view changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentView, activeLessonId]);
+
+  // Restoring the session: hold the shell until Firebase reports auth state,
+  // otherwise the login screen flashes for already-signed-in users.
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#0a1224] flex flex-col items-center justify-center gap-4">
+        <img
+          src="/mascot-cat-logo.png"
+          alt=""
+          className="w-24 h-24 object-contain animate-float"
+        />
+        <p className="text-xs font-black uppercase tracking-wider text-slate-400">
+          Loading your profile…
+        </p>
+      </div>
+    );
+  }
+
+  // Signed out: only the public landing page and the auth screen are reachable.
+  // Dashboard, progress, profile, friends and lessons stay mounted-out entirely.
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-[#0a1224] text-slate-100 selection:bg-[#1cb0f6] selection:text-slate-950">
+        {publicView === 'home' ? (
+          <>
+            <div className="w-full flex justify-end px-4 sm:px-6 lg:px-8 pt-4">
+              <button
+                onClick={() => setPublicView('auth')}
+                className="btn-3d bg-[#0f1d38] hover:bg-[#1b3464] border-2 border-[#1c325c] hover:border-[#1cb0f6]/60 border-b-4 text-slate-100 font-black text-xs uppercase tracking-wider rounded-2xl px-5 py-2.5"
+              >
+                Log in
+              </button>
+            </div>
+            <HomePage onStartLearning={() => setPublicView('auth')} />
+          </>
+        ) : (
+          <AuthPage onBack={() => setPublicView('home')} />
+        )}
+        <DraggableMascot />
+      </div>
+    );
+  }
 
   const handleNavigate = (view: AppView) => {
     setActiveLessonId(null);
