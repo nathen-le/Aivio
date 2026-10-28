@@ -52,11 +52,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         await updateProfile(credential.user, { displayName: trimmedName });
       }
 
-      await createUserProfileIfMissing(
-        credential.user.uid,
-        credential.user.email ?? email,
-        trimmedName,
-      );
+      // The auth account already exists at this point, so a failed profile
+      // write must not surface as "registration failed" — that would send the
+      // learner back to a signup form for an account they already hold.
+      // useUserProfile heals a missing document on the next profile load.
+      try {
+        await createUserProfileIfMissing(
+          credential.user.uid,
+          credential.user.email ?? email,
+          trimmedName,
+        );
+      } catch (error) {
+        console.error(
+          'Account created, but the profile document could not be written yet:',
+          error instanceof Error ? error.message : error,
+        );
+      }
 
       // onAuthStateChanged already fired with this user and set state; the
       // updateProfile call above mutates that same instance in place.

@@ -16,6 +16,11 @@ const MESSAGES: Record<string, string> = {
   'auth/network-request-failed': 'Network problem — check your connection and try again.',
   'auth/operation-not-allowed':
     'Email/password sign-in is not enabled for this Firebase project.',
+  'auth/invalid-api-key': 'This site is misconfigured and cannot sign you in right now.',
+  'auth/api-key-not-valid': 'This site is misconfigured and cannot sign you in right now.',
+  'auth/unauthorized-domain':
+    'This site is not authorized for sign-in. The domain must be added in Firebase.',
+  'auth/internal-error': 'Sign-in service error. Please try again in a moment.',
 };
 
 export function getAuthErrorMessage(error: unknown): string {

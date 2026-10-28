@@ -6,3 +6,20 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# Conservative security headers. No Content-Security-Policy is set here on
+# purpose: Firebase Auth and Firestore need several Google origins, and a
+# wrong policy would break sign-in silently. Add one deliberately later.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=()"
+
+# Fingerprinted assets are safe to cache permanently.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
