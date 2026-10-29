@@ -8,7 +8,12 @@ export interface AuthContextValue {
   loading: boolean;
   register: (email: string, password: string, displayName: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
-  logout: () => Promise<void>;
+  /**
+   * Waits for unsaved progress to be confirmed before signing out. Rejects with
+   * UnsavedProgressError if it cannot be saved; pass { force: true } to sign out
+   * anyway (unsent changes stay in this browser's outbox for the next sign-in).
+   */
+  logout: (options?: { force?: boolean }) => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
 }
 

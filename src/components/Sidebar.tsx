@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Compass,
+  Globe,
   Trophy,
   Users,
   User,
@@ -11,6 +12,7 @@ import {
 } from 'lucide-react';
 import { sound } from '../utils/sound';
 import type { AppView } from '../App';
+import { useFriends } from '../hooks/useFriends';
 
 interface SidebarProps {
   currentView: AppView;
@@ -40,6 +42,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const level = Math.floor(totalXP / XP_PER_LEVEL) + 1;
   const xpInLevel = totalXP % XP_PER_LEVEL;
   const xpPct = Math.round((xpInLevel / XP_PER_LEVEL) * 100);
+
+  const { incoming } = useFriends();
+  const requestBadge = (id: string) => (id === 'friends' ? incoming.length : 0);
 
   const navItems = [
     {
@@ -74,6 +79,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
         onSelectTab?.('friends');
       },
       isActive: currentView === 'friends',
+    },
+    {
+      id: 'local',
+      label: 'LOCAL',
+      icon: <Globe className="w-5 h-5 stroke-[2.5]" />,
+      action: () => {
+        sound.playClick();
+        onNavigate('local');
+        onSelectTab?.('local');
+      },
+      isActive: currentView === 'local',
     },
     {
       id: 'profile',
@@ -151,6 +167,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   {item.icon}
                 </div>
                 <span className={item.isActive ? 'text-[#1cb0f6]' : ''}>{item.label}</span>
+                {requestBadge(item.id) > 0 && (
+                  <span
+                    className="ml-auto min-w-5 h-5 px-1.5 rounded-full bg-rose-500 text-white text-[10px] font-black flex items-center justify-center"
+                    aria-label={`${requestBadge(item.id)} pending friend requests`}
+                  >
+                    {requestBadge(item.id)}
+                  </span>
+                )}
               </button>
             ))}
           </nav>
@@ -217,7 +241,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <button
             key={item.id}
             onClick={item.action}
-            className={`flex flex-col items-center justify-center px-3 py-1.5 rounded-xl transition-all relative ${
+            className={`flex flex-col items-center justify-center px-2.5 sm:px-3 py-1.5 rounded-xl transition-all relative ${
               item.isActive
                 ? 'text-[#1cb0f6]'
                 : 'text-slate-500 hover:text-slate-300'
@@ -229,6 +253,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <div className={`transition-transform ${item.isActive ? 'scale-110' : ''}`}>
               {item.icon}
             </div>
+            {requestBadge(item.id) > 0 && (
+              <span
+                className="absolute top-0 right-1 min-w-4 h-4 px-1 rounded-full bg-rose-500 text-white text-[9px] font-black flex items-center justify-center"
+                aria-label={`${requestBadge(item.id)} pending friend requests`}
+              >
+                {requestBadge(item.id)}
+              </span>
+            )}
             <span className={`text-[9px] font-black uppercase mt-0.5 tracking-wider ${item.isActive ? 'text-[#1cb0f6]' : ''}`}>
               {item.label}
             </span>

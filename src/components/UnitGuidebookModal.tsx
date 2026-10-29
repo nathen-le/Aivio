@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X, BookOpen, CheckCircle2, AlertTriangle, Layers, Database, Cpu } from 'lucide-react';
 import { sound } from '../utils/sound';
 
@@ -8,11 +9,37 @@ interface UnitGuidebookModalProps {
 }
 
 export const UnitGuidebookModal: React.FC<UnitGuidebookModalProps> = ({ isOpen, onClose }) => {
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-      <div className="max-w-2xl w-full bg-[#0f1d38] border-2 border-[#1cb0f6] rounded-3xl p-6 sm:p-8 shadow-[0_25px_60px_rgba(0,0,0,0.9),0_0_30px_rgba(28,176,246,0.3)] max-h-[85vh] overflow-y-auto text-white">
+  // Portaled to <body> so no transformed/overflow-clipped page ancestor can
+  // re-anchor this fixed overlay away from the viewport.
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[70] flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="guidebook-title"
+        className="max-w-2xl w-full bg-[#0f1d38] border-2 border-[#1cb0f6] rounded-3xl p-5 sm:p-8 shadow-[0_25px_60px_rgba(0,0,0,0.9),0_0_30px_rgba(28,176,246,0.3)] max-h-[90vh] max-h-[90dvh] overflow-y-auto overscroll-contain text-white"
+      >
         {/* Header */}
         <div className="flex items-start justify-between pb-4 border-b-2 border-[#1c325c] mb-6">
           <div className="flex items-center gap-3">
@@ -23,7 +50,7 @@ export const UnitGuidebookModal: React.FC<UnitGuidebookModalProps> = ({ isOpen, 
               <span className="text-[11px] font-black uppercase tracking-wider text-[#1cb0f6]">
                 Unit 1 Reference
               </span>
-              <h2 className="text-2xl font-black text-white tracking-tight">
+              <h2 id="guidebook-title" className="text-2xl font-black text-white tracking-tight">
                 AI Foundations Guidebook
               </h2>
             </div>
@@ -34,6 +61,7 @@ export const UnitGuidebookModal: React.FC<UnitGuidebookModalProps> = ({ isOpen, 
               sound.playClick();
               onClose();
             }}
+            aria-label="Close guidebook"
             className="p-2 rounded-xl bg-[#16274a] hover:bg-[#203766] border border-[#26447a] text-slate-300 hover:text-white transition-colors"
           >
             <X className="w-5 h-5 stroke-[2.5]" />
@@ -120,6 +148,7 @@ export const UnitGuidebookModal: React.FC<UnitGuidebookModalProps> = ({ isOpen, 
           Got It, Back to Lesson Path
         </button>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };

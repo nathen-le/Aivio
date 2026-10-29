@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { X, Send, Sparkles, Zap, Lightbulb, Volume2, VolumeX, MessageCircle } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { X, Send, Sparkles, Zap, Lightbulb, Volume2, VolumeX, MessageCircle, Move } from 'lucide-react';
 import { sound } from '../utils/sound';
 
 interface Message {
@@ -34,6 +34,81 @@ const getAIAnswer = (query: string): string => {
   return "🐱 Great curiosity! In AI, models are probabilistic pattern detectors trained on giant datasets. Every concept in the lesson path connects together. Keep going—you've got this! What else can I break down?";
 };
 
+const FAB_SIZE = 62;
+const EDGE = 8;
+const PANEL_GAP = 12;
+const DRAG_THRESHOLD = 6;
+const POSITION_KEY = 'aivio_helper_position_v1';
+
+interface Fraction {
+  fx: number;
+  fy: number;
+}
+
+const clamp = (v: number, min: number, max: number) => Math.min(Math.max(v, min), Math.max(min, max));
+
+const readViewport = () => ({ w: window.innerWidth, h: window.innerHeight });
+
+// Only a pair of 0..1 numbers is stored: where the button sits inside the
+// screen. Nothing about the user. Fractions keep it valid across resizes.
+function loadPosition(): Fraction | null {
+  try {
+    const raw = localStorage.getItem(POSITION_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as Partial<Fraction>;
+    if (
+      typeof parsed.fx === 'number' && typeof parsed.fy === 'number' &&
+      Number.isFinite(parsed.fx) && Number.isFinite(parsed.fy)
+    ) {
+      return { fx: clamp(parsed.fx, 0, 1), fy: clamp(parsed.fy, 0, 1) };
+    }
+  } catch {
+    /* storage unavailable or corrupt: fall back to the default spot */
+  }
+  return null;
+}
+
+function savePosition(pos: Fraction) {
+  try {
+    localStorage.setItem(POSITION_KEY, JSON.stringify(pos));
+  } catch {
+    /* non-fatal */
+  }
+}
+
+/** Top-left pixel position of the button for a stored fraction. */
+function toPixels(pos: Fraction, vw: number, vh: number) {
+  return {
+    x: EDGE + pos.fx * Math.max(0, vw - FAB_SIZE - EDGE * 2),
+    y: EDGE + pos.fy * Math.max(0, vh - FAB_SIZE - EDGE * 2),
+  };
+}
+
+function toFraction(x: number, y: number, vw: number, vh: number): Fraction {
+  const rangeX = Math.max(1, vw - FAB_SIZE - EDGE * 2);
+  const rangeY = Math.max(1, vh - FAB_SIZE - EDGE * 2);
+  return { fx: clamp((x - EDGE) / rangeX, 0, 1), fy: clamp((y - EDGE) / rangeY, 0, 1) };
+}
+
+/**
+ * Default spot: bottom-right. Below the lg breakpoint the Sidebar renders a
+ * bottom tab bar, so the default sits above it instead of covering it.
+ */
+function defaultPixels(vw: number, vh: number) {
+  const bottomOffset = vw < 1024 ? 88 : 24;
+  return {
+    x: clamp(vw - FAB_SIZE - 24, EDGE, vw - FAB_SIZE - EDGE),
+    y: clamp(vh - FAB_SIZE - bottomOffset, EDGE, vh - FAB_SIZE - EDGE),
+  };
+}
+
+const CORNERS: Fraction[] = [
+  { fx: 1, fy: 1 },
+  { fx: 0, fy: 1 },
+  { fx: 0, fy: 0 },
+  { fx: 1, fy: 0 },
+];
+
 export const DraggableMascot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputText, setInputText] = useState('');
@@ -41,6 +116,145 @@ export const DraggableMascot: React.FC = () => {
   const [isMuted, setIsMuted] = useState(sound.isMuted);
   const [hasNewMessage, setHasNewMessage] = useState(false);
   const chatBottomRef = useRef<HTMLDivElement>(null);
+
+  const [viewport, setViewport] = useState(readViewport);
+  const [savedPos, setSavedPos] = useState<Fraction | null>(loadPosition);
+  const [dragPx, setDragPx] = useState<{ x: number; y: number } | null>(null);
+  const dragRef = useRef<{
+    pointerId: number;
+    startX: number;
+    startY: number;
+    originX: number;
+    originY: number;
+    moved: boolean;
+  } | null>(null);
+  const suppressClickRef = useRef(false);
+  const fabRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const onResize = () => setViewport(readViewport());
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  const basePx = savedPos
+    ? toPixels(savedPos, viewport.w, viewport.h)
+    : defaultPixels(viewport.w, viewport.h);
+  const fab = dragPx ?? basePx;
+  const isDragging = dragPx !== null;
+
+  const moveTo = useCallback(
+    (x: number, y: number, persist: boolean) => {
+      const cx = clamp(x, EDGE, viewport.w - FAB_SIZE - EDGE);
+      const cy = clamp(y, EDGE, viewport.h - FAB_SIZE - EDGE);
+      if (persist) {
+        const next = toFraction(cx, cy, viewport.w, viewport.h);
+        setSavedPos(next);
+        savePosition(next);
+      }
+      return { x: cx, y: cy };
+    },
+    [viewport.w, viewport.h],
+  );
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement>) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    dragRef.current = {
+      pointerId: e.pointerId,
+      startX: e.clientX,
+      startY: e.clientY,
+      originX: fab.x,
+      originY: fab.y,
+      moved: false,
+    };
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLButtonElement>) => {
+    const d = dragRef.current;
+    if (!d || d.pointerId !== e.pointerId) return;
+    const dx = e.clientX - d.startX;
+    const dy = e.clientY - d.startY;
+    if (!d.moved) {
+      if (Math.hypot(dx, dy) < DRAG_THRESHOLD) return;
+      d.moved = true;
+      e.currentTarget.setPointerCapture(e.pointerId);
+    }
+    setDragPx(moveTo(d.originX + dx, d.originY + dy, false));
+  };
+
+  const endDrag = (e: React.PointerEvent<HTMLButtonElement>) => {
+    const d = dragRef.current;
+    if (!d || d.pointerId !== e.pointerId) return;
+    dragRef.current = null;
+    if (d.moved) {
+      // The click the browser fires after a drag must not open/close the chat.
+      suppressClickRef.current = true;
+      window.setTimeout(() => { suppressClickRef.current = false; }, 0);
+      moveTo(
+        d.originX + (e.clientX - d.startX),
+        d.originY + (e.clientY - d.startY),
+        true,
+      );
+      setDragPx(null);
+    }
+  };
+
+  const handleFabKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    const step = e.shiftKey ? 64 : 16;
+    const delta: Record<string, [number, number]> = {
+      ArrowLeft: [-step, 0],
+      ArrowRight: [step, 0],
+      ArrowUp: [0, -step],
+      ArrowDown: [0, step],
+    };
+    const move = delta[e.key];
+    if (!move) return;
+    e.preventDefault();
+    moveTo(fab.x + move[0], fab.y + move[1], true);
+  };
+
+  const cycleCorner = () => {
+    sound.playClick();
+    // Next corner after whichever one is currently nearest.
+    const cur = toFraction(fab.x, fab.y, viewport.w, viewport.h);
+    let nearest = 0;
+    let best = Infinity;
+    CORNERS.forEach((c, i) => {
+      const dist = Math.hypot(c.fx - cur.fx, c.fy - cur.fy);
+      if (dist < best) { best = dist; nearest = i; }
+    });
+    const next = CORNERS[(nearest + 1) % CORNERS.length];
+    setSavedPos(next);
+    savePosition(next);
+  };
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsOpen(false);
+        fabRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isOpen]);
+
+  // Chat panel placement: beside the button, flipped above/below depending on
+  // where there is room, and always clamped inside the viewport.
+  const panelWidth = Math.min(360, viewport.w - EDGE * 2);
+  const panelLeft = clamp(fab.x + FAB_SIZE - panelWidth, EDGE, viewport.w - panelWidth - EDGE);
+  const spaceAbove = fab.y - PANEL_GAP - EDGE;
+  const spaceBelow = viewport.h - (fab.y + FAB_SIZE) - PANEL_GAP - EDGE;
+  const panelAbove = spaceAbove >= spaceBelow;
+  const panelStyle: React.CSSProperties = {
+    width: panelWidth,
+    left: panelLeft,
+    maxHeight: Math.max(220, panelAbove ? spaceAbove : spaceBelow),
+    ...(panelAbove
+      ? { bottom: viewport.h - fab.y + PANEL_GAP }
+      : { top: fab.y + FAB_SIZE + PANEL_GAP }),
+  };
 
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -103,14 +317,18 @@ export const DraggableMascot: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 select-none">
+    <div className="select-none">
 
       {/* ── Chat Panel (slides up when open) ── */}
       {isOpen && (
-        <div className="w-[340px] sm:w-[360px] rounded-3xl bg-[#0b1628] border border-[#1cb0f6]/50 shadow-[0_24px_70px_rgba(0,0,0,0.9),0_0_40px_rgba(28,176,246,0.18)] overflow-hidden animate-slide-up">
+        <div
+          role="dialog"
+          aria-label="Aivo study companion chat"
+          style={panelStyle}
+          className="fixed z-50 flex flex-col rounded-3xl bg-[#0b1628] border border-[#1cb0f6]/50 shadow-[0_24px_70px_rgba(0,0,0,0.9),0_0_40px_rgba(28,176,246,0.18)] overflow-hidden animate-slide-up">
 
           {/* Header */}
-          <div className="px-4 py-3 bg-gradient-to-r from-[#0c1d3e] via-[#11254a] to-[#0c1d3e] border-b border-[#1cb0f6]/25 flex items-center justify-between">
+          <div className="shrink-0 px-4 py-3 bg-gradient-to-r from-[#0c1d3e] via-[#11254a] to-[#0c1d3e] border-b border-[#1cb0f6]/25 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative w-10 h-10 rounded-full border-2 border-[#1cb0f6]/70 bg-[#091628] flex items-center justify-center p-1 shadow-[0_0_14px_rgba(28,176,246,0.3)]">
                 <img src="/mascot-cat-avatar.png" alt="Aivo" className="w-full h-full object-contain" />
@@ -127,6 +345,14 @@ export const DraggableMascot: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-1.5">
+              <button
+                onClick={cycleCorner}
+                className="p-2 rounded-xl bg-[#142344]/80 hover:bg-[#1b3464] text-sky-400 border border-[#1f3764]/60 hover:border-[#1cb0f6]/40 transition-all"
+                title="Move Aivo to another corner"
+                aria-label="Move Aivo to another corner of the screen"
+              >
+                <Move className="w-3.5 h-3.5" />
+              </button>
               <button
                 onClick={toggleSound}
                 className="p-2 rounded-xl bg-[#142344]/80 hover:bg-[#1b3464] text-sky-400 border border-[#1f3764]/60 hover:border-[#1cb0f6]/40 transition-all"
@@ -145,7 +371,7 @@ export const DraggableMascot: React.FC = () => {
           </div>
 
           {/* Quick prompts bar */}
-          <div className="px-3 py-2 bg-[#091525] border-b border-[#142348]/80 flex items-center gap-1.5 overflow-x-auto scrollbar-none">
+          <div className="shrink-0 px-3 py-2 bg-[#091525] border-b border-[#142348]/80 flex items-center gap-1.5 overflow-x-auto scrollbar-none">
             <span className="shrink-0 flex items-center gap-0.5 text-[9px] font-black uppercase text-amber-400/90">
               <Lightbulb className="w-3 h-3" /> Try:
             </span>
@@ -161,7 +387,7 @@ export const DraggableMascot: React.FC = () => {
           </div>
 
           {/* Messages area */}
-          <div className="p-3.5 h-[240px] overflow-y-auto space-y-3 text-xs leading-relaxed bg-[#070f1e]/60">
+          <div className="p-3.5 flex-[0_1_240px] min-h-[96px] overflow-y-auto space-y-3 text-xs leading-relaxed bg-[#070f1e]/60">
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -202,7 +428,7 @@ export const DraggableMascot: React.FC = () => {
           {/* Input bar */}
           <form
             onSubmit={(e) => { e.preventDefault(); handleSendMessage(); }}
-            className="p-3 bg-[#05090f] border-t border-[#142348]/80 flex items-center gap-2"
+            className="shrink-0 p-3 bg-[#05090f] border-t border-[#142348]/80 flex items-center gap-2"
           >
             <input
               type="text"
@@ -223,18 +449,33 @@ export const DraggableMascot: React.FC = () => {
       )}
 
       {/* ── FAB Button ── */}
-      <div className="relative">
+      <div
+        className="fixed z-50"
+        style={{ left: 0, top: 0, transform: `translate3d(${fab.x}px, ${fab.y}px, 0)`, width: FAB_SIZE, height: FAB_SIZE }}
+      >
         {/* Pulsing outer ring when closed */}
         {!isOpen && (
           <div className="absolute inset-0 rounded-full bg-[#1cb0f6]/20 animate-ping pointer-events-none scale-150" />
         )}
 
         <button
-          onClick={isOpen ? handleClose : handleOpen}
-          className={`relative w-[62px] h-[62px] rounded-full flex items-center justify-center transition-all duration-200 ${
+          ref={fabRef}
+          onClick={() => {
+            if (suppressClickRef.current) return;
+            if (isOpen) handleClose(); else handleOpen();
+          }}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={endDrag}
+          onPointerCancel={endDrag}
+          onKeyDown={handleFabKeyDown}
+          style={{ touchAction: 'none', cursor: isDragging ? 'grabbing' : 'grab' }}
+          aria-expanded={isOpen}
+          title="Drag to move. Arrow keys also move Aivo."
+          className={`relative w-[62px] h-[62px] rounded-full flex items-center justify-center ${isDragging ? '' : 'transition-all duration-200'} ${
             isOpen
               ? 'bg-[#0f1d38] border-2 border-[#1cb0f6]/50 hover:bg-[#162848] active:scale-95 shadow-[0_8px_24px_rgba(0,0,0,0.6)]'
-              : 'bg-gradient-to-tr from-[#0c7ec7] via-[#1cb0f6] to-[#3dc8ff] border-2 border-white/35 hover:scale-110 active:scale-95 shadow-[0_8px_28px_rgba(28,176,246,0.65)] animate-float'
+              : `bg-gradient-to-tr from-[#0c7ec7] via-[#1cb0f6] to-[#3dc8ff] border-2 border-white/35 hover:scale-110 active:scale-95 shadow-[0_8px_28px_rgba(28,176,246,0.65)] ${isDragging ? '' : 'animate-float'}`
           }`}
           aria-label={isOpen ? 'Close Aivo chat' : 'Open Aivo AI chat'}
         >

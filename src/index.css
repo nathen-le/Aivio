@@ -124,10 +124,12 @@
 .animate-pulse-subtle { animation: pulse-subtle 3s ease-in-out infinite; }
 .animate-glow-pulse { animation: glow-pulse 2s ease-in-out infinite; }
 .animate-shake { animation: shake 0.4s ease-in-out; }
-.animate-fade-in { animation: fade-in 0.25s ease-out both; }
-.animate-slide-up { animation: slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.animate-slide-down { animation: slide-down 0.25s ease-out both; }
-.animate-pop-in { animation: pop-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
+/* `backwards`, not `both`: a retained end-state transform would turn every animated
+   ancestor into the containing block for position:fixed descendants (modals). */
+.animate-fade-in { animation: fade-in 0.25s ease-out backwards; }
+.animate-slide-up { animation: slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+.animate-slide-down { animation: slide-down 0.25s ease-out backwards; }
+.animate-pop-in { animation: pop-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
 .animate-xp-float { animation: xp-float 1.2s ease-out forwards; }
 .animate-spin-slow { animation: spin-slow 12s linear infinite; }
 .animate-fire-flicker { animation: fire-flicker 0.8s ease-in-out infinite; }

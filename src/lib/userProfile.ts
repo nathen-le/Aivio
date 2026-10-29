@@ -10,6 +10,7 @@ import {
 import type { Timestamp } from 'firebase/firestore';
 import { db } from './firebase';
 import { normalizeUsername, validateUsername } from './username';
+import { syncPublicProfileFields } from './publicProfile';
 
 /**
  * Profile document stored at users/{uid}.
@@ -158,7 +159,7 @@ export async function backfillMissingFields(
  * username, and the rules permit create but never update, so a second claimant
  * is rejected even if this check passes and a race follows.
  */
-async function reserveUsername(uid: string, next: string, previous: string): Promise<void> {
+async function reserveUsername(uid: string, next: string): Promise<void> {
   await runTransaction(db, async (tx) => {
     const nextSnapshot = await tx.get(usernameRef(next));
 
@@ -173,14 +174,18 @@ async function reserveUsername(uid: string, next: string, previous: string): Pro
     tx.set(usernameRef(next), { uid, createdAt: serverTimestamp() });
   });
 
-  // Released after the new name is safely held, so a failure here leaves a
-  // harmless orphan the same learner can reclaim rather than losing the name.
-  if (previous && previous !== next) {
-    try {
-      await deleteDoc(usernameRef(previous));
-    } catch (error) {
-      console.warn('Could not release previous username reservation:', error);
-    }
+}
+
+/**
+ * Released only after the new name is held and the public profile points at
+ * it, so no one else can claim the old name while a stale copy is still shown.
+ * A failure leaves a harmless orphan the same learner can reclaim.
+ */
+async function releaseUsername(previous: string): Promise<void> {
+  try {
+    await deleteDoc(usernameRef(previous));
+  } catch (error) {
+    console.warn('Could not release previous username reservation:', error);
   }
 }
 
@@ -204,7 +209,7 @@ export async function saveUserProfile(
       if (invalid) {
         throw new ProfileError('username-invalid', invalid);
       }
-      await reserveUsername(uid, normalized, currentUsername);
+      await reserveUsername(uid, normalized);
     }
 
     applied.username = normalized;
@@ -227,6 +232,17 @@ export async function saveUserProfile(
       );
     }
     throw error;
+  }
+
+  // Mirror the three public fields. Failure here must not fail the save.
+  await syncPublicProfileFields(uid, {
+    displayName: applied.displayName,
+    username: applied.username,
+    avatarUrl: applied.avatarUrl,
+  });
+
+  if (typeof applied.username === 'string' && applied.username !== currentUsername && currentUsername) {
+    await releaseUsername(currentUsername);
   }
 
   return applied;

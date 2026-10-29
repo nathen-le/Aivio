@@ -22,7 +22,6 @@ import { UnitGuidebookModal } from '../components/UnitGuidebookModal';
 import { RightGamificationSidebar } from '../components/RightGamificationSidebar';
 import { ConnectingRoadmap } from '../components/ConnectingRoadmap';
 import { sound } from '../utils/sound';
-import { useFriends } from '../hooks/useFriends';
 import type { LessonNodeStatus } from '../types/lesson';
 
 interface DashboardPageProps {
@@ -54,7 +53,6 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   const roadmapContainerRef = useRef<HTMLDivElement | null>(null);
   const checkpointRefs = useRef<(HTMLElement | null)[]>([]);
 
-  const { friends } = useFriends();
 
   const unit1Lessons = ALL_LESSONS.filter((l) => l.learningPathId === 'ai-fundamentals');
   const completedCount = unit1Lessons.filter((l) => completedLessonIds.includes(l.id)).length;
@@ -160,10 +158,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   ];
 
   // Leaderboard peers
-  const allPeers = [
-    { name: 'Alex (You)', xp: totalXP, isUser: true, avatar: '🐱', streak: streakDays },
-    ...friends.map((f) => ({ name: f.name, xp: f.xp, isUser: false, avatar: f.avatar, streak: f.streak })),
-  ].sort((a, b) => b.xp - a.xp);
+  // Friends' XP is private learning progress and is not shared with other
+  // accounts, so the board only ranks the signed-in learner.
+  const allPeers = [{ name: 'You', xp: totalXP, isUser: true, avatar: '🐱', streak: streakDays }];
 
   return (
     <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 pt-3 sm:pt-5 pb-24 lg:pb-12 animate-fade-in select-none">
@@ -275,6 +272,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 );
               })}
             </div>
+            <p className="text-[11px] text-slate-500 font-medium mt-4 text-center">
+              Friends' progress is private, so only your own XP is ranked here for now.
+            </p>
           </div>
         </div>
       ) : (

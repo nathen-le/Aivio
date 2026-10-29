@@ -1,7 +1,6 @@
 import React from 'react';
 import { Flame, Zap, Users, Target, Check, ChevronRight, UserPlus, Star, Shield } from 'lucide-react';
 import { sound } from '../utils/sound';
-import { useFriends } from '../hooks/useFriends';
 
 interface RightGamificationSidebarProps {
   streakDays: number;
@@ -18,31 +17,21 @@ export const RightGamificationSidebar: React.FC<RightGamificationSidebarProps> =
   onNavigateProgress,
   onNavigateFriends,
 }) => {
-  const { friends } = useFriends();
-
   const weekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
   const todayDayIndex = (new Date().getDay() + 6) % 7;
 
+  // Friends' XP is private progress and is not shared across accounts.
   const allPeers = [
     {
       id: 'current-user',
-      name: 'You (Alex)',
+      name: 'You',
       xp: totalXP,
       isUser: true,
       avatar: '🐱',
       streak: streakDays,
       isOnline: true,
     },
-    ...friends.map((f) => ({
-      id: f.id,
-      name: f.name.split(' ')[0] + ' ' + (f.name.split(' ')[1]?.[0] || '') + '.',
-      xp: f.xp,
-      isUser: false,
-      avatar: f.avatar,
-      streak: f.streak,
-      isOnline: f.isOnline,
-    })),
-  ].sort((a, b) => b.xp - a.xp);
+  ];
 
   // Quest config
   const quests = [

@@ -8,6 +8,10 @@ type AuthMode = 'login' | 'signup' | 'reset';
 
 interface AuthPageProps {
   onBack?: () => void;
+  /** Which form to show first. Defaults to log in. */
+  initialMode?: 'login' | 'signup';
+  /** Reports login/signup switches so the caller can keep the URL in sync. */
+  onModeChange?: (mode: 'login' | 'signup') => void;
 }
 
 const MODE_COPY: Record<AuthMode, { title: string; subtitle: string; cta: string }> = {
@@ -31,10 +35,10 @@ const MODE_COPY: Record<AuthMode, { title: string; subtitle: string; cta: string
 const inputClass =
   'w-full bg-[#0c1a30] border-2 border-[#1f3764] focus:border-[#1cb0f6] rounded-2xl pl-11 pr-4 py-3.5 text-sm font-bold text-white placeholder:text-slate-500 outline-none transition-colors disabled:opacity-60';
 
-export const AuthPage: React.FC<AuthPageProps> = ({ onBack }) => {
+export const AuthPage: React.FC<AuthPageProps> = ({ onBack, initialMode = 'login', onModeChange }) => {
   const { register, login, resetPassword } = useAuth();
 
-  const [mode, setMode] = useState<AuthMode>('login');
+  const [mode, setMode] = useState<AuthMode>(initialMode);
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -47,6 +51,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onBack }) => {
   const switchMode = (next: AuthMode) => {
     sound.playClick();
     setMode(next);
+    if (next !== 'reset') onModeChange?.(next);
     setError(null);
     setNotice(null);
     // Never carry a typed password across modes.

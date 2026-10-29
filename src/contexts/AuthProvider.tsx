@@ -12,6 +12,7 @@ import type { User } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 import { createUserProfileIfMissing } from '../lib/userProfile';
 import { AuthContext } from './auth-context';
+import { flushPendingSaves, UnsavedProgressError } from '../lib/pendingSaves';
 
 /**
  * Owns Firebase auth state for the whole app.
@@ -79,7 +80,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await signInWithEmailAndPassword(auth, email, password);
   }, []);
 
-  const logout = useCallback(async () => {
+  const logout = useCallback(async (options?: { force?: boolean }) => {
+    if (!options?.force && !(await flushPendingSaves())) {
+      throw new UnsavedProgressError();
+    }
     await signOut(auth);
   }, []);
 

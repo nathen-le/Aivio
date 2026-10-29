@@ -28,6 +28,7 @@ import { sound } from '../utils/sound';
 import { useUserProfile } from '../hooks/useUserProfile';
 import type { UserProfileDoc } from '../lib/userProfile';
 import { useAuth } from '../hooks/useAuth';
+import { UnsavedProgressError } from '../lib/pendingSaves';
 import { normalizeUsername, validateUsername } from '../lib/username';
 import type { UserProgress } from '../types/lesson';
 import type { LevelInfo } from '../hooks/useProgress';
@@ -90,6 +91,22 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
   const { profile, loading, saving, error, saved, saveProfile, clearStatus } = useUserProfile();
   const { user, logout } = useAuth();
   const [signingOut, setSigningOut] = useState(false);
+  const [unsavedOnSignOut, setUnsavedOnSignOut] = useState(false);
+
+  const handleSignOut = async (force = false) => {
+    if (signingOut) return;
+    sound.playClick();
+    setSigningOut(true);
+    setUnsavedOnSignOut(false);
+    try {
+      await logout({ force });
+    } catch (err) {
+      if (err instanceof UnsavedProgressError) setUnsavedOnSignOut(true);
+      else console.error('Sign out failed:', err instanceof Error ? err.message : err);
+    } finally {
+      setSigningOut(false);
+    }
+  };
   const [isEditing, setIsEditing] = useState(false);
   const [showAvatarPicker, setShowAvatarPicker] = useState(false);
   const [activeSection, setActiveSection] = useState<'general' | 'privacy' | 'notifications'>('general');
@@ -727,16 +744,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           </div>
 
           <button
-            onClick={async () => {
-              if (signingOut) return;
-              sound.playClick();
-              setSigningOut(true);
-              try {
-                await logout();
-              } finally {
-                setSigningOut(false);
-              }
-            }}
+            onClick={() => void handleSignOut()}
             disabled={signingOut}
             className="btn-3d shrink-0 bg-[#132344] hover:bg-[#1b3464] border-2 border-[#1c325c] hover:border-red-400/60 border-b-4 text-slate-200 hover:text-red-300 font-black text-xs uppercase tracking-wider rounded-2xl px-5 py-2.5 flex items-center justify-center gap-2 disabled:opacity-60"
           >
@@ -745,8 +753,34 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           </button>
         </div>
 
+        {unsavedOnSignOut && (
+          <div
+            role="alert"
+            className="mt-3 p-3 rounded-2xl bg-amber-500/10 border border-amber-500/40 text-xs font-bold text-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+          >
+            <span>
+              Your latest progress hasn't been saved yet. Check your connection and retry, or sign out
+              anyway — it stays on this device and is sent the next time you sign in here.
+            </span>
+            <span className="flex gap-2 shrink-0">
+              <button
+                onClick={() => void handleSignOut()}
+                className="px-3 py-1.5 rounded-xl bg-amber-400 text-slate-950 font-black uppercase tracking-wider"
+              >
+                Retry
+              </button>
+              <button
+                onClick={() => void handleSignOut(true)}
+                className="px-3 py-1.5 rounded-xl border border-amber-400/60 text-amber-200 font-black uppercase tracking-wider"
+              >
+                Sign out anyway
+              </button>
+            </span>
+          </div>
+        )}
+
         <p className="text-[11px] text-slate-500 font-medium mt-3">
-          Your learning progress is still stored on this device and is not tied to this account yet.
+          Your learning progress is saved to your account.
         </p>
       </div>
 

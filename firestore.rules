@@ -69,6 +69,78 @@ service cloud.firestore {
         && request.resource.data.updatedAt is timestamp;
     }
 
+    // Exactly the fields src/lib/progressStore.ts writes (UserProgress plus
+    // schemaVersion/updatedAt). Required AND exclusive: nothing missing, nothing extra.
+    function isWellFormedProgress() {
+      let d = request.resource.data;
+      return d.keys().hasOnly([
+          'userName', 'totalXP', 'currentStreak', 'lastActiveDate',
+          'completedLessonIds', 'earnedBadgeIds', 'lessonAttempts',
+          'activePathId', 'schemaVersion', 'updatedAt',
+          'revision', 'recentWriteIds'
+        ])
+        && d.keys().hasAll([
+          'userName', 'totalXP', 'currentStreak', 'lastActiveDate',
+          'completedLessonIds', 'earnedBadgeIds', 'lessonAttempts',
+          'activePathId', 'schemaVersion', 'updatedAt',
+          'revision', 'recentWriteIds'
+        ])
+        && d.userName is string && d.userName.size() >= 1 && d.userName.size() <= 60
+        && d.totalXP is int && d.totalXP >= 0 && d.totalXP <= 1000000
+        && d.currentStreak is int && d.currentStreak >= 0 && d.currentStreak <= 100000
+        && d.lastActiveDate is string && d.lastActiveDate.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+        && d.completedLessonIds is list && d.completedLessonIds.size() <= 200
+        && d.earnedBadgeIds is list && d.earnedBadgeIds.size() <= 100
+        && d.lessonAttempts is map && d.lessonAttempts.size() <= 200
+        && d.activePathId is string && d.activePathId.size() >= 1 && d.activePathId.size() <= 100
+        && d.schemaVersion is int && d.schemaVersion == 1
+        && d.revision is int && d.revision >= 1
+        && d.recentWriteIds is list && d.recentWriteIds.size() <= 20
+        && d.updatedAt == request.time;
+    }
+
+    // ── Social: public profiles, friend requests, friendships ──
+
+    // The ONLY fields other learners can ever see about someone. Email, bio,
+    // location, school, birthday, progress and every other private field live
+    // in users/{uid} and never appear here.
+    function isWellFormedPublicProfile(userId) {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['uid', 'displayName', 'username', 'avatarUrl', 'schemaVersion', 'updatedAt'])
+        && d.keys().hasAll(['uid', 'displayName', 'username', 'avatarUrl', 'schemaVersion', 'updatedAt'])
+        && d.uid == userId
+        && d.displayName is string && d.displayName.size() <= 60
+        && isValidUsernameValue(d.username)
+        // The shown username must be one this learner has reserved, so nobody
+        // can publish a name that belongs to someone else.
+        && ownsUsernameReservation(d.username)
+        // Avatars are the app's own bundled images, never an arbitrary URL
+        // that would leak viewers' IP addresses to a third party.
+        && d.avatarUrl is string && d.avatarUrl.matches('^/mascot-[a-z0-9-]{1,40}[.](png|jpg)$')
+        && d.schemaVersion is int && d.schemaVersion == 1
+        && d.updatedAt == request.time;
+    }
+
+    // Both orders of a pair map to one friendship document ID.
+    function pairId(a, b) {
+      return a < b ? a + '_' + b : b + '_' + a;
+    }
+
+    function publicProfilePath(uid) {
+      return /databases/$(database)/documents/publicProfiles/$(uid);
+    }
+
+    // A pair of people shares exactly ONE request document, whichever of them
+    // sent it. Two crossing requests therefore collide on the same document ID
+    // and the second is refused by the database itself, not by a racy check.
+    function requestPath(a, b) {
+      return /databases/$(database)/documents/friendRequests/$(pairId(a, b));
+    }
+
+    function friendshipPath(a, b) {
+      return /databases/$(database)/documents/friendships/$(pairId(a, b));
+    }
+
     match /users/{userId} {
       // Read only your own document. `list` stays denied, so the user
       // collection cannot be enumerated even by a signed-in learner.
@@ -92,6 +164,105 @@ service cloud.firestore {
 
       // Account deletion should go through a reviewed server-side flow.
       allow delete: if false;
+
+      // Learning progress: one document per learner at users/{uid}/progress/state.
+      // Sub-collections do not inherit the parent's rules, so this is explicit.
+      match /progress/{progressId} {
+        allow get: if isOwner(userId) && progressId == 'state';
+        allow list: if false;
+        // `revision` must advance by exactly one per write. A client holding a
+        // stale copy therefore cannot silently replace a newer document; the
+        // app writes through a transaction that re-reads and merges first.
+        // Documents written before revisions existed count as revision 0.
+        allow create: if isOwner(userId)
+          && progressId == 'state'
+          && isWellFormedProgress()
+          && request.resource.data.revision == 1;
+        allow update: if isOwner(userId)
+          && progressId == 'state'
+          && isWellFormedProgress()
+          && request.resource.data.revision == resource.data.get('revision', 0) + 1;
+        allow delete: if false;
+      }
+    }
+
+    // Discovery data. Readable by any signed-in learner (that is its purpose);
+    // writable only by its owner. list is capped so the whole directory cannot
+    // be pulled in a single query.
+    match /publicProfiles/{userId} {
+      allow get: if isSignedIn();
+      allow list: if isSignedIn() && request.query.limit <= 50;
+      allow create, update: if isOwner(userId) && isWellFormedPublicProfile(userId);
+      allow delete: if false;
+    }
+
+    // friendRequests/{smallerUid}_{largerUid}: one document per pair of people,
+    // holding who asked whom. Existence means "pending"; accepting or declining
+    // deletes it. Only the two people involved can see it, and list queries
+    // must filter by their own UID.
+    match /friendRequests/{requestId} {
+      // `get` is decided from the document ID (it contains both UIDs) so that
+      // checking a request that does not exist yet is allowed for the two
+      // people it would belong to, and refused for everyone else.
+      allow get: if isSignedIn()
+        && (requestId.split('_')[0] == request.auth.uid || requestId.split('_')[1] == request.auth.uid);
+      allow list: if isSignedIn()
+        && (resource.data.fromUid == request.auth.uid || resource.data.toUid == request.auth.uid);
+
+      allow create: if isSignedIn()
+        && request.resource.data.keys().hasOnly(['fromUid', 'toUid', 'createdAt'])
+        && request.resource.data.keys().hasAll(['fromUid', 'toUid', 'createdAt'])
+        // The sender is always the authenticated user, never a client claim.
+        && request.resource.data.fromUid == request.auth.uid
+        && request.resource.data.toUid is string
+        && request.resource.data.toUid != request.auth.uid
+        && requestId == pairId(request.auth.uid, request.resource.data.toUid)
+        && request.resource.data.createdAt == request.time
+        // Both people must be real, discoverable accounts.
+        && exists(publicProfilePath(request.auth.uid))
+        && exists(publicProfilePath(request.resource.data.toUid))
+        // None between people who are already friends.
+        && !exists(friendshipPath(request.auth.uid, request.resource.data.toUid));
+
+      // Never updatable: a second create on an existing pair (a duplicate, or
+      // the other person's crossing request) is evaluated as an update.
+      allow update: if false;
+
+      // The sender cancels; the recipient declines. Nobody else can delete.
+      allow delete: if isSignedIn()
+        && (resource.data.fromUid == request.auth.uid || resource.data.toUid == request.auth.uid);
+    }
+
+    // friendships/{smallerUid}_{largerUid}. One document represents the
+    // friendship for both people. It can only be created by the person who
+    // RECEIVED a request, in the same batch that deletes that request, so a
+    // friendship cannot be forced on anyone.
+    match /friendships/{pair} {
+      allow get: if isSignedIn()
+        && (pair.split('_')[0] == request.auth.uid || pair.split('_')[1] == request.auth.uid);
+      allow list: if isSignedIn() && request.auth.uid in resource.data.members;
+
+      allow create: if isSignedIn()
+        && request.resource.data.keys().hasOnly(['members', 'createdAt'])
+        && request.resource.data.keys().hasAll(['members', 'createdAt'])
+        && request.resource.data.members is list
+        && request.resource.data.members.size() == 2
+        && request.resource.data.members[0] < request.resource.data.members[1]
+        && pair == request.resource.data.members[0] + '_' + request.resource.data.members[1]
+        && request.auth.uid in request.resource.data.members
+        && request.resource.data.createdAt == request.time
+        // A pending request FROM the other person TO me must exist now...
+        && get(requestPath(request.resource.data.members[0], request.resource.data.members[1])).data.toUid == request.auth.uid
+        && get(requestPath(request.resource.data.members[0], request.resource.data.members[1])).data.fromUid
+             == (request.resource.data.members[0] == request.auth.uid
+                  ? request.resource.data.members[1] : request.resource.data.members[0])
+        // ...and must be consumed by this same batch.
+        && !existsAfter(requestPath(request.resource.data.members[0], request.resource.data.members[1]));
+
+      allow update: if false;
+
+      // Either friend can end the friendship.
+      allow delete: if isSignedIn() && request.auth.uid in resource.data.members;
     }
 
     // Username reservations. The document ID *is* the normalized username, so

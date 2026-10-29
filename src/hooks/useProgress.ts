@@ -1,20 +1,81 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { doc, onSnapshot } from 'firebase/firestore';
 import type { UserProgress, LessonNodeStatus } from '../types/lesson';
 import { BADGES } from '../data/badges';
 import { ALL_LESSONS } from '../data/lessons';
+import { db } from '../lib/firebase';
+import {
+  applyPatch,
+  composePatches,
+  diffProgress,
+  emptyPatch,
+  isEmptyPatch,
+} from '../lib/progressMerge';
+import type { ProgressPatch } from '../lib/progressMerge';
+import { addToOutbox, readOutbox, removeFromOutbox } from '../lib/progressOutbox';
+import type { OutboxEntry } from '../lib/progressOutbox';
+import { registerPendingSaveFlusher } from '../lib/pendingSaves';
+import {
+  commitPatch,
+  createStoredIfMissing,
+  fetchStored,
+  readStored,
+} from '../lib/progressSync';
+import type { StoredProgress } from '../lib/progressSync';
+import {
+  createDefaultProgress,
+  getLegacyClaimant,
+  markLegacyClaimed,
+  readLegacyProgress,
+} from '../lib/progressStore';
 
-const STORAGE_KEY = 'aivio_user_progress_v1';
+const SAVE_DEBOUNCE_MS = 300;
+const MAX_RETRY_DELAY_MS = 30_000;
 
-const DEFAULT_PROGRESS: UserProgress = {
-  userName: 'Learner',
-  totalXP: 0,
-  currentStreak: 1,
-  lastActiveDate: new Date().toISOString().split('T')[0],
-  completedLessonIds: [],
-  earnedBadgeIds: [],
-  lessonAttempts: {},
-  activePathId: 'ai-fundamentals',
-};
+export type ProgressStatus =
+  /** No account: nothing to load. */
+  | 'signed-out'
+  /** Waiting on Firestore. Progress must not be shown or saved yet. */
+  | 'loading'
+  /** Account has no saved progress but this device holds legacy progress; the user must choose. */
+  | 'needs-import-decision'
+  | 'ready'
+  | 'error';
+
+export type SaveStatus = 'idle' | 'saving' | 'error';
+
+/**
+ * Everything the sync engine knows. What the learner sees is derived:
+ * base (last confirmed Firestore state) + frozen patches (sent, unconfirmed)
+ * + pending (not yet sent).
+ */
+interface Core {
+  uid: string | null;
+  status: ProgressStatus;
+  base: UserProgress;
+  revision: number;
+  frozen: OutboxEntry[];
+  pending: ProgressPatch;
+  legacy: UserProgress | null;
+}
+
+const blankCore = (uid: string | null, status: ProgressStatus, name = 'Learner'): Core => ({
+  uid,
+  status,
+  base: createDefaultProgress(name),
+  revision: 0,
+  frozen: [],
+  pending: emptyPatch(),
+  legacy: null,
+});
+
+const displayOf = (core: Core): UserProgress =>
+  applyPatch(core.frozen.reduce((acc, e) => applyPatch(acc, e.patch), core.base), core.pending);
+
+const newWriteId = () =>
+  typeof crypto !== 'undefined' && 'randomUUID' in crypto
+    ? crypto.randomUUID()
+    : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
 
 export interface LevelInfo {
   level: number;
@@ -62,38 +123,311 @@ export function calculateLevel(totalXP: number): LevelInfo {
   };
 }
 
-export function useProgress() {
-  const [progress, setProgress] = useState<UserProgress>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        return {
-          ...DEFAULT_PROGRESS,
-          ...parsed,
-        };
-      }
-    } catch (e) {
-      console.error('Failed to load progress from localStorage', e);
-    }
-    return DEFAULT_PROGRESS;
-  });
+export function useProgress(uid: string | null, fallbackName = 'Learner') {
+  const coreRef = useRef<Core>(blankCore(null, 'loading', fallbackName));
+  const [core, setCore] = useState<Core>(coreRef.current);
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle');
+  const [loadAttempt, setLoadAttempt] = useState(0);
 
-  // Sync state to localStorage on changes
+  const activeUidRef = useRef<string | null>(uid);
+  const flushRef = useRef<Promise<boolean> | null>(null);
+  const retryTimerRef = useRef<number | null>(null);
+  const retryCountRef = useRef(0);
+  const nameRef = useRef(fallbackName);
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-    } catch (e) {
-      console.error('Failed to save progress to localStorage', e);
+    nameRef.current = fallbackName;
+  }, [fallbackName]);
+
+  /** Single path for state changes, so the engine and the screen never disagree. */
+  const mutate = useCallback((fn: (c: Core) => Core) => {
+    const next = fn(coreRef.current);
+    coreRef.current = next;
+    setCore(next);
+  }, []);
+
+  // A state object from another account (or from before sign-in) is never
+  // exposed: it reads as loading until this uid's own load completes.
+  const isCurrent = uid !== null && core.uid === uid;
+  const status: ProgressStatus = uid === null ? 'signed-out' : isCurrent ? core.status : 'loading';
+  const progress = useMemo(
+    () => (isCurrent ? displayOf(core) : createDefaultProgress(fallbackName)),
+    [isCurrent, core, fallbackName],
+  );
+  const legacyProgress = isCurrent ? core.legacy : null;
+
+  const becomeReady = useCallback(
+    (forUid: string, stored: StoredProgress) => {
+      // Unconfirmed patches from an earlier session. Any the server already
+      // recorded are dropped here, so they are never applied twice.
+      const outbox = readOutbox(forUid);
+      const frozen = outbox.filter((e) => !stored.recentWriteIds.includes(e.id));
+      outbox.filter((e) => stored.recentWriteIds.includes(e.id)).forEach((e) => removeFromOutbox(forUid, e.id));
+      mutate(() => ({
+        ...blankCore(forUid, 'ready'),
+        base: stored.progress,
+        revision: stored.revision,
+        frozen,
+      }));
+    },
+    [mutate],
+  );
+
+  // ── Load (and create-if-missing) once auth has resolved a uid ──
+  useEffect(() => {
+    activeUidRef.current = uid;
+    retryCountRef.current = 0;
+    if (retryTimerRef.current !== null) {
+      window.clearTimeout(retryTimerRef.current);
+      retryTimerRef.current = null;
     }
-  }, [progress]);
+    if (!uid) return;
+
+    let cancelled = false;
+    (async () => {
+      try {
+        const stored = await fetchStored(db, uid);
+        if (cancelled) return;
+
+        // Existing Firestore progress always wins; legacy device data is left alone.
+        if (stored) {
+          becomeReady(uid, stored);
+          return;
+        }
+
+        // No saved progress yet. Offer device progress only if no other
+        // account has already claimed it, and only with explicit consent.
+        const legacy = readLegacyProgress();
+        const claimant = getLegacyClaimant();
+        if (legacy && (claimant === null || claimant === uid)) {
+          mutate(() => ({ ...blankCore(uid, 'needs-import-decision', nameRef.current), legacy }));
+          return;
+        }
+
+        const created = await createStoredIfMissing(db, uid, createDefaultProgress(nameRef.current));
+        if (!cancelled) becomeReady(uid, created);
+      } catch (e) {
+        if (cancelled) return;
+        console.error('Failed to load progress:', e instanceof Error ? e.message : e);
+        mutate(() => blankCore(uid, 'error'));
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [uid, loadAttempt, becomeReady, mutate]);
+
+  const retryLoad = useCallback(() => {
+    mutate((c) => ({ ...c, status: 'loading' }));
+    setLoadAttempt((n) => n + 1);
+  }, [mutate]);
+
+  /** User chose to import device progress. Local data is kept either way. */
+  const importLegacy = useCallback(async (): Promise<boolean> => {
+    if (!uid || !legacyProgress) return false;
+    try {
+      const stored = await createStoredIfMissing(db, uid, legacyProgress);
+      // The write is confirmed; only now is the claim recorded.
+      markLegacyClaimed(uid);
+      if (activeUidRef.current === uid) becomeReady(uid, stored);
+      return true;
+    } catch (e) {
+      console.error('Failed to import progress:', e instanceof Error ? e.message : e);
+      return false;
+    }
+  }, [uid, legacyProgress, becomeReady]);
+
+  /** User declined the import: start with defaults. Device data is untouched. */
+  const startFresh = useCallback(async (): Promise<boolean> => {
+    if (!uid) return false;
+    try {
+      const created = await createStoredIfMissing(db, uid, createDefaultProgress(nameRef.current));
+      if (activeUidRef.current === uid) becomeReady(uid, created);
+      return true;
+    } catch (e) {
+      console.error('Failed to create progress:', e instanceof Error ? e.message : e);
+      return false;
+    }
+  }, [uid, becomeReady]);
+
+  // ── Save: patches are applied to the latest stored state in a transaction ──
+  const freezePending = useCallback(
+    (forUid: string) => {
+      const c = coreRef.current;
+      if (c.uid !== forUid || isEmptyPatch(c.pending)) return;
+      const entry: OutboxEntry = { id: newWriteId(), patch: c.pending };
+      addToOutbox(forUid, entry);
+      mutate((cur) => ({ ...cur, frozen: [...cur.frozen, entry], pending: emptyPatch() }));
+    },
+    [mutate],
+  );
+
+  /**
+   * Sends everything unconfirmed, oldest first, one at a time. Resolves true
+   * only after Firestore has confirmed the last write; false if a write failed
+   * (the patches stay queued and a retry is scheduled).
+   */
+  const flush = useCallback(
+    (forUid: string): Promise<boolean> => {
+      if (flushRef.current) return flushRef.current;
+      if (retryTimerRef.current !== null) {
+        window.clearTimeout(retryTimerRef.current);
+        retryTimerRef.current = null;
+      }
+
+      const run = (async () => {
+        // Lets the assignment of flushRef below happen before any early exit.
+        await Promise.resolve();
+        try {
+          for (;;) {
+            if (activeUidRef.current !== forUid || coreRef.current.uid !== forUid) return false;
+            if (coreRef.current.status !== 'ready') return false;
+            if (coreRef.current.frozen.length === 0) {
+              if (isEmptyPatch(coreRef.current.pending)) break;
+              freezePending(forUid);
+            }
+            const entry = coreRef.current.frozen[0];
+            setSaveStatus('saving');
+            const result = await commitPatch(db, forUid, entry.id, entry.patch);
+            if (activeUidRef.current !== forUid) return false;
+            removeFromOutbox(forUid, entry.id);
+            mutate((c) =>
+              c.uid !== forUid
+                ? c
+                : {
+                    ...c,
+                    // A newer revision may already have arrived from another tab.
+                    ...(result.revision >= c.revision
+                      ? { base: result.progress, revision: result.revision }
+                      : {}),
+                    frozen: c.frozen.filter((e) => e.id !== entry.id),
+                  },
+            );
+            retryCountRef.current = 0;
+          }
+          setSaveStatus('idle');
+          return true;
+        } catch (e) {
+          console.error('Failed to save progress:', e instanceof Error ? e.message : e);
+          if (activeUidRef.current === forUid) {
+            setSaveStatus('error');
+            const delay = Math.min(MAX_RETRY_DELAY_MS, 2000 * 2 ** retryCountRef.current);
+            retryCountRef.current += 1;
+            retryTimerRef.current = window.setTimeout(() => {
+              retryTimerRef.current = null;
+              void flush(forUid);
+            }, delay);
+          }
+          return false;
+        } finally {
+          flushRef.current = null;
+        }
+      })();
+
+      flushRef.current = run;
+      return run;
+    },
+    [freezePending, mutate],
+  );
+
+  // Debounced send whenever there is anything unconfirmed.
+  const hasUnsent = isCurrent && core.status === 'ready' && (core.frozen.length > 0 || !isEmptyPatch(core.pending));
+  useEffect(() => {
+    if (!uid || !hasUnsent) return;
+    const timer = window.setTimeout(() => void flush(uid), SAVE_DEBOUNCE_MS);
+    return () => window.clearTimeout(timer);
+  }, [uid, hasUnsent, core.pending, flush]);
+
+  // Sign-out hook: lets logout wait until Firestore has confirmed everything.
+  useEffect(() => {
+    if (!uid) return;
+    return registerPendingSaveFlusher(async () => {
+      if (coreRef.current.uid !== uid || coreRef.current.status !== 'ready') return true;
+      return flush(uid);
+    });
+  }, [uid, flush]);
+
+  // Live updates: another tab's confirmed changes appear here, and patches the
+  // server already recorded (lost acknowledgement) are never shown twice.
+  useEffect(() => {
+    if (!uid || !isCurrent || core.status !== 'ready') return;
+    return onSnapshot(
+      doc(db, 'users', uid, 'progress', 'state'),
+      (snap) => {
+        if (!snap.exists() || snap.metadata.hasPendingWrites) return;
+        const remote = readStored(snap.data());
+        mutate((c) => {
+          if (c.uid !== uid || remote.revision < c.revision) return c;
+          const applied = c.frozen.filter((e) => remote.recentWriteIds.includes(e.id));
+          applied.forEach((e) => removeFromOutbox(uid, e.id));
+          return {
+            ...c,
+            base: remote.progress,
+            revision: remote.revision,
+            frozen: c.frozen.filter((e) => !remote.recentWriteIds.includes(e.id)),
+          };
+        });
+      },
+      (error) => console.warn('Progress listener stopped:', error.code),
+    );
+  }, [uid, isCurrent, core.status, mutate]);
+
+  // Leaving or hiding the page: persist unconfirmed patches to the outbox
+  // right away and warn before a tab with unsaved changes is closed.
+  useEffect(() => {
+    if (!uid) return;
+    const hasUnconfirmed = () =>
+      coreRef.current.uid === uid &&
+      (coreRef.current.frozen.length > 0 || !isEmptyPatch(coreRef.current.pending));
+    const persistNow = () => {
+      if (!hasUnconfirmed()) return;
+      freezePending(uid);
+      void flush(uid);
+    };
+    const onVisibility = () => {
+      if (document.visibilityState === 'hidden') persistNow();
+    };
+    const onBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (hasUnconfirmed()) {
+        persistNow();
+        e.preventDefault();
+      }
+    };
+    window.addEventListener('online', persistNow);
+    window.addEventListener('pagehide', persistNow);
+    document.addEventListener('visibilitychange', onVisibility);
+    window.addEventListener('beforeunload', onBeforeUnload);
+    return () => {
+      window.removeEventListener('online', persistNow);
+      window.removeEventListener('pagehide', persistNow);
+      document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener('beforeunload', onBeforeUnload);
+    };
+  }, [uid, flush, freezePending]);
+
+  const retrySave = useCallback(() => {
+    if (uid) void flush(uid);
+  }, [uid, flush]);
+
+  /** Records an update as a patch, but only against this account's loaded progress. */
+  const setProgress = useCallback(
+    (updater: (prev: UserProgress) => UserProgress) => {
+      mutate((c) => {
+        if (c.uid !== activeUidRef.current || c.status !== 'ready') return c;
+        const current = displayOf(c);
+        const patch = diffProgress(current, updater(current));
+        return isEmptyPatch(patch) ? c : { ...c, pending: composePatches(c.pending, patch) };
+      });
+    },
+    [mutate],
+  );
 
   const updateUserName = useCallback((name: string) => {
     setProgress((prev) => ({
       ...prev,
-      userName: name.trim() || 'Learner',
+      userName: name.trim().slice(0, 60) || 'Learner',
     }));
-  }, []);
+  }, [setProgress]);
 
   const getLessonStatus = useCallback(
     (lessonId: string): LessonNodeStatus => {
@@ -236,7 +570,7 @@ export function useProgress() {
         newlyUnlockedBadges,
       };
     },
-    [progress]
+    [progress, setProgress]
   );
 
   const unlockBadgeDirectly = useCallback((badgeId: string) => {
@@ -250,12 +584,17 @@ export function useProgress() {
         earnedBadgeIds: [...prev.earnedBadgeIds, badgeId],
       };
     });
-  }, []);
+  }, [setProgress]);
 
+  // Resets this account's saved progress. The legacy device copy is never touched.
   const resetProgress = useCallback(() => {
-    localStorage.removeItem(STORAGE_KEY);
-    setProgress(DEFAULT_PROGRESS);
-  }, []);
+    const today = new Date().toISOString().split('T')[0];
+    mutate((c) =>
+      c.uid !== activeUidRef.current || c.status !== 'ready'
+        ? c
+        : { ...c, pending: composePatches(c.pending, { ...emptyPatch(), reset: today }) },
+    );
+  }, [mutate]);
 
   const levelInfo = calculateLevel(progress.totalXP);
 
@@ -280,6 +619,13 @@ export function useProgress() {
   }, [progress.completedLessonIds]);
 
   return {
+    status,
+    saveStatus,
+    legacyProgress,
+    retryLoad,
+    retrySave,
+    importLegacy,
+    startFresh,
     progress,
     levelInfo,
     getLessonStatus,
