@@ -167,7 +167,7 @@ export const MatchingActivity: React.FC<MatchingActivityProps> = ({
           <div className="p-5 rounded-3xl bg-[#EEF3E3] border-2 border-[#8DAA5B] flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in shadow-[0_10px_25px_rgba(16,185,129,0.3)]">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-white/60 bg-black/40 p-1 shrink-0 flex items-center justify-center">
-                <img src="/mascot-cat-avatar.png" alt="Aivo" className="w-full h-full object-contain" />
+                <img src="/mascot-penguin-happy.png" alt="Aivo" className="w-full h-full object-contain" />
               </div>
               <div>
                 <h4 className="font-black text-base text-[#2B1B1A] flex items-center gap-1.5">

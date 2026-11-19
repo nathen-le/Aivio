@@ -331,7 +331,7 @@ export const DraggableMascot: React.FC = () => {
           <div className="shrink-0 px-4 py-3 bg-gradient-to-r from-[#FFFDF9] via-[#F6EFE4] to-[#FFFDF9] border-b border-[#5C1F2A]/25 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative w-10 h-10 rounded-full border-2 border-[#5C1F2A]/70 bg-[#F6EFE4] flex items-center justify-center p-1 shadow-[0_0_14px_rgba(92,31,42,0.3)]">
-                <img src="/mascot-cat-avatar.png" alt="Aivo" className="w-full h-full object-contain" />
+                <img src="/mascot-penguin-happy.png" alt="Aivo" className="w-full h-full object-contain" />
                 {/* Online dot */}
                 <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#8DAA5B] border-2 border-[#FFFDF9] shadow-[0_0_6px_rgba(52,211,153,0.7)]" />
               </div>
@@ -395,7 +395,7 @@ export const DraggableMascot: React.FC = () => {
               >
                 {msg.sender === 'aivo' && (
                   <div className="w-7 h-7 rounded-full border border-[#5C1F2A]/50 shrink-0 bg-[#F6EFE4] mt-0.5 flex items-center justify-center p-0.5">
-                    <img src="/mascot-cat-avatar.png" alt="Aivo" className="w-full h-full object-contain" />
+                    <img src="/mascot-penguin-happy.png" alt="Aivo" className="w-full h-full object-contain" />
                   </div>
                 )}
                 <div
@@ -491,7 +491,7 @@ export const DraggableMascot: React.FC = () => {
               {/* Glow aura */}
               <div className="absolute inset-0 rounded-full bg-[#FBE3E0] blur-md opacity-20 pointer-events-none" />
               <img
-                src="/mascot-cat-avatar.png"
+                src="/mascot-penguin-happy.png"
                 alt="Open Aivo AI chat"
                 className="w-10 h-10 object-contain relative z-10 drop-shadow-lg"
               />

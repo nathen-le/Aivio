@@ -56,7 +56,7 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
             {/* Mascot Avatar Portrait */}
             <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl overflow-hidden border-4 border-[#5C1F2A] bg-[#F6EFE4] p-1.5 shrink-0 shadow-lg flex items-center justify-center">
               <img
-                src="/mascot-cat-avatar.png"
+                src="/mascot-penguin-happy.png"
                 alt="Aivo Avatar"
                 className="w-full h-full object-contain"
               />

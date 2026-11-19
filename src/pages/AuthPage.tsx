@@ -114,7 +114,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onBack, initialMode = 'login
         <div className="bg-[#FFFDF9] border-2 border-[#E8DCCB] rounded-3xl p-6 sm:p-8 shadow-2xl">
           <div className="flex flex-col items-center text-center mb-7">
             <img
-              src="/mascot-cat-logo.png"
+              src="/mascot-penguin-happy.png"
               alt=""
               className="w-20 h-20 object-contain mb-3 animate-float"
             />

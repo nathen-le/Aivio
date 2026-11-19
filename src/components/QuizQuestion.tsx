@@ -216,7 +216,7 @@ export const QuizQuestion: React.FC<QuizQuestionProps> = ({
             <div className="flex items-center gap-3.5">
               <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-white/60 bg-black/40 p-1 shrink-0 shadow-md flex items-center justify-center">
                 <img
-                  src="/mascot-cat-avatar.png"
+                  src="/mascot-penguin-happy.png"
                   alt="Aivo"
                   className="w-full h-full object-contain"
                 />

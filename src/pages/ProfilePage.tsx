@@ -64,7 +64,7 @@ function toFormState(profile: UserProfileDoc): ProfileFormState {
     school: profile.school ?? '',
     birthday: profile.birthday ?? '',
     website: profile.website ?? '',
-    avatarUrl: profile.avatarUrl || '/mascot-cat-avatar.png',
+    avatarUrl: profile.avatarUrl || '/mascot-penguin-happy.png',
     dailyGoalXP: profile.dailyGoalXP ?? 50,
   };
 }
@@ -78,7 +78,7 @@ const EMPTY_FORM: ProfileFormState = {
   school: '',
   birthday: '',
   website: '',
-  avatarUrl: '/mascot-cat-avatar.png',
+  avatarUrl: '/mascot-penguin-happy.png',
   dailyGoalXP: 50,
 };
 
@@ -122,12 +122,12 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
   }, [profile, isEditing]);
 
   const catAvatarOptions = [
-    { id: 'cat-avatar', src: '/mascot-cat-avatar.png', label: 'Classic Face' },
-    { id: 'cat-celebrate', src: '/mascot-cat-celebrate.png', label: 'Jumping Joy' },
-    { id: 'cat-reading', src: '/mascot-cat-reading.png', label: 'Study Book' },
-    { id: 'cat-thinking', src: '/mascot-cat-thinking.png', label: 'Curious Ponder' },
-    { id: 'cat-winking', src: '/mascot-cat-winking.png', label: 'Playful Wink' },
-    { id: 'cat-idle', src: '/mascot-cat-idle.png', label: 'Standing Idle' },
+    { id: 'penguin-happy', src: '/mascot-penguin-happy.png', label: 'Happy Hat' },
+    { id: 'penguin-writing', src: '/mascot-penguin-writing.png', label: 'Note Taker' },
+    { id: 'penguin-thinking', src: '/mascot-penguin-thinking.png', label: 'Curious Ponder' },
+    { id: 'penguin-celebrate', src: '/mascot-penguin-celebrate.png', label: 'Jumping Joy' },
+    { id: 'penguin-love', src: '/mascot-penguin-love.png', label: 'Big Heart' },
+    { id: 'penguin-idea', src: '/mascot-penguin-idea.png', label: 'Bright Idea' },
   ];
 
   // Live username feedback. Availability itself is decided by the server:

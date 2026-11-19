@@ -101,7 +101,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               {/* Cat Mascot Artwork */}
               <div className="w-64 h-64 rounded-2xl overflow-hidden mb-4 shadow-xl border-2 border-white/20 bg-white relative group flex items-center justify-center p-2">
                 <img
-                  src="/mascot-cat-celebrate.png"
+                  src="/mascot-penguin-celebrate.png"
                   alt="Aivo the Cool Blue Cyber Cat"
                   className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                 />

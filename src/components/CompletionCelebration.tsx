@@ -70,7 +70,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
       {/* Celebrating Cat Mascot Character Artwork */}
       <div className="w-44 h-44 sm:w-52 sm:h-52 rounded-3xl overflow-hidden border-4 border-[#5C1F2A] shadow-[0_15px_40px_rgba(92,31,42,0.5)] mb-5 bg-[#FFFDF9] animate-bounce-subtle flex items-center justify-center p-2">
         <img
-          src="/mascot-cat-celebrate.png"
+          src="/mascot-penguin-celebrate.png"
           alt="Celebrating Cat Mascot"
           className="w-full h-full object-contain"
         />

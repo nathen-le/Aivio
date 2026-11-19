@@ -11,6 +11,11 @@ export const UNIT_1_LESSONS: Lesson[] = [
     unitId: 'unit-1',
     unitTitle: 'Unit 1: AI Foundations',
     order: 1,
+    icon: 'cloud-network',
+    video: {
+      title: 'Lesson 1 explainer',
+      durationMinutes: 3,
+    },
     description: 'Demystify artificial intelligence, distinguish Narrow AI from sci-fi myths, and see how algorithms perceive the world.',
     estimatedMinutes: 6,
     learningObjectives: [
@@ -121,6 +126,11 @@ export const UNIT_1_LESSONS: Lesson[] = [
     unitId: 'unit-1',
     unitTitle: 'Unit 1: AI Foundations',
     order: 2,
+    icon: 'lightbulb',
+    video: {
+      title: 'Lesson 2 explainer',
+      durationMinutes: 3,
+    },
     description: 'Understand the radical paradigm shift: why writing manual rules fails for complex problems, and how machine learning inverts the equation.',
     estimatedMinutes: 7,
     learningObjectives: [
@@ -213,6 +223,11 @@ export const UNIT_1_LESSONS: Lesson[] = [
     unitId: 'unit-1',
     unitTitle: 'Unit 1: AI Foundations',
     order: 3,
+    icon: 'database',
+    video: {
+      title: 'Lesson 3 explainer',
+      durationMinutes: 3,
+    },
     description: 'Explore the 3 core learning methods: Supervised, Unsupervised, and Reinforcement Learning, and see the training loop in action.',
     estimatedMinutes: 8,
     learningObjectives: [
@@ -309,6 +324,11 @@ export const UNIT_1_LESSONS: Lesson[] = [
     unitId: 'unit-1',
     unitTitle: 'Unit 1: AI Foundations',
     order: 4,
+    icon: 'neural',
+    video: {
+      title: 'Lesson 4 explainer',
+      durationMinutes: 3,
+    },
     description: 'Deconstruct the buzzwords: AI, Machine Learning, Deep Learning, Generative AI, and Large Language Models. See how they nest together.',
     estimatedMinutes: 8,
     learningObjectives: [
@@ -398,6 +418,11 @@ export const UNIT_1_LESSONS: Lesson[] = [
     unitId: 'unit-1',
     unitTitle: 'Unit 1: AI Foundations',
     order: 5,
+    icon: 'chat',
+    video: {
+      title: 'Lesson 5 explainer',
+      durationMinutes: 3,
+    },
     description: 'Become a critical thinker: discover the superpower capabilities of AI, along with hallucinations, training biases, and ethical limits.',
     estimatedMinutes: 9,
     learningObjectives: [

@@ -76,7 +76,7 @@ export const ContentCard: React.FC<ContentCardProps> = ({ block, onContinue }) =
         {block.mascotTip && (
           <div className="my-4 p-4 rounded-3xl bg-[#FFFDF9] border-2 border-[#5C1F2A]/40 flex items-center gap-3.5 shadow-md">
             <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-[#5C1F2A] bg-[#FFFDF9] p-1 shrink-0 shadow-md flex items-center justify-center">
-              <img src="/mascot-cat-avatar.png" alt="Aivo" className="w-full h-full object-contain" />
+              <img src="/mascot-penguin-happy.png" alt="Aivo" className="w-full h-full object-contain" />
             </div>
             <div className="text-xs text-[#7A2B37] leading-relaxed font-medium">
               <span className="font-black text-[#5C1F2A] block mb-0.5 uppercase tracking-wider text-[11px]">

@@ -4,12 +4,21 @@ import { sound } from '../utils/sound';
 import { useFriends } from '../hooks/useFriends';
 import type { ActionOutcome, PersonEntry } from '../hooks/useFriends';
 import { PersonAvatar, personName } from '../components/PersonAvatar';
+import { TopBar, type TopTab } from '../components/TopBar';
 
 interface FriendsPageProps {
   onNavigateLocal?: () => void;
+  totalXP?: number;
+  streakDays?: number;
+  onNavigateTop?: (tab: TopTab) => void;
 }
 
-export const FriendsPage: React.FC<FriendsPageProps> = ({ onNavigateLocal }) => {
+export const FriendsPage: React.FC<FriendsPageProps> = ({
+  onNavigateLocal,
+  totalXP = 0,
+  streakDays = 0,
+  onNavigateTop,
+}) => {
   const {
     status,
     friends,
@@ -95,18 +104,20 @@ export const FriendsPage: React.FC<FriendsPageProps> = ({ onNavigateLocal }) => 
         </div>
       )}
 
+      {onNavigateTop && (
+        <TopBar active="friends" onSelect={onNavigateTop} streakDays={streakDays} totalXP={totalXP} />
+      )}
+
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+      <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-[#2B1B1A] tracking-tight flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#5C1F2A] to-[#5C1F2A] flex items-center justify-center shadow-lg">
-              <Users className="w-5 h-5 text-[#2B1B1A]" />
-            </div>
-            Friends & Study Cohort
+          <p className="text-xs font-black uppercase tracking-widest text-[#857670] mb-2">Friends</p>
+          <h1 className="text-4xl sm:text-5xl font-black text-[#2B1B1A] tracking-tight leading-[1.05]" style={{ fontFamily: 'Fredoka, Nunito, sans-serif' }}>
+            A little nudge from your people.
           </h1>
-          <p className="text-sm text-[#857670] font-medium mt-1">
+          <p className="text-base text-[#4D3B38] mt-3">
             {status === 'ready'
-              ? `${friends.length} ${friends.length === 1 ? 'friend' : 'friends'} • ${incoming.length} waiting for your reply`
+              ? `${friends.length} ${friends.length === 1 ? 'friend' : 'friends'} · ${incoming.length} waiting for your reply`
               : 'Loading your friends…'}
           </p>
         </div>
@@ -117,10 +128,10 @@ export const FriendsPage: React.FC<FriendsPageProps> = ({ onNavigateLocal }) => 
             setModalMsg(null);
             setShowAddModal(true);
           }}
-          className="px-5 py-3 rounded-2xl bg-[#5C1F2A] hover:bg-[#5C1F2A] text-[#FFF8EE] font-black text-xs uppercase tracking-wider border-b-4 border-[#3D1119] active:translate-y-1 active:border-b-0 transition-all shadow-lg shadow-[#5C1F2A]/25 flex items-center gap-2 cursor-pointer"
+          className="px-5 py-3 rounded-2xl bg-[#5C1F2A] hover:bg-[#3D1119] text-[#FFF8EE] font-black text-sm transition-colors flex items-center gap-2 cursor-pointer"
         >
           <UserPlus className="w-4 h-4 stroke-[2.5]" />
-          ADD FRIEND
+          Add friend
         </button>
       </div>
 

@@ -30,16 +30,16 @@ export const Mascot: React.FC<MascotProps> = ({
     switch (mood) {
       case 'celebrate':
       case 'happy':
-        return '/mascot-cat-celebrate.png';
+        return '/mascot-penguin-celebrate.png';
       case 'thinking':
-        return '/mascot-cat-thinking.png';
+        return '/mascot-penguin-thinking.png';
       case 'encourage':
-        return '/mascot-cat-winking.png';
+        return '/mascot-penguin-smile.png';
       case 'oops':
-        return '/mascot-cat-thinking.png';
+        return '/mascot-penguin-thinking.png';
       case 'idle':
       default:
-        return '/mascot-cat-idle.png';
+        return '/mascot-penguin-smile.png';
     }
   };
 

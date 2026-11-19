@@ -58,7 +58,7 @@ export type EditableProfileFields = Pick<
 
 export const USER_PROFILE_SCHEMA_VERSION = 2;
 
-export const DEFAULT_AVATAR_URL = '/mascot-cat-avatar.png';
+export const DEFAULT_AVATAR_URL = '/mascot-penguin-happy.png';
 
 /** A brand-new learner starts empty — no sample or placeholder identity. */
 export function buildDefaultProfile(uid: string, email: string, displayName: string): UserProfileDoc {

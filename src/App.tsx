@@ -9,6 +9,8 @@ import { ProgressPage } from './pages/ProgressPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { FriendsPage } from './pages/FriendsPage';
 import { LocalPage } from './pages/LocalPage';
+import { ReviewPage } from './pages/ReviewPage';
+import type { TopTab } from './components/TopBar';
 import { FriendsProvider } from './contexts/FriendsProvider';
 import { AuthPage } from './pages/AuthPage';
 import { useAuth } from './hooks/useAuth';
@@ -35,7 +37,7 @@ function readAuthHash(): AuthEntryMode | null {
   return null;
 }
 
-export type AppView = 'home' | 'dashboard' | 'progress' | 'profile' | 'friends' | 'local' | 'lesson';
+export type AppView = 'home' | 'dashboard' | 'review' | 'progress' | 'profile' | 'friends' | 'local' | 'lesson';
 
 export function App() {
   const { user, loading, logout } = useAuth();
@@ -109,7 +111,7 @@ export function App() {
     return (
       <div className="min-h-screen bg-[#FBF6EE] flex flex-col items-center justify-center gap-4">
         <img
-          src="/mascot-cat-logo.png"
+          src="/mascot-penguin-happy.png"
           alt=""
           className="w-24 h-24 object-contain animate-float"
         />
@@ -195,6 +197,12 @@ export function App() {
 
   const activeLesson = activeLessonId ? getLessonById(activeLessonId) : null;
 
+  const handleTopTab = (tab: TopTab) => {
+    if (tab === 'pathway') handleNavigate('dashboard');
+    else if (tab === 'review') handleNavigate('review');
+    else handleNavigate('friends');
+  };
+
   return (
     <FriendsProvider key={user.uid} uid={user.uid}>
     <div className="min-h-screen bg-[#FBF6EE] text-[#2B1B1A] flex flex-col lg:flex-row selection:bg-[#5C1F2A] selection:text-[#FFF8EE]">
@@ -206,6 +214,7 @@ export function App() {
           activeTab={activeTab}
           onSelectTab={setActiveTab}
           totalXP={progress.totalXP}
+          streakDays={progress.currentStreak}
         />
       )}
 
@@ -232,7 +241,19 @@ export function App() {
               setCurrentView('friends');
               setActiveTab('friends');
             }}
+            onNavigateTop={handleTopTab}
             activeTab={activeTab}
+          />
+        )}
+
+        {currentView === 'review' && (
+          <ReviewPage
+            totalXP={progress.totalXP}
+            streakDays={progress.currentStreak}
+            completedLessonIds={progress.completedLessonIds}
+            getLessonStatus={getLessonStatus}
+            onSelectLesson={handleStartLesson}
+            onNavigateTop={handleTopTab}
           />
         )}
 

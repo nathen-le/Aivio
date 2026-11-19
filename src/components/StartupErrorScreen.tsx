@@ -11,7 +11,7 @@ export const StartupErrorScreen: React.FC<{ message: string }> = ({ message }) =
   <div className="min-h-screen bg-[#FBF6EE] text-[#2B1B1A] flex items-center justify-center px-4 py-10">
     <div className="w-full max-w-lg bg-[#FFFDF9] border-2 border-[#E8DCCB] rounded-3xl p-7 shadow-2xl">
       <div className="flex flex-col items-center text-center">
-        <img src="/mascot-cat-thinking.png" alt="" className="w-20 h-20 object-contain mb-4" />
+        <img src="/mascot-penguin-thinking.png" alt="" className="w-20 h-20 object-contain mb-4" />
         <h1 className="text-2xl font-black text-[#2B1B1A] tracking-tight mb-2">
           Aivio can&rsquo;t start
         </h1>

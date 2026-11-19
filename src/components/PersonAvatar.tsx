@@ -12,7 +12,7 @@ export const PersonAvatar: React.FC<{ profile: PublicProfile | null; size?: 'md'
     } shrink-0 rounded-2xl bg-gradient-to-br from-[#F6EFE4] to-[#F1E6D6] border-2 border-[#F1E6D6] flex items-center justify-center shadow-md overflow-hidden p-1`}
   >
     <img
-      src={profile?.avatarUrl ?? '/mascot-cat-avatar.png'}
+      src={profile?.avatarUrl ?? '/mascot-penguin-happy.png'}
       alt=""
       className={`w-full h-full object-contain ${profile ? '' : 'opacity-40'}`}
     />

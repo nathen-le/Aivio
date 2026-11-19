@@ -6,6 +6,7 @@ import { ContentCard } from './ContentCard';
 import { QuizQuestion } from './QuizQuestion';
 import { MatchingActivity } from './MatchingActivity';
 import { SortingActivity } from './SortingActivity';
+import { VideoPlaceholder } from './VideoPlaceholder';
 import { sound } from '../utils/sound';
 import type { Lesson, LessonBlock } from '../types/lesson';
 
@@ -49,37 +50,44 @@ export const LessonRenderer: React.FC<LessonRendererProps> = ({
 
   return (
     <div className="w-full min-h-screen bg-[#FBF6EE] flex flex-col justify-between py-5 px-4 sm:px-6 max-w-4xl mx-auto select-none">
-      {/* Top Header Bar */}
-      <div className="flex items-center gap-3 sm:gap-4 pb-4 border-b-2 border-[#E8DCCB]">
-        {/* Exit Button */}
-        <button
-          onClick={() => {
-            sound.playClick();
-            setShowExitConfirm(true);
-          }}
-          className="p-2.5 rounded-2xl text-[#857670] hover:text-[#2B1B1A] hover:bg-[#F6EFE4] transition-colors focus:outline-none"
-          title="Exit lesson"
-          aria-label="Exit lesson"
-        >
-          <X className="w-6 h-6 stroke-[3]" />
-        </button>
-
-        {/* Thick Progress Bar */}
-        <div className="flex-1">
-          <ProgressBar progressPercent={progressPercent} height="lg" color="cyan" />
-        </div>
-
-        {/* Step indicator & XP Pill */}
-        <div className="flex items-center gap-3">
-          <span className="text-xs font-mono font-black text-[#7A2B37] hidden sm:inline">
-            {currentBlockIndex + 1} / {lesson.blocks.length}
-          </span>
+      {/* Header: exit link, lesson label, title, progress */}
+      <div className="pb-5 border-b border-[#E8DCCB]">
+        <div className="flex items-center justify-between gap-4">
+          <button
+            onClick={() => {
+              sound.playClick();
+              setShowExitConfirm(true);
+            }}
+            className="flex items-center gap-2 text-sm font-bold text-[#4D3B38] hover:text-[#5C1F2A] transition-colors"
+            aria-label="Exit lesson"
+          >
+            <X className="w-4 h-4 stroke-[2.5]" />
+            Exit lesson
+          </button>
           <XPDisplay xp={lesson.xpReward} size="sm" />
         </div>
+
+        <p className="mt-6 text-xs font-black uppercase tracking-widest text-[#7A2B37]">
+          {lesson.unitTitle} · Lesson {String(lesson.order).padStart(2, '0')}
+        </p>
+        <h1 className="mt-1 text-3xl sm:text-4xl font-black text-[#2B1B1A] tracking-tight leading-tight" style={{ fontFamily: 'Fredoka, Nunito, sans-serif' }}>
+          {lesson.title}
+        </h1>
+
+        <div className="mt-5 flex items-center gap-3">
+          <div className="flex-1">
+            <ProgressBar progressPercent={progressPercent} height="lg" color="cyan" />
+          </div>
+          <span className="text-sm font-black text-[#2B1B1A] tabular-nums">{progressPercent}%</span>
+        </div>
+        <p className="mt-1.5 text-[11px] font-bold text-[#857670] uppercase tracking-wider">
+          Step {currentBlockIndex + 1} of {lesson.blocks.length} · Lesson progress
+        </p>
       </div>
 
       {/* Main Interactive Block Area */}
-      <div className="flex-1 flex flex-col justify-center py-6 sm:py-8 animate-fade-in">
+      <div className="flex-1 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px] gap-6 py-6 sm:py-8 animate-fade-in">
+      <div className="flex flex-col justify-center min-w-0">
         {currentBlock.type === 'content' && (
           <ContentCard block={currentBlock} onContinue={handleBlockAdvance} />
         )}
@@ -107,6 +115,23 @@ export const LessonRenderer: React.FC<LessonRendererProps> = ({
             onContinue={handleBlockAdvance}
           />
         )}
+      </div>
+
+      {/* Right rail: video slot and what this lesson covers */}
+      <aside className="space-y-4">
+        {lesson.video && <VideoPlaceholder video={lesson.video} />}
+        <div className="rounded-3xl bg-[#FFFDF9] border border-[#E8DCCB] p-5">
+          <p className="text-sm font-black text-[#2B1B1A]">What you will learn</p>
+          <ul className="mt-3 space-y-2">
+            {lesson.learningObjectives.map((objective) => (
+              <li key={objective} className="flex gap-2 text-xs text-[#4D3B38] leading-relaxed">
+                <span className="mt-1 w-1.5 h-1.5 rounded-full bg-[#5C1F2A] shrink-0" />
+                {objective}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
       </div>
 
       {/* Exit Confirmation Modal */}

@@ -72,9 +72,22 @@ export interface SortingBlock extends BaseBlock {
 
 export type LessonBlock = ContentBlock | QuizBlock | MatchingBlock | SortingBlock;
 
+export interface LessonVideo {
+  /** Placeholder until a real clip is linked. */
+  title: string;
+  durationMinutes: number;
+  /** Optional embed/file URL. When missing, the video slot shows a placeholder. */
+  src?: string;
+}
+
+/** Roadmap icon keys, matching files in public/icons/. */
+export type LessonIconKey = 'cloud-network' | 'lightbulb' | 'database' | 'neural' | 'chat' | 'gear' | 'cloud-alt';
+
 export interface Lesson {
   id: string;
   title: string;
+  icon?: LessonIconKey;
+  video?: LessonVideo;
   learningPathId: string;
   unitId: string;
   unitTitle: string;

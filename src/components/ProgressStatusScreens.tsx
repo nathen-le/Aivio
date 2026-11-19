@@ -11,7 +11,7 @@ const secondaryBtn =
 
 export const ProgressLoadingScreen: React.FC = () => (
   <div className={shell} role="status">
-    <img src="/mascot-cat-logo.png" alt="" className="w-24 h-24 object-contain animate-float" />
+    <img src="/mascot-penguin-happy.png" alt="" className="w-24 h-24 object-contain animate-float" />
     <p className="text-xs font-black uppercase tracking-wider text-[#857670]">Loading your progress…</p>
   </div>
 );
