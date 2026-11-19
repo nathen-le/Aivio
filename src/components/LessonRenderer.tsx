@@ -48,16 +48,16 @@ export const LessonRenderer: React.FC<LessonRendererProps> = ({
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#0a1224] flex flex-col justify-between py-5 px-4 sm:px-6 max-w-4xl mx-auto select-none">
+    <div className="w-full min-h-screen bg-[#FBF6EE] flex flex-col justify-between py-5 px-4 sm:px-6 max-w-4xl mx-auto select-none">
       {/* Top Header Bar */}
-      <div className="flex items-center gap-3 sm:gap-4 pb-4 border-b-2 border-[#1c325c]">
+      <div className="flex items-center gap-3 sm:gap-4 pb-4 border-b-2 border-[#E8DCCB]">
         {/* Exit Button */}
         <button
           onClick={() => {
             sound.playClick();
             setShowExitConfirm(true);
           }}
-          className="p-2.5 rounded-2xl text-slate-400 hover:text-white hover:bg-[#132344] transition-colors focus:outline-none"
+          className="p-2.5 rounded-2xl text-[#857670] hover:text-[#2B1B1A] hover:bg-[#F6EFE4] transition-colors focus:outline-none"
           title="Exit lesson"
           aria-label="Exit lesson"
         >
@@ -71,7 +71,7 @@ export const LessonRenderer: React.FC<LessonRendererProps> = ({
 
         {/* Step indicator & XP Pill */}
         <div className="flex items-center gap-3">
-          <span className="text-xs font-mono font-black text-sky-400 hidden sm:inline">
+          <span className="text-xs font-mono font-black text-[#7A2B37] hidden sm:inline">
             {currentBlockIndex + 1} / {lesson.blocks.length}
           </span>
           <XPDisplay xp={lesson.xpReward} size="sm" />
@@ -112,14 +112,14 @@ export const LessonRenderer: React.FC<LessonRendererProps> = ({
       {/* Exit Confirmation Modal */}
       {showExitConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-          <div className="max-w-md w-full bg-[#0f1d38] border-2 border-amber-400/60 rounded-3xl p-6 sm:p-8 shadow-2xl text-center">
-            <div className="w-16 h-16 rounded-2xl bg-amber-400/20 border-2 border-amber-400 text-amber-400 flex items-center justify-center mb-4 mx-auto">
+          <div className="max-w-md w-full bg-[#FFFDF9] border-2 border-[#F2B93B]/60 rounded-3xl p-6 sm:p-8 shadow-2xl text-center">
+            <div className="w-16 h-16 rounded-2xl bg-[#F2B93B]/20 border-2 border-[#F2B93B] text-[#8A5A00] flex items-center justify-center mb-4 mx-auto">
               <AlertTriangle className="w-8 h-8 stroke-[2.5]" />
             </div>
-            <h3 className="text-2xl font-black text-white mb-2">
+            <h3 className="text-2xl font-black text-[#2B1B1A] mb-2">
               Wait, don't leave!
             </h3>
-            <p className="text-xs sm:text-sm text-slate-300 mb-6 leading-relaxed font-medium">
+            <p className="text-xs sm:text-sm text-[#4D3B38] mb-6 leading-relaxed font-medium">
               You are making great progress! If you quit now, you will lose your session progress and bonus XP for this lesson.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
@@ -128,7 +128,7 @@ export const LessonRenderer: React.FC<LessonRendererProps> = ({
                   sound.playClick();
                   setShowExitConfirm(false);
                 }}
-                className="flex-1 py-3.5 rounded-2xl bg-[#1cb0f6] hover:bg-[#25b8fc] text-slate-950 font-black text-xs uppercase tracking-wider border-b-4 border-[#1899d6] active:translate-y-1 active:border-b-0 transition-all shadow-lg"
+                className="flex-1 py-3.5 rounded-2xl bg-[#5C1F2A] hover:bg-[#5C1F2A] text-[#FFF8EE] font-black text-xs uppercase tracking-wider border-b-4 border-[#3D1119] active:translate-y-1 active:border-b-0 transition-all shadow-lg"
               >
                 KEEP LEARNING
               </button>
@@ -137,7 +137,7 @@ export const LessonRenderer: React.FC<LessonRendererProps> = ({
                   sound.playClick();
                   onExit();
                 }}
-                className="flex-1 py-3.5 rounded-2xl bg-[#142344] hover:bg-[#1a2e58] border-b-4 border-[#0c182e] text-slate-300 font-black text-xs uppercase tracking-wider active:translate-y-1 active:border-b-0 transition-all"
+                className="flex-1 py-3.5 rounded-2xl bg-[#F6EFE4] hover:bg-[#F1E6D6] border-b-4 border-[#FFFDF9] text-[#4D3B38] font-black text-xs uppercase tracking-wider active:translate-y-1 active:border-b-0 transition-all"
               >
                 QUIT SESSION
               </button>

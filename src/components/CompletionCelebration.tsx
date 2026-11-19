@@ -37,7 +37,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
         particleCount: 100,
         spread: 80,
         origin: { y: 0.6 },
-        colors: ['#1cb0f6', '#38bdf8', '#0284c7', '#f59e0b', '#10b981'],
+        colors: ['#5C1F2A', '#7A2B37', '#3D1119', '#F2B93B', '#8DAA5B'],
       });
 
       const timer = setTimeout(() => {
@@ -46,14 +46,14 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
           angle: 60,
           spread: 60,
           origin: { x: 0 },
-          colors: ['#1cb0f6', '#8b5cf6'],
+          colors: ['#5C1F2A', '#9B3A5A'],
         });
         confetti({
           particleCount: 60,
           angle: 120,
           spread: 60,
           origin: { x: 1 },
-          colors: ['#38bdf8', '#10b981'],
+          colors: ['#7A2B37', '#8DAA5B'],
         });
       }, 300);
 
@@ -68,7 +68,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
   return (
     <div className="w-full max-w-xl mx-auto py-8 px-4 flex flex-col items-center text-center animate-fade-in select-none">
       {/* Celebrating Cat Mascot Character Artwork */}
-      <div className="w-44 h-44 sm:w-52 sm:h-52 rounded-3xl overflow-hidden border-4 border-[#1cb0f6] shadow-[0_15px_40px_rgba(28,176,246,0.5)] mb-5 bg-[#0f1d38] animate-bounce-subtle flex items-center justify-center p-2">
+      <div className="w-44 h-44 sm:w-52 sm:h-52 rounded-3xl overflow-hidden border-4 border-[#5C1F2A] shadow-[0_15px_40px_rgba(92,31,42,0.5)] mb-5 bg-[#FFFDF9] animate-bounce-subtle flex items-center justify-center p-2">
         <img
           src="/mascot-cat-celebrate.png"
           alt="Celebrating Cat Mascot"
@@ -77,14 +77,14 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
       </div>
 
       {/* Pill */}
-      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-950/80 text-emerald-400 border-2 border-emerald-500/50 text-xs font-black uppercase tracking-wider mb-2">
+      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#EEF3E3] text-[#4F6B2A] border-2 border-[#8DAA5B]/50 text-xs font-black uppercase tracking-wider mb-2">
         <CheckCircle2 className="w-4 h-4 stroke-[3]" /> LESSON COMPLETED!
       </div>
 
-      <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight mb-2">
+      <h2 className="text-3xl sm:text-4xl font-black text-[#2B1B1A] tracking-tight mb-2">
         {lesson.title}
       </h2>
-      <p className="text-xs sm:text-sm font-medium text-slate-300 max-w-md mx-auto mb-6">
+      <p className="text-xs sm:text-sm font-medium text-[#4D3B38] max-w-md mx-auto mb-6">
         {isFirstCompletion
           ? 'Legendary focus! You leveled up your neural intelligence.'
           : 'Great practice session! Consistent repetition wires the brain.'}
@@ -93,40 +93,40 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
       {/* Reward Summary Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full mb-6">
         {/* Total XP Earned */}
-        <div className="p-4 rounded-3xl bg-[#0f1d38] border-2 border-amber-500/40 shadow-lg">
-          <div className="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center mx-auto mb-1.5">
-            <Zap className="w-5 h-5 fill-amber-400" />
+        <div className="p-4 rounded-3xl bg-[#FFFDF9] border-2 border-[#F2B93B]/40 shadow-lg">
+          <div className="w-9 h-9 rounded-xl bg-[#F2B93B]/20 text-[#8A5A00] flex items-center justify-center mx-auto mb-1.5">
+            <Zap className="w-5 h-5 fill-[#F2B93B]" />
           </div>
-          <span className="text-3xl font-black text-amber-300 font-mono block">
+          <span className="text-3xl font-black text-[#8A5A00] font-mono block">
             +{xpAwarded}
           </span>
-          <p className="text-[10px] uppercase font-black text-amber-400 tracking-wider">
+          <p className="text-[10px] uppercase font-black text-[#8A5A00] tracking-wider">
             XP Earned
           </p>
         </div>
 
         {/* Accuracy */}
-        <div className="p-4 rounded-3xl bg-[#0f1d38] border-2 border-emerald-500/40 shadow-lg">
-          <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-1.5">
+        <div className="p-4 rounded-3xl bg-[#FFFDF9] border-2 border-[#8DAA5B]/40 shadow-lg">
+          <div className="w-9 h-9 rounded-xl bg-[#8DAA5B]/20 text-[#4F6B2A] flex items-center justify-center mx-auto mb-1.5">
             <Sparkles className="w-5 h-5 stroke-[2.5]" />
           </div>
-          <span className="text-3xl font-black text-emerald-300 font-mono block">
+          <span className="text-3xl font-black text-[#4F6B2A] font-mono block">
             {mistakesCount === 0 ? '100%' : `${Math.max(60, 100 - mistakesCount * 10)}%`}
           </span>
-          <p className="text-[10px] uppercase font-black text-emerald-400 tracking-wider">
+          <p className="text-[10px] uppercase font-black text-[#4F6B2A] tracking-wider">
             {mistakesCount === 0 ? 'FLAWLESS!' : 'ACCURACY'}
           </p>
         </div>
 
         {/* Gems Bonus */}
-        <div className="p-4 rounded-3xl bg-[#0f1d38] border-2 border-[#1cb0f6]/40 shadow-lg col-span-2 sm:col-span-1">
-          <div className="w-9 h-9 rounded-xl bg-cyan-500/20 text-[#1cb0f6] flex items-center justify-center mx-auto mb-1.5 text-lg">
+        <div className="p-4 rounded-3xl bg-[#FFFDF9] border-2 border-[#5C1F2A]/40 shadow-lg col-span-2 sm:col-span-1">
+          <div className="w-9 h-9 rounded-xl bg-[#5C1F2A]/20 text-[#5C1F2A] flex items-center justify-center mx-auto mb-1.5 text-lg">
             💎
           </div>
-          <span className="text-3xl font-black text-[#1cb0f6] font-mono block">
+          <span className="text-3xl font-black text-[#5C1F2A] font-mono block">
             +{Math.floor(xpAwarded * 1.5)}
           </span>
-          <p className="text-[10px] uppercase font-black text-sky-400 tracking-wider">
+          <p className="text-[10px] uppercase font-black text-[#7A2B37] tracking-wider">
             Data Crystals
           </p>
         </div>
@@ -134,21 +134,21 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
 
       {/* Unlocked Badges Celebration */}
       {unlockedBadgeObjs.length > 0 && (
-        <div className="w-full mb-6 p-5 rounded-3xl bg-[#142344] border-2 border-purple-500/50 shadow-xl">
-          <div className="flex items-center justify-center gap-2 text-xs uppercase font-black tracking-wider text-purple-300 mb-2">
-            <Sparkles className="w-4 h-4 text-purple-400 animate-spin" /> NEW BADGE UNLOCKED!
+        <div className="w-full mb-6 p-5 rounded-3xl bg-[#F6EFE4] border-2 border-[#E8DCCB]/50 shadow-xl">
+          <div className="flex items-center justify-center gap-2 text-xs uppercase font-black tracking-wider text-[#2B1B1A] mb-2">
+            <Sparkles className="w-4 h-4 text-[#2B1B1A] animate-spin" /> NEW BADGE UNLOCKED!
           </div>
           <div className="space-y-2">
             {unlockedBadgeObjs.map((badge) => (
               <div
                 key={badge.id}
-                className="flex items-center justify-between p-3.5 rounded-2xl bg-[#0f1d38] border-2 border-purple-500/30 text-left"
+                className="flex items-center justify-between p-3.5 rounded-2xl bg-[#FFFDF9] border-2 border-[#E8DCCB]/30 text-left"
               >
                 <div>
-                  <h4 className="font-black text-sm text-white">{badge.title}</h4>
-                  <p className="text-xs text-purple-200">{badge.description}</p>
+                  <h4 className="font-black text-sm text-[#2B1B1A]">{badge.title}</h4>
+                  <p className="text-xs text-[#2B1B1A]">{badge.description}</p>
                 </div>
-                <span className="text-xs font-mono font-black text-amber-300 shrink-0">
+                <span className="text-xs font-mono font-black text-[#8A5A00] shrink-0">
                   +{badge.xpBonus} XP Bonus
                 </span>
               </div>
@@ -165,7 +165,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
               sound.playClick();
               onContinueNext();
             }}
-            className="flex-1 py-4 px-6 rounded-2xl bg-[#1cb0f6] hover:bg-[#25b8fc] text-slate-950 font-black text-sm uppercase tracking-wider border-b-4 border-[#1899d6] active:translate-y-1 active:border-b-0 transition-all shadow-xl shadow-cyan-500/30 flex items-center justify-center gap-2"
+            className="flex-1 py-4 px-6 rounded-2xl bg-[#5C1F2A] hover:bg-[#5C1F2A] text-[#FFF8EE] font-black text-sm uppercase tracking-wider border-b-4 border-[#3D1119] active:translate-y-1 active:border-b-0 transition-all shadow-xl shadow-[#5C1F2A]/30 flex items-center justify-center gap-2"
           >
             <span>NEXT LESSON</span>
             <ArrowRight className="w-5 h-5 stroke-[3]" />
@@ -176,7 +176,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
               sound.playClick();
               onReturnDashboard();
             }}
-            className="flex-1 py-4 px-6 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-sm uppercase tracking-wider border-b-4 border-emerald-700 active:translate-y-1 active:border-b-0 transition-all shadow-xl shadow-emerald-500/30 flex items-center justify-center gap-2"
+            className="flex-1 py-4 px-6 rounded-2xl bg-[#8DAA5B] hover:bg-[#8DAA5B] text-[#2B1B1A] font-black text-sm uppercase tracking-wider border-b-4 border-[#8DAA5B] active:translate-y-1 active:border-b-0 transition-all shadow-xl shadow-[#8DAA5B]/30 flex items-center justify-center gap-2"
           >
             <span>VIEW LESSON PATH</span>
             <CheckCircle2 className="w-5 h-5 stroke-[3]" />
@@ -188,7 +188,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
             sound.playClick();
             onReturnDashboard();
           }}
-          className="py-4 px-6 rounded-2xl bg-[#142344] hover:bg-[#1a2e58] border-b-4 border-[#0c182e] text-slate-200 font-black text-sm uppercase tracking-wider active:translate-y-1 active:border-b-0 transition-all"
+          className="py-4 px-6 rounded-2xl bg-[#F6EFE4] hover:bg-[#F1E6D6] border-b-4 border-[#FFFDF9] text-[#2B1B1A] font-black text-sm uppercase tracking-wider active:translate-y-1 active:border-b-0 transition-all"
         >
           Dashboard
         </button>

@@ -7,16 +7,16 @@
 
 @layer base {
   :root {
-    --bg-dark: #0a1224;
-    --bg-surface: #0f1d38;
-    --bg-card: #132344;
-    --duo-blue: #1cb0f6;
-    --duo-blue-shadow: #1899d6;
+    --bg-dark: #FBF6EE;
+    --bg-surface: #FFFDF9;
+    --bg-card: #F6EFE4;
+    --duo-blue: #5C1F2A;
+    --duo-blue-shadow: #3D1119;
   }
 
   body {
-    background-color: #0a1224;
-    color: #F1F5F9;
+    background-color: #FBF6EE;
+    color: #2B1B1A;
     font-family: 'Nunito', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow-x: hidden;
   }
@@ -33,9 +33,9 @@
 
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: #0a1224; }
-::-webkit-scrollbar-thumb { background: #172b50; border-radius: 9999px; }
-::-webkit-scrollbar-thumb:hover { background: #1cb0f6; }
+::-webkit-scrollbar-track { background: #FBF6EE; }
+::-webkit-scrollbar-thumb { background: #E8DCCB; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #5C1F2A; }
 
 /* Hide scrollbar utility */
 .scrollbar-none::-webkit-scrollbar { display: none; }
@@ -59,8 +59,8 @@
 }
 
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 15px rgba(28, 176, 246, 0.4); }
-  50% { box-shadow: 0 0 28px rgba(28, 176, 246, 0.8); }
+  0%, 100% { box-shadow: 0 0 15px rgba(92,31,42, 0.4); }
+  50% { box-shadow: 0 0 28px rgba(92,31,42, 0.8); }
 }
 
 @keyframes shake {
@@ -137,7 +137,7 @@
 
 /* ─── XP shimmer text ─── */
 .text-shimmer {
-  background: linear-gradient(90deg, #fbbf24, #f59e0b, #fde68a, #f59e0b, #fbbf24);
+  background: linear-gradient(90deg, #F2B93B, #F2B93B, #FBE9A6, #F2B93B, #F2B93B);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -156,6 +156,6 @@
 
 /* ─── Accessible visible focus states ─── */
 *:focus-visible {
-  outline: 3px solid #1cb0f6;
+  outline: 3px solid #5C1F2A;
   outline-offset: 2px;
 }

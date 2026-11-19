@@ -85,12 +85,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       pathId: 'ai-tools-productivity',
       title: 'AI Tools & Prompt Crafting',
       tagline: 'Master modern LLM workflows, context framing, and study assistants.',
-      icon: <Wrench className="w-6 h-6 text-purple-300" />,
+      icon: <Wrench className="w-6 h-6 text-[#2B1B1A]" />,
       colorTheme: {
-        banner: 'from-[#6d28d9] via-[#8b5cf6] to-[#4f46e5]',
-        border: 'border-[#5b21b6]',
-        badge: 'bg-purple-950/80 text-purple-200 border-purple-500/40',
-        accent: '#8b5cf6',
+        banner: 'from-[#5C1F2A] via-[#5C1F2A] to-[#5C1F2A]',
+        border: 'border-[#E8DCCB]',
+        badge: 'bg-[#FBE3E0]/80 text-[#2B1B1A] border-[#E8DCCB]/40',
+        accent: '#9B3A5A',
       },
       lessons: LEARNING_PATHS.find((p) => p.id === 'ai-tools-productivity')?.lessons || [],
       requiredPreviousUnit: 'Unit 1: AI Foundations',
@@ -100,12 +100,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       pathId: 'ai-ethics-citizenship',
       title: 'AI Ethics & Digital Citizenship',
       tagline: 'Algorithmic bias, deepfakes, copyright, and ethical teenage citizenship.',
-      icon: <ShieldAlert className="w-6 h-6 text-emerald-300" />,
+      icon: <ShieldAlert className="w-6 h-6 text-[#4F6B2A]" />,
       colorTheme: {
-        banner: 'from-[#047857] via-[#10b981] to-[#0f766e]',
-        border: 'border-[#065f46]',
-        badge: 'bg-emerald-950/80 text-emerald-200 border-emerald-500/40',
-        accent: '#10b981',
+        banner: 'from-[#EEF3E3] via-[#8DAA5B] to-[#EEF3E3]',
+        border: 'border-[#8DAA5B]',
+        badge: 'bg-[#EEF3E3] text-[#4F6B2A] border-[#8DAA5B]/40',
+        accent: '#8DAA5B',
       },
       lessons: LEARNING_PATHS.find((p) => p.id === 'ai-ethics-citizenship')?.lessons || [],
       requiredPreviousUnit: 'Unit 2: AI Tools',
@@ -115,12 +115,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       pathId: 'how-ai-learns',
       title: 'How AI Learns (Neural Networks)',
       tagline: 'Weights, biases, loss functions, backprop, and gradient descent.',
-      icon: <Network className="w-6 h-6 text-amber-300" />,
+      icon: <Network className="w-6 h-6 text-[#8A5A00]" />,
       colorTheme: {
-        banner: 'from-[#b45309] via-[#f59e0b] to-[#c2410c]',
+        banner: 'from-[#b45309] via-[#F2B93B] to-[#c2410c]',
         border: 'border-[#92400e]',
-        badge: 'bg-amber-950/80 text-amber-200 border-amber-500/40',
-        accent: '#f59e0b',
+        badge: 'bg-[#FBE9A6]/80 text-[#8A5A00] border-[#F2B93B]/40',
+        accent: '#F2B93B',
       },
       lessons: LEARNING_PATHS.find((p) => p.id === 'how-ai-learns')?.lessons || [],
       requiredPreviousUnit: 'Unit 3: AI Ethics',
@@ -130,12 +130,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       pathId: 'ai-creator-lab',
       title: 'AI Creator Lab & Multimodal',
       tagline: 'Diffusion image synthesis, voice cloning, and creative digital media.',
-      icon: <Palette className="w-6 h-6 text-rose-300" />,
+      icon: <Palette className="w-6 h-6 text-[#B0303C]" />,
       colorTheme: {
-        banner: 'from-[#be123c] via-[#f43f5e] to-[#db2777]',
-        border: 'border-[#9f1239]',
-        badge: 'bg-rose-950/80 text-rose-200 border-rose-500/40',
-        accent: '#f43f5e',
+        banner: 'from-[#5C1F2A] via-[#C2414B] to-[#5C1F2A]',
+        border: 'border-[#E8DCCB]',
+        badge: 'bg-[#FBE3E0] text-[#B0303C] border-[#C2414B]/40',
+        accent: '#C2414B',
       },
       lessons: LEARNING_PATHS.find((p) => p.id === 'ai-creator-lab')?.lessons || [],
       requiredPreviousUnit: 'Unit 4: Neural Networks',
@@ -145,12 +145,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       pathId: 'ai-in-real-world',
       title: 'AI in the Real World & Careers',
       tagline: 'Autonomous vehicles, healthcare, climate tech, and future careers.',
-      icon: <Globe className="w-6 h-6 text-sky-300" />,
+      icon: <Globe className="w-6 h-6 text-[#7A2B37]" />,
       colorTheme: {
-        banner: 'from-[#1d4ed8] via-[#3b82f6] to-[#0284c7]',
-        border: 'border-[#1e40af]',
-        badge: 'bg-blue-950/80 text-blue-200 border-blue-500/40',
-        accent: '#3b82f6',
+        banner: 'from-[#5C1F2A] via-[#5C1F2A] to-[#3D1119]',
+        border: 'border-[#E8DCCB]',
+        badge: 'bg-[#FBE3E0]/80 text-[#7A2B37] border-[#5C1F2A]/40',
+        accent: '#5C1F2A',
       },
       lessons: LEARNING_PATHS.find((p) => p.id === 'ai-in-real-world')?.lessons || [],
       requiredPreviousUnit: 'Unit 5: Creator Lab',
@@ -166,23 +166,23 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 pt-3 sm:pt-5 pb-24 lg:pb-12 animate-fade-in select-none">
       {/* Toast Notification */}
       {lockedToast && (
-        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-2xl bg-amber-500 text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wider shadow-2xl shadow-amber-500/30 animate-fade-in flex items-center gap-2 max-w-md text-center">
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-2xl bg-[#F2B93B] text-[#2B1B1A] font-black text-xs sm:text-sm uppercase tracking-wider shadow-2xl shadow-[#F2B93B]/30 animate-fade-in flex items-center gap-2 max-w-md text-center">
           {lockedToast}
         </div>
       )}
 
       {/* Top Mobile Quick Stats Bar */}
-      <div className="lg:hidden flex items-center justify-between p-2.5 rounded-2xl bg-[#0c1830] border border-[#1c325c]/70 mb-5 shadow-lg gap-2">
-        <div className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-orange-950/40 border border-orange-500/30 text-orange-400 font-black text-xs">
-          <Flame className="w-4 h-4 fill-orange-400 animate-fire-flicker" />
+      <div className="lg:hidden flex items-center justify-between p-2.5 rounded-2xl bg-[#FFFDF9] border border-[#E8DCCB]/70 mb-5 shadow-lg gap-2">
+        <div className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-[#FBE9A6] border border-[#E9873A]/30 text-[#B5581B] font-black text-xs">
+          <Flame className="w-4 h-4 fill-[#E9873A] animate-fire-flicker" />
           <span>{streakDays}d</span>
         </div>
-        <div className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-cyan-950/40 border border-cyan-400/25 text-[#1cb0f6] font-black text-xs">
+        <div className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-[#FBE3E0]/40 border border-[#5C1F2A]/25 text-[#5C1F2A] font-black text-xs">
           <span>💎</span>
           <span className="font-mono">{Math.floor(totalXP * 1.5) + 100}</span>
         </div>
-        <div className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-amber-950/40 border border-amber-400/25 text-amber-300 font-black text-xs">
-          <Zap className="w-4 h-4 fill-amber-400" />
+        <div className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-[#FBE9A6] border border-[#F2B93B]/25 text-[#8A5A00] font-black text-xs">
+          <Zap className="w-4 h-4 fill-[#F2B93B]" />
           <span className="font-mono">{totalXP}</span>
         </div>
       </div>
@@ -190,30 +190,30 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       {/* When activeTab is 'leaderboard', show the full community leaderboard */}
       {activeTab === 'leaderboard' ? (
         <div className="max-w-3xl mx-auto animate-fade-in">
-          <div className="p-6 rounded-3xl bg-gradient-to-r from-[#0284c7] via-[#1cb0f6] to-[#0284c7] border-b-[6px] border-[#0369a1] text-slate-950 mb-8 shadow-xl flex items-center justify-between">
+          <div className="p-6 rounded-3xl bg-gradient-to-r from-[#3D1119] via-[#5C1F2A] to-[#3D1119] border-b-[6px] border-[#3D1119] text-[#FFF8EE] mb-8 shadow-xl flex items-center justify-between">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-slate-950/20 text-slate-950">
+                <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#FFFDF9]/20 text-[#2B1B1A]">
                   Global Cohort Rankings
                 </span>
               </div>
               <h1 className="text-3xl font-black tracking-tight">Leagues & Friends</h1>
-              <p className="text-xs sm:text-sm font-bold text-sky-950 mt-1">
+              <p className="text-xs sm:text-sm font-bold text-[#7A2B37] mt-1">
                 Compete with classmates and friends. Top learners earn bonus XP badges each week!
               </p>
             </div>
-            <div className="w-16 h-16 rounded-2xl bg-[#0f1d38] border-2 border-white flex items-center justify-center text-3xl shadow-lg shrink-0">
+            <div className="w-16 h-16 rounded-2xl bg-[#FFFDF9] border-2 border-white flex items-center justify-center text-3xl shadow-lg shrink-0">
               🏆
             </div>
           </div>
 
-          <div className="rounded-3xl bg-[#0f1d38] border-2 border-[#1c325c] p-6 shadow-xl">
-            <h3 className="text-sm font-black text-white uppercase tracking-wider mb-4 flex items-center justify-between">
+          <div className="rounded-3xl bg-[#FFFDF9] border-2 border-[#E8DCCB] p-6 shadow-xl">
+            <h3 className="text-sm font-black text-[#2B1B1A] uppercase tracking-wider mb-4 flex items-center justify-between">
               <span className="flex items-center gap-2">
-                <Trophy className="w-4 h-4 text-amber-400" />
+                <Trophy className="w-4 h-4 text-[#8A5A00]" />
                 This Week's Leaderboard
               </span>
-              <span className="text-xs font-bold text-slate-400">Resets in 3 days</span>
+              <span className="text-xs font-bold text-[#857670]">Resets in 3 days</span>
             </h3>
 
             <div className="space-y-2">
@@ -224,20 +224,20 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                     key={idx}
                     className={`p-4 rounded-2xl flex items-center justify-between border-2 transition-all ${
                       peer.isUser
-                        ? 'bg-[#1b3464] border-[#1cb0f6] text-white shadow-lg shadow-cyan-950/50'
-                        : 'bg-[#132344] border-[#1f3764] text-slate-200'
+                        ? 'bg-[#F1E6D6] border-[#5C1F2A] text-[#2B1B1A] shadow-lg shadow-[#5C1F2A]/50'
+                        : 'bg-[#F6EFE4] border-[#F1E6D6] text-[#2B1B1A]'
                     }`}
                   >
                     <div className="flex items-center gap-4">
                       <span
                         className={`w-6 text-center font-mono font-black text-sm ${
                           rank === 1
-                            ? 'text-amber-400 text-lg'
+                            ? 'text-[#8A5A00] text-lg'
                             : rank === 2
-                            ? 'text-slate-300 text-base'
+                            ? 'text-[#4D3B38] text-base'
                             : rank === 3
-                            ? 'text-amber-600 text-base'
-                            : 'text-slate-500'
+                            ? 'text-[#8A5A00] text-base'
+                            : 'text-[#857670]'
                         }`}
                       >
                         {rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank}
@@ -245,26 +245,26 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                       <div className="text-2xl">{peer.avatar}</div>
                       <div>
                         <div className="text-sm font-black flex items-center gap-2">
-                          <span className={peer.isUser ? 'text-[#1cb0f6]' : 'text-white'}>
+                          <span className={peer.isUser ? 'text-[#5C1F2A]' : 'text-[#2B1B1A]'}>
                             {peer.name}
                           </span>
                           {peer.isUser && (
-                            <span className="text-[9px] uppercase font-black px-2 py-0.5 rounded-full bg-[#1cb0f6] text-slate-950">
+                            <span className="text-[9px] uppercase font-black px-2 py-0.5 rounded-full bg-[#5C1F2A] text-[#FFF8EE]">
                               YOU
                             </span>
                           )}
                         </div>
-                        <span className="text-[11px] text-orange-400 font-bold flex items-center gap-1 mt-0.5">
-                          <Flame className="w-3 h-3 fill-orange-400" />
+                        <span className="text-[11px] text-[#B5581B] font-bold flex items-center gap-1 mt-0.5">
+                          <Flame className="w-3 h-3 fill-[#E9873A]" />
                           {peer.streak} day streak
                         </span>
                       </div>
                     </div>
                     <div className="text-right">
-                      <span className="font-mono text-base font-black text-amber-300 block">
+                      <span className="font-mono text-base font-black text-[#8A5A00] block">
                         {peer.xp} XP
                       </span>
-                      <span className="text-[10px] text-slate-400 uppercase font-bold">
+                      <span className="text-[10px] text-[#857670] uppercase font-bold">
                         {rank <= 3 ? 'Promotion Zone' : 'Active'}
                       </span>
                     </div>
@@ -272,7 +272,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 );
               })}
             </div>
-            <p className="text-[11px] text-slate-500 font-medium mt-4 text-center">
+            <p className="text-[11px] text-[#857670] font-medium mt-4 text-center">
               Friends' progress is private, so only your own XP is ranked here for now.
             </p>
           </div>
@@ -285,7 +285,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             {/* ================= UNIT 1 (ACTIVE) ================= */}
             <div>
               {/* Unit Header Banner */}
-              <div className="rounded-3xl bg-gradient-to-br from-[#0369a1] via-[#0e8fd4] to-[#1cb0f6] p-5 sm:p-6 border-b-[5px] border-[#025a87] shadow-[0_16px_40px_rgba(28,176,246,0.35)] mb-6 sm:mb-8 text-white relative overflow-hidden">
+              <div className="rounded-3xl bg-gradient-to-br from-[#3D1119] via-[#F1E6D6] to-[#5C1F2A] p-5 sm:p-6 border-b-[5px] border-[#E8DCCB] shadow-[0_16px_40px_rgba(92,31,42,0.35)] mb-6 sm:mb-8 text-[#2B1B1A] relative overflow-hidden">
                 {/* Decorative background circles */}
                 <div className="absolute -right-10 -top-10 w-44 h-44 rounded-full bg-white/5 pointer-events-none" />
                 <div className="absolute -right-2 -bottom-8 w-28 h-28 rounded-full bg-white/8 pointer-events-none" />
@@ -295,7 +295,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative">
                   <div>
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full bg-white/20 text-white border border-white/30 backdrop-blur-sm">
+                      <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full bg-white/20 text-[#2B1B1A] border border-white/30 backdrop-blur-sm">
                         UNIT 1 OF 6 • ACTIVE
                       </span>
                       {/* Progress dots */}
@@ -305,13 +305,13 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                         ))}
                       </div>
                     </div>
-                    <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight drop-shadow-sm">
+                    <h1 className="text-2xl sm:text-3xl font-black text-[#2B1B1A] tracking-tight leading-tight drop-shadow-sm">
                       AI Foundations
                     </h1>
-                    <p className="text-xs sm:text-sm font-bold text-white/80 mt-1.5 max-w-md">
+                    <p className="text-xs sm:text-sm font-bold text-[#2B1B1A]/80 mt-1.5 max-w-md">
                       Demystify neural networks, machine learning, and pattern recognition.
                     </p>
-                    <p className="text-[11px] font-black text-white/60 mt-1">
+                    <p className="text-[11px] font-black text-[#2B1B1A]/60 mt-1">
                       {completedCount} / 5 lessons complete
                     </p>
                   </div>
@@ -321,9 +321,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                       sound.playClick();
                       setShowGuidebook(true);
                     }}
-                    className="px-5 py-3 rounded-2xl bg-[#0a1e3c] hover:bg-[#112447] text-white font-black text-xs uppercase tracking-wider border-b-4 border-[#06111f] active:translate-y-1 active:border-b-0 transition-all flex items-center gap-2 shadow-xl shrink-0 border border-white/10"
+                    className="px-5 py-3 rounded-2xl bg-[#F6EFE4] hover:bg-[#F6EFE4] text-[#2B1B1A] font-black text-xs uppercase tracking-wider border-b-4 border-[#E8DCCB] active:translate-y-1 active:border-b-0 transition-all flex items-center gap-2 shadow-xl shrink-0 border border-white/10"
                   >
-                    <BookOpen className="w-4 h-4 text-[#1cb0f6] stroke-[2.5]" />
+                    <BookOpen className="w-4 h-4 text-[#5C1F2A] stroke-[2.5]" />
                     <span>GUIDEBOOK</span>
                   </button>
                 </div>
@@ -332,11 +332,11 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               {/* Unit 1 Lesson Path with Curved Connecting Roadmap */}
               <div
                 ref={roadmapContainerRef}
-                className="relative py-6 flex flex-col items-center w-full max-w-lg mx-auto rounded-3xl bg-gradient-to-b from-[#0a1628]/60 to-transparent"
+                className="relative py-6 flex flex-col items-center w-full max-w-lg mx-auto rounded-3xl bg-gradient-to-b from-[#FFFDF9]/60 to-transparent"
               >
                 {/* Ambient glow blobs behind the path */}
-                <div className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-[#1cb0f6]/4 blur-3xl pointer-events-none" />
-                <div className="absolute bottom-1/4 right-1/4 w-28 h-28 rounded-full bg-purple-600/4 blur-3xl pointer-events-none" />
+                <div className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-[#5C1F2A]/4 blur-3xl pointer-events-none" />
+                <div className="absolute bottom-1/4 right-1/4 w-28 h-28 rounded-full bg-[#5C1F2A]/4 blur-3xl pointer-events-none" />
                 {/* Connecting Curved Roadmap SVG Track */}
                 <ConnectingRoadmap
                   containerRef={roadmapContainerRef}
@@ -406,10 +406,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               const isExpanded = expandedUnitId === unit.pathId;
 
               return (
-                <div key={unit.unitNumber} className="relative pt-6 border-t-2 border-[#1c325c]">
+                <div key={unit.unitNumber} className="relative pt-6 border-t-2 border-[#E8DCCB]">
                   {/* Unit Header Card */}
                   <div
-                    className={`rounded-3xl bg-gradient-to-r ${unit.colorTheme.banner} p-5 sm:p-6 border-b-[6px] ${unit.colorTheme.border} shadow-2xl text-white relative overflow-hidden`}
+                    className={`rounded-3xl bg-gradient-to-r ${unit.colorTheme.banner} p-5 sm:p-6 border-b-[6px] ${unit.colorTheme.border} shadow-2xl text-[#2B1B1A] relative overflow-hidden`}
                   >
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                       <div className="flex items-start gap-4">
@@ -421,12 +421,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                             <span className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full ${unit.colorTheme.badge}`}>
                               UNIT {unit.unitNumber} OF 6
                             </span>
-                            <span className="text-[11px] font-black px-2 py-0.5 rounded-full bg-black/30 text-white/90 border border-white/20 flex items-center gap-1">
+                            <span className="text-[11px] font-black px-2 py-0.5 rounded-full bg-black/30 text-[#2B1B1A]/90 border border-white/20 flex items-center gap-1">
                               <Lock className="w-3 h-3" /> Locked
                             </span>
                           </div>
                           <h2 className="text-2xl font-black tracking-tight">{unit.title}</h2>
-                          <p className="text-xs text-white/90 mt-1 max-w-md font-medium">
+                          <p className="text-xs text-[#2B1B1A]/90 mt-1 max-w-md font-medium">
                             {unit.tagline}
                           </p>
                         </div>
@@ -438,14 +438,14 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                           sound.playClick();
                           setExpandedUnitId(isExpanded ? null : unit.pathId);
                         }}
-                        className="px-4 py-2.5 rounded-2xl bg-black/30 hover:bg-black/50 border-2 border-white/30 text-white font-black text-xs uppercase tracking-wider transition-all flex items-center gap-1.5 shrink-0 active:scale-95"
+                        className="px-4 py-2.5 rounded-2xl bg-black/30 hover:bg-black/50 border-2 border-white/30 text-[#2B1B1A] font-black text-xs uppercase tracking-wider transition-all flex items-center gap-1.5 shrink-0 active:scale-95"
                       >
                         <span>{isExpanded ? 'Hide Path' : 'Preview Path'}</span>
                         {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                       </button>
                     </div>
 
-                    <div className="mt-4 pt-3 border-t border-white/20 flex items-center justify-between text-xs font-bold text-white/80">
+                    <div className="mt-4 pt-3 border-t border-white/20 flex items-center justify-between text-xs font-bold text-[#2B1B1A]/80">
                       <span>{unit.lessons.length} Upcoming Lessons</span>
                       <span className="text-[11px] italic opacity-90">
                         Prerequisite: {unit.requiredPreviousUnit}
@@ -455,15 +455,15 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
                   {/* Expandable Preview Pathway */}
                   {isExpanded && (
-                    <div className="mt-8 py-6 px-4 rounded-3xl bg-[#0c162c] border-2 border-[#1c325c] flex flex-col items-center animate-fade-in relative">
+                    <div className="mt-8 py-6 px-4 rounded-3xl bg-[#FFFDF9] border-2 border-[#E8DCCB] flex flex-col items-center animate-fade-in relative">
                       <div className="mb-6 text-center max-w-md">
-                        <span className="text-[10px] uppercase font-black text-slate-400 tracking-wider block mb-1">
+                        <span className="text-[10px] uppercase font-black text-[#857670] tracking-wider block mb-1">
                           CURRICULUM PREVIEW
                         </span>
-                        <h4 className="text-base font-black text-white">
+                        <h4 className="text-base font-black text-[#2B1B1A]">
                           Lessons in Unit {unit.unitNumber}
                         </h4>
-                        <p className="text-xs text-slate-400 mt-0.5">
+                        <p className="text-xs text-[#857670] mt-0.5">
                           Click any node to preview its topic and learning objectives.
                         </p>
                       </div>
@@ -473,42 +473,42 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                           <div
                             key={lesson.id}
                             onClick={() => handleLockedNodeClick(unit.title, lesson.title)}
-                            className={`flex items-center gap-4 p-4 rounded-2xl bg-[#0f1d38] border-2 border-[#1c325c] hover:border-slate-500 cursor-pointer transition-all duration-200 group w-full max-w-md shadow-md ${
+                            className={`flex items-center gap-4 p-4 rounded-2xl bg-[#FFFDF9] border-2 border-[#E8DCCB] hover:border-[#E8DCCB] cursor-pointer transition-all duration-200 group w-full max-w-md shadow-md ${
                               offsets[idx % offsets.length]
                             }`}
                           >
                             {/* Locked Circle Node */}
-                            <div className="w-12 h-12 rounded-2xl bg-[#142344] border-2 border-[#254684] flex items-center justify-center text-slate-400 group-hover:text-amber-400 group-hover:border-amber-500/50 transition-colors shrink-0 shadow-md">
+                            <div className="w-12 h-12 rounded-2xl bg-[#F6EFE4] border-2 border-[#E8DCCB] flex items-center justify-center text-[#857670] group-hover:text-[#8A5A00] group-hover:border-[#F2B93B]/50 transition-colors shrink-0 shadow-md">
                               <Lock className="w-5 h-5" />
                             </div>
 
                             <div className="flex-1 min-w-0 text-left">
                               <div className="flex items-center gap-2">
-                                <span className="text-[10px] uppercase font-black text-slate-500">
+                                <span className="text-[10px] uppercase font-black text-[#857670]">
                                   Lesson {lesson.order}
                                 </span>
-                                <span className="text-[10px] font-bold text-amber-400 font-mono">
+                                <span className="text-[10px] font-bold text-[#8A5A00] font-mono">
                                   +{lesson.xpReward} XP
                                 </span>
                               </div>
-                              <h5 className="text-sm font-black text-white truncate group-hover:text-cyan-300 transition-colors">
+                              <h5 className="text-sm font-black text-[#2B1B1A] truncate group-hover:text-[#7A2B37] transition-colors">
                                 {lesson.title}
                               </h5>
-                              <span className="text-[11px] text-slate-400 block mt-0.5">
+                              <span className="text-[11px] text-[#857670] block mt-0.5">
                                 ~{lesson.estimatedMinutes} mins • Locked
                               </span>
                             </div>
 
-                            <span className="text-[10px] uppercase font-black px-2.5 py-1 rounded-xl bg-[#132344] text-slate-400 border border-[#1f3764] group-hover:border-amber-500/40 group-hover:text-amber-300 transition-colors shrink-0">
+                            <span className="text-[10px] uppercase font-black px-2.5 py-1 rounded-xl bg-[#F6EFE4] text-[#857670] border border-[#F1E6D6] group-hover:border-[#F2B93B]/40 group-hover:text-[#8A5A00] transition-colors shrink-0">
                               Locked
                             </span>
                           </div>
                         ))}
 
                         {/* Unit Final Trophy Placeholder */}
-                        <div className="p-4 rounded-2xl bg-[#132344] border-2 border-dashed border-[#24427c] text-center w-full max-w-md flex items-center justify-center gap-3 text-slate-400">
-                          <Award className="w-5 h-5 text-amber-400" />
-                          <span className="text-xs font-black uppercase tracking-wider text-slate-300">
+                        <div className="p-4 rounded-2xl bg-[#F6EFE4] border-2 border-dashed border-[#E8DCCB] text-center w-full max-w-md flex items-center justify-center gap-3 text-[#857670]">
+                          <Award className="w-5 h-5 text-[#8A5A00]" />
+                          <span className="text-xs font-black uppercase tracking-wider text-[#4D3B38]">
                             Unit {unit.unitNumber} Mastery Badge (+100 XP)
                           </span>
                         </div>

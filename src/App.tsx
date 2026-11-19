@@ -107,13 +107,13 @@ export function App() {
   // otherwise the login screen flashes for already-signed-in users.
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0a1224] flex flex-col items-center justify-center gap-4">
+      <div className="min-h-screen bg-[#FBF6EE] flex flex-col items-center justify-center gap-4">
         <img
           src="/mascot-cat-logo.png"
           alt=""
           className="w-24 h-24 object-contain animate-float"
         />
-        <p className="text-xs font-black uppercase tracking-wider text-slate-400">
+        <p className="text-xs font-black uppercase tracking-wider text-[#857670]">
           Loading your profile…
         </p>
       </div>
@@ -124,13 +124,13 @@ export function App() {
   // Dashboard, progress, profile, friends and lessons stay mounted-out entirely.
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#0a1224] text-slate-100 selection:bg-[#1cb0f6] selection:text-slate-950">
+      <div className="min-h-screen bg-[#FBF6EE] text-[#2B1B1A] selection:bg-[#5C1F2A] selection:text-[#FFF8EE]">
         {authMode === null ? (
           <>
             <div className="w-full flex justify-end px-4 sm:px-6 lg:px-8 pt-4">
               <button
                 onClick={() => openAuth('login')}
-                className="btn-3d bg-[#0f1d38] hover:bg-[#1b3464] border-2 border-[#1c325c] hover:border-[#1cb0f6]/60 border-b-4 text-slate-100 font-black text-xs uppercase tracking-wider rounded-2xl px-5 py-2.5"
+                className="btn-3d bg-[#FFFDF9] hover:bg-[#F1E6D6] border-2 border-[#E8DCCB] hover:border-[#5C1F2A]/60 border-b-4 text-[#2B1B1A] font-black text-xs uppercase tracking-wider rounded-2xl px-5 py-2.5"
               >
                 Log in
               </button>
@@ -197,7 +197,7 @@ export function App() {
 
   return (
     <FriendsProvider key={user.uid} uid={user.uid}>
-    <div className="min-h-screen bg-[#0a1224] text-slate-100 flex flex-col lg:flex-row selection:bg-[#1cb0f6] selection:text-slate-950">
+    <div className="min-h-screen bg-[#FBF6EE] text-[#2B1B1A] flex flex-col lg:flex-row selection:bg-[#5C1F2A] selection:text-[#FFF8EE]">
       {/* Left Persistent Navigation Sidebar */}
       {currentView !== 'lesson' && (
         <Sidebar

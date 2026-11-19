@@ -325,29 +325,29 @@ export const DraggableMascot: React.FC = () => {
           role="dialog"
           aria-label="Aivo study companion chat"
           style={panelStyle}
-          className="fixed z-50 flex flex-col rounded-3xl bg-[#0b1628] border border-[#1cb0f6]/50 shadow-[0_24px_70px_rgba(0,0,0,0.9),0_0_40px_rgba(28,176,246,0.18)] overflow-hidden animate-slide-up">
+          className="fixed z-50 flex flex-col rounded-3xl bg-[#FFFDF9] border border-[#5C1F2A]/50 shadow-[0_24px_70px_rgba(0,0,0,0.9),0_0_40px_rgba(92,31,42,0.18)] overflow-hidden animate-slide-up">
 
           {/* Header */}
-          <div className="shrink-0 px-4 py-3 bg-gradient-to-r from-[#0c1d3e] via-[#11254a] to-[#0c1d3e] border-b border-[#1cb0f6]/25 flex items-center justify-between">
+          <div className="shrink-0 px-4 py-3 bg-gradient-to-r from-[#FFFDF9] via-[#F6EFE4] to-[#FFFDF9] border-b border-[#5C1F2A]/25 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="relative w-10 h-10 rounded-full border-2 border-[#1cb0f6]/70 bg-[#091628] flex items-center justify-center p-1 shadow-[0_0_14px_rgba(28,176,246,0.3)]">
+              <div className="relative w-10 h-10 rounded-full border-2 border-[#5C1F2A]/70 bg-[#F6EFE4] flex items-center justify-center p-1 shadow-[0_0_14px_rgba(92,31,42,0.3)]">
                 <img src="/mascot-cat-avatar.png" alt="Aivo" className="w-full h-full object-contain" />
                 {/* Online dot */}
-                <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#0b1628] shadow-[0_0_6px_rgba(52,211,153,0.7)]" />
+                <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#8DAA5B] border-2 border-[#FFFDF9] shadow-[0_0_6px_rgba(52,211,153,0.7)]" />
               </div>
               <div>
-                <h3 className="font-extrabold text-sm text-white tracking-tight flex items-center gap-1.5">
+                <h3 className="font-extrabold text-sm text-[#2B1B1A] tracking-tight flex items-center gap-1.5">
                   Aivo
-                  <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full bg-[#1cb0f6]/15 text-[#1cb0f6] border border-[#1cb0f6]/30">AI</span>
+                  <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full bg-[#5C1F2A]/15 text-[#5C1F2A] border border-[#5C1F2A]/30">AI</span>
                 </h3>
-                <p className="text-[10px] text-sky-400/80 font-bold uppercase tracking-wider">Study Companion • Online</p>
+                <p className="text-[10px] text-[#7A2B37]/80 font-bold uppercase tracking-wider">Study Companion • Online</p>
               </div>
             </div>
 
             <div className="flex items-center gap-1.5">
               <button
                 onClick={cycleCorner}
-                className="p-2 rounded-xl bg-[#142344]/80 hover:bg-[#1b3464] text-sky-400 border border-[#1f3764]/60 hover:border-[#1cb0f6]/40 transition-all"
+                className="p-2 rounded-xl bg-[#F6EFE4]/80 hover:bg-[#F1E6D6] text-[#7A2B37] border border-[#F1E6D6]/60 hover:border-[#5C1F2A]/40 transition-all"
                 title="Move Aivo to another corner"
                 aria-label="Move Aivo to another corner of the screen"
               >
@@ -355,14 +355,14 @@ export const DraggableMascot: React.FC = () => {
               </button>
               <button
                 onClick={toggleSound}
-                className="p-2 rounded-xl bg-[#142344]/80 hover:bg-[#1b3464] text-sky-400 border border-[#1f3764]/60 hover:border-[#1cb0f6]/40 transition-all"
+                className="p-2 rounded-xl bg-[#F6EFE4]/80 hover:bg-[#F1E6D6] text-[#7A2B37] border border-[#F1E6D6]/60 hover:border-[#5C1F2A]/40 transition-all"
                 title={isMuted ? 'Unmute sounds' : 'Mute sounds'}
               >
                 {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
               </button>
               <button
                 onClick={handleClose}
-                className="p-2 rounded-xl bg-[#142344]/80 hover:bg-rose-950/70 text-slate-400 hover:text-rose-400 border border-[#1f3764]/60 hover:border-rose-800/60 transition-all"
+                className="p-2 rounded-xl bg-[#F6EFE4]/80 hover:bg-[#FBE3E0]/70 text-[#857670] hover:text-[#B0303C] border border-[#F1E6D6]/60 hover:border-[#B0303C]/60 transition-all"
                 title="Close Aivo"
               >
                 <X className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -371,15 +371,15 @@ export const DraggableMascot: React.FC = () => {
           </div>
 
           {/* Quick prompts bar */}
-          <div className="shrink-0 px-3 py-2 bg-[#091525] border-b border-[#142348]/80 flex items-center gap-1.5 overflow-x-auto scrollbar-none">
-            <span className="shrink-0 flex items-center gap-0.5 text-[9px] font-black uppercase text-amber-400/90">
+          <div className="shrink-0 px-3 py-2 bg-[#F6EFE4] border-b border-[#F6EFE4]/80 flex items-center gap-1.5 overflow-x-auto scrollbar-none">
+            <span className="shrink-0 flex items-center gap-0.5 text-[9px] font-black uppercase text-[#8A5A00]/90">
               <Lightbulb className="w-3 h-3" /> Try:
             </span>
             {quickQuestions.map((q, idx) => (
               <button
                 key={idx}
                 onClick={() => { sound.playClick(); handleSendMessage(q); }}
-                className="shrink-0 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#0f1e38] hover:bg-[#1cb0f6] hover:text-slate-950 text-sky-300 border border-[#1f3764]/70 hover:border-transparent transition-all whitespace-nowrap active:scale-95"
+                className="shrink-0 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#FFFDF9] hover:bg-[#5C1F2A] hover:text-[#FFF8EE] text-[#7A2B37] border border-[#F1E6D6]/70 hover:border-transparent transition-all whitespace-nowrap active:scale-95"
               >
                 {q}
               </button>
@@ -387,22 +387,22 @@ export const DraggableMascot: React.FC = () => {
           </div>
 
           {/* Messages area */}
-          <div className="p-3.5 flex-[0_1_240px] min-h-[96px] overflow-y-auto space-y-3 text-xs leading-relaxed bg-[#070f1e]/60">
+          <div className="p-3.5 flex-[0_1_240px] min-h-[96px] overflow-y-auto space-y-3 text-xs leading-relaxed bg-[#FFFDF9]/60">
             {messages.map((msg) => (
               <div
                 key={msg.id}
                 className={`flex gap-2 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
               >
                 {msg.sender === 'aivo' && (
-                  <div className="w-7 h-7 rounded-full border border-[#1cb0f6]/50 shrink-0 bg-[#0c1a36] mt-0.5 flex items-center justify-center p-0.5">
+                  <div className="w-7 h-7 rounded-full border border-[#5C1F2A]/50 shrink-0 bg-[#F6EFE4] mt-0.5 flex items-center justify-center p-0.5">
                     <img src="/mascot-cat-avatar.png" alt="Aivo" className="w-full h-full object-contain" />
                   </div>
                 )}
                 <div
                   className={`max-w-[83%] px-3 py-2.5 rounded-2xl shadow-sm ${
                     msg.sender === 'user'
-                      ? 'bg-[#1cb0f6] text-slate-950 font-semibold rounded-br-md border-b-[3px] border-[#1899d6]'
-                      : 'bg-[#0f1e38] text-slate-100 rounded-bl-md border border-[#1c3060]/80'
+                      ? 'bg-[#5C1F2A] text-[#FFF8EE] font-semibold rounded-br-md border-b-[3px] border-[#3D1119]'
+                      : 'bg-[#FFFDF9] text-[#2B1B1A] rounded-bl-md border border-[#F1E6D6]/80'
                   }`}
                 >
                   <p>{msg.text}</p>
@@ -412,13 +412,13 @@ export const DraggableMascot: React.FC = () => {
             ))}
 
             {isTyping && (
-              <div className="flex items-center gap-2 text-cyan-300 text-xs italic bg-[#0f1e38] px-3 py-2.5 rounded-2xl w-fit border border-[#1c3060]/80 animate-fade-in">
+              <div className="flex items-center gap-2 text-[#7A2B37] text-xs italic bg-[#FFFDF9] px-3 py-2.5 rounded-2xl w-fit border border-[#F1E6D6]/80 animate-fade-in">
                 <Sparkles className="w-3.5 h-3.5 animate-spin" />
                 <span>Thinking...</span>
                 <span className="flex gap-0.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-bounce" style={{ animationDelay: '300ms' }} />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#5C1F2A] animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#5C1F2A] animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#5C1F2A] animate-bounce" style={{ animationDelay: '300ms' }} />
                 </span>
               </div>
             )}
@@ -428,19 +428,19 @@ export const DraggableMascot: React.FC = () => {
           {/* Input bar */}
           <form
             onSubmit={(e) => { e.preventDefault(); handleSendMessage(); }}
-            className="shrink-0 p-3 bg-[#05090f] border-t border-[#142348]/80 flex items-center gap-2"
+            className="shrink-0 p-3 bg-[#05090f] border-t border-[#F6EFE4]/80 flex items-center gap-2"
           >
             <input
               type="text"
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder="Ask about AI, neural nets..."
-              className="flex-1 px-3.5 py-2.5 rounded-xl bg-[#0f1d38] border border-[#1f3764]/70 text-white text-xs placeholder:text-slate-500 focus:outline-none focus:border-[#1cb0f6]/70 transition-colors"
+              className="flex-1 px-3.5 py-2.5 rounded-xl bg-[#FFFDF9] border border-[#F1E6D6]/70 text-[#2B1B1A] text-xs placeholder:text-[#857670] focus:outline-none focus:border-[#5C1F2A]/70 transition-colors"
             />
             <button
               type="submit"
               disabled={!inputText.trim()}
-              className="p-2.5 rounded-xl bg-[#1cb0f6] hover:bg-[#2bbef8] disabled:bg-[#111e34] disabled:text-slate-600 text-slate-950 font-bold transition-all border-b-[3px] border-[#1899d6] disabled:border-[#0c1828] active:border-b-0 active:translate-y-0.5"
+              className="p-2.5 rounded-xl bg-[#5C1F2A] hover:bg-[#F1E6D6] disabled:bg-[#F6EFE4] disabled:text-[#B3A59C] text-[#FFF8EE] font-bold transition-all border-b-[3px] border-[#3D1119] disabled:border-[#E8DCCB] active:border-b-0 active:translate-y-0.5"
             >
               <Send className="w-3.5 h-3.5 stroke-[2.5]" />
             </button>
@@ -455,7 +455,7 @@ export const DraggableMascot: React.FC = () => {
       >
         {/* Pulsing outer ring when closed */}
         {!isOpen && (
-          <div className="absolute inset-0 rounded-full bg-[#1cb0f6]/20 animate-ping pointer-events-none scale-150" />
+          <div className="absolute inset-0 rounded-full bg-[#5C1F2A]/20 animate-ping pointer-events-none scale-150" />
         )}
 
         <button
@@ -474,29 +474,29 @@ export const DraggableMascot: React.FC = () => {
           title="Drag to move. Arrow keys also move Aivo."
           className={`relative w-[62px] h-[62px] rounded-full flex items-center justify-center ${isDragging ? '' : 'transition-all duration-200'} ${
             isOpen
-              ? 'bg-[#0f1d38] border-2 border-[#1cb0f6]/50 hover:bg-[#162848] active:scale-95 shadow-[0_8px_24px_rgba(0,0,0,0.6)]'
-              : `bg-gradient-to-tr from-[#0c7ec7] via-[#1cb0f6] to-[#3dc8ff] border-2 border-white/35 hover:scale-110 active:scale-95 shadow-[0_8px_28px_rgba(28,176,246,0.65)] ${isDragging ? '' : 'animate-float'}`
+              ? 'bg-[#FFFDF9] border-2 border-[#5C1F2A]/50 hover:bg-[#F6EFE4] active:scale-95 shadow-[0_8px_24px_rgba(0,0,0,0.6)]'
+              : `bg-gradient-to-tr from-[#5C1F2A] via-[#5C1F2A] to-[#F1E6D6] border-2 border-white/35 hover:scale-110 active:scale-95 shadow-[0_8px_28px_rgba(92,31,42,0.65)] ${isDragging ? '' : 'animate-float'}`
           }`}
           aria-label={isOpen ? 'Close Aivo chat' : 'Open Aivo AI chat'}
         >
           {/* Soft glow behind when open */}
           {isOpen && (
-            <div className="absolute inset-0 rounded-full bg-[#1cb0f6] blur-lg opacity-15 pointer-events-none" />
+            <div className="absolute inset-0 rounded-full bg-[#5C1F2A] blur-lg opacity-15 pointer-events-none" />
           )}
 
           {isOpen ? (
-            <X className="w-6 h-6 text-sky-300 stroke-[2.5] relative z-10" />
+            <X className="w-6 h-6 text-[#7A2B37] stroke-[2.5] relative z-10" />
           ) : (
             <>
               {/* Glow aura */}
-              <div className="absolute inset-0 rounded-full bg-cyan-300 blur-md opacity-20 pointer-events-none" />
+              <div className="absolute inset-0 rounded-full bg-[#FBE3E0] blur-md opacity-20 pointer-events-none" />
               <img
                 src="/mascot-cat-avatar.png"
                 alt="Open Aivo AI chat"
                 className="w-10 h-10 object-contain relative z-10 drop-shadow-lg"
               />
               {/* New message indicator OR default Zap badge */}
-              <div className={`absolute -top-1 -right-1 w-5 h-5 rounded-full border-2 border-[#0a1224] flex items-center justify-center z-10 shadow-md ${hasNewMessage ? 'bg-rose-500 animate-bounce' : 'bg-amber-400'}`}>
+              <div className={`absolute -top-1 -right-1 w-5 h-5 rounded-full border-2 border-[#FBF6EE] flex items-center justify-center z-10 shadow-md ${hasNewMessage ? 'bg-[#C2414B] animate-bounce' : 'bg-[#F2B93B]'}`}>
                 {hasNewMessage
                   ? <MessageCircle className="w-2.5 h-2.5 fill-white stroke-[2]" />
                   : <Zap className="w-2.5 h-2.5 fill-slate-950 stroke-[2]" />
@@ -508,7 +508,7 @@ export const DraggableMascot: React.FC = () => {
 
         {/* Tooltip label on closed state (hover) */}
         {!isOpen && (
-          <div className="absolute bottom-full right-0 mb-2 px-2.5 py-1.5 rounded-xl bg-[#0f1d38] border border-[#1cb0f6]/40 text-[10px] font-black text-white whitespace-nowrap shadow-lg pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="absolute bottom-full right-0 mb-2 px-2.5 py-1.5 rounded-xl bg-[#FFFDF9] border border-[#5C1F2A]/40 text-[10px] font-black text-[#2B1B1A] whitespace-nowrap shadow-lg pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
             Ask Aivo AI
           </div>
         )}

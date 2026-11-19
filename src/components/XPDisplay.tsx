@@ -22,12 +22,12 @@ export const XPDisplay: React.FC<XPDisplayProps> = ({
 
   return (
     <div
-      className={`inline-flex items-center font-black rounded-2xl bg-[#142344] border-2 border-amber-400 text-amber-300 shadow-md ${sizeStyles} ${className}`}
+      className={`inline-flex items-center font-black rounded-2xl bg-[#F6EFE4] border-2 border-[#F2B93B] text-[#8A5A00] shadow-md ${sizeStyles} ${className}`}
     >
-      <Zap className="w-4 h-4 text-amber-400 fill-amber-400" />
+      <Zap className="w-4 h-4 text-[#8A5A00] fill-[#F2B93B]" />
       <span className="font-mono tracking-tight">{xp} XP</span>
       {bonus && bonus > 0 && (
-        <span className="flex items-center text-emerald-400 text-xs font-black">
+        <span className="flex items-center text-[#4F6B2A] text-xs font-black">
           <Sparkles className="w-3.5 h-3.5 mr-0.5" /> +{bonus}
         </span>
       )}

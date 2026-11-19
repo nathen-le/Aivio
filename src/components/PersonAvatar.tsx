@@ -9,7 +9,7 @@ export const PersonAvatar: React.FC<{ profile: PublicProfile | null; size?: 'md'
   <div
     className={`${
       size === 'lg' ? 'w-16 h-16' : 'w-14 h-14'
-    } shrink-0 rounded-2xl bg-gradient-to-br from-[#142344] to-[#1b3464] border-2 border-[#274885] flex items-center justify-center shadow-md overflow-hidden p-1`}
+    } shrink-0 rounded-2xl bg-gradient-to-br from-[#F6EFE4] to-[#F1E6D6] border-2 border-[#F1E6D6] flex items-center justify-center shadow-md overflow-hidden p-1`}
   >
     <img
       src={profile?.avatarUrl ?? '/mascot-cat-avatar.png'}

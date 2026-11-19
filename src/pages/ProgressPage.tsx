@@ -50,11 +50,11 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
   return (
     <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-3 sm:pt-5 pb-24 lg:pb-12 animate-fade-in select-none">
       {/* Top Profile Banner */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-[#0f1d38] border-2 border-[#1c325c] shadow-2xl mb-8">
+      <div className="p-6 sm:p-8 rounded-3xl bg-[#FFFDF9] border-2 border-[#E8DCCB] shadow-2xl mb-8">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
             {/* Mascot Avatar Portrait */}
-            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl overflow-hidden border-4 border-[#1cb0f6] bg-[#142344] p-1.5 shrink-0 shadow-lg flex items-center justify-center">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl overflow-hidden border-4 border-[#5C1F2A] bg-[#F6EFE4] p-1.5 shrink-0 shadow-lg flex items-center justify-center">
               <img
                 src="/mascot-cat-avatar.png"
                 alt="Aivo Avatar"
@@ -63,17 +63,17 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
             </div>
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[11px] uppercase font-black tracking-wider text-[#1cb0f6]">
+                <span className="text-[11px] uppercase font-black tracking-wider text-[#5C1F2A]">
                   STUDENT PASSPORT
                 </span>
-                <span className="text-[10px] uppercase font-black px-2 py-0.5 rounded-full bg-purple-950 text-purple-300 border border-purple-800">
+                <span className="text-[10px] uppercase font-black px-2 py-0.5 rounded-full bg-[#FBE3E0] text-[#2B1B1A] border border-[#E8DCCB]">
                   Level {levelInfo.level}
                 </span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-black text-white">
+              <h1 className="text-2xl sm:text-3xl font-black text-[#2B1B1A]">
                 {progress.userName}'s AI Profile
               </h1>
-              <p className="text-xs sm:text-sm text-slate-300 mt-1 font-bold">
+              <p className="text-xs sm:text-sm text-[#4D3B38] mt-1 font-bold">
                 {levelInfo.title} • {completedCount} of {totalAvailableLessons} Lessons Mastered ({overallPercentage}%)
               </p>
             </div>
@@ -85,7 +85,7 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
               sound.playClick();
               onResumeNextLesson();
             }}
-            className="w-full md:w-auto px-8 py-4 rounded-2xl bg-[#1cb0f6] hover:bg-[#25b8fc] text-slate-950 font-black text-sm uppercase tracking-wider border-b-4 border-[#1899d6] active:translate-y-1 active:border-b-0 shadow-xl shadow-cyan-500/25 transition-all flex items-center justify-center gap-2"
+            className="w-full md:w-auto px-8 py-4 rounded-2xl bg-[#5C1F2A] hover:bg-[#5C1F2A] text-[#FFF8EE] font-black text-sm uppercase tracking-wider border-b-4 border-[#3D1119] active:translate-y-1 active:border-b-0 shadow-xl shadow-[#5C1F2A]/25 transition-all flex items-center justify-center gap-2"
           >
             <span>RESUME LESSON</span>
             <ArrowRight className="w-5 h-5 stroke-[3]" />
@@ -94,54 +94,54 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
 
         {/* Stats Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
-          <div className="p-4 rounded-2xl bg-[#142344] border-2 border-[#1f3764]">
-            <span className="text-xs uppercase font-black text-amber-400 flex items-center gap-1.5 mb-1">
-              <Zap className="w-4 h-4 fill-amber-400" /> Total XP
+          <div className="p-4 rounded-2xl bg-[#F6EFE4] border-2 border-[#F1E6D6]">
+            <span className="text-xs uppercase font-black text-[#8A5A00] flex items-center gap-1.5 mb-1">
+              <Zap className="w-4 h-4 fill-[#F2B93B]" /> Total XP
             </span>
-            <span className="text-2xl sm:text-3xl font-black text-white font-mono block">
+            <span className="text-2xl sm:text-3xl font-black text-[#2B1B1A] font-mono block">
               {progress.totalXP}
             </span>
-            <span className="text-[11px] text-slate-400 font-bold">All-time points</span>
+            <span className="text-[11px] text-[#857670] font-bold">All-time points</span>
           </div>
 
-          <div className="p-4 rounded-2xl bg-[#142344] border-2 border-[#1f3764]">
-            <span className="text-xs uppercase font-black text-orange-400 flex items-center gap-1.5 mb-1">
-              <Flame className="w-4 h-4 fill-orange-400" /> Daily Streak
+          <div className="p-4 rounded-2xl bg-[#F6EFE4] border-2 border-[#F1E6D6]">
+            <span className="text-xs uppercase font-black text-[#B5581B] flex items-center gap-1.5 mb-1">
+              <Flame className="w-4 h-4 fill-[#E9873A]" /> Daily Streak
             </span>
-            <span className="text-2xl sm:text-3xl font-black text-white font-mono block">
+            <span className="text-2xl sm:text-3xl font-black text-[#2B1B1A] font-mono block">
               {progress.currentStreak} {progress.currentStreak === 1 ? 'day' : 'days'}
             </span>
-            <span className="text-[11px] text-slate-400 font-bold">Daily habit</span>
+            <span className="text-[11px] text-[#857670] font-bold">Daily habit</span>
           </div>
 
-          <div className="p-4 rounded-2xl bg-[#142344] border-2 border-[#1f3764]">
-            <span className="text-xs uppercase font-black text-cyan-400 flex items-center gap-1.5 mb-1">
+          <div className="p-4 rounded-2xl bg-[#F6EFE4] border-2 border-[#F1E6D6]">
+            <span className="text-xs uppercase font-black text-[#7A2B37] flex items-center gap-1.5 mb-1">
               <span>💎</span> Crystals
             </span>
-            <span className="text-2xl sm:text-3xl font-black text-white font-mono block">
+            <span className="text-2xl sm:text-3xl font-black text-[#2B1B1A] font-mono block">
               {Math.floor(progress.totalXP * 1.5) + 100}
             </span>
-            <span className="text-[11px] text-slate-400 font-bold">In-game gems</span>
+            <span className="text-[11px] text-[#857670] font-bold">In-game gems</span>
           </div>
 
-          <div className="p-4 rounded-2xl bg-[#142344] border-2 border-[#1f3764]">
-            <span className="text-xs uppercase font-black text-purple-400 flex items-center gap-1.5 mb-1">
+          <div className="p-4 rounded-2xl bg-[#F6EFE4] border-2 border-[#F1E6D6]">
+            <span className="text-xs uppercase font-black text-[#2B1B1A] flex items-center gap-1.5 mb-1">
               <Award className="w-4 h-4" /> Badges
             </span>
-            <span className="text-2xl sm:text-3xl font-black text-white font-mono block">
+            <span className="text-2xl sm:text-3xl font-black text-[#2B1B1A] font-mono block">
               {progress.earnedBadgeIds.length} / {BADGES.length}
             </span>
-            <span className="text-[11px] text-slate-400 font-bold">Achievements</span>
+            <span className="text-[11px] text-[#857670] font-bold">Achievements</span>
           </div>
         </div>
 
         {/* Level XP Bar */}
-        <div className="mt-6 pt-5 border-t-2 border-[#1c325c]">
-          <div className="flex justify-between items-center text-xs font-black text-slate-200 mb-1.5">
+        <div className="mt-6 pt-5 border-t-2 border-[#E8DCCB]">
+          <div className="flex justify-between items-center text-xs font-black text-[#2B1B1A] mb-1.5">
             <span>
               Level {levelInfo.level}: {levelInfo.title}
             </span>
-            <span className="text-sky-300 font-mono">
+            <span className="text-[#7A2B37] font-mono">
               {levelInfo.currentXP} / {levelInfo.xpForNextLevel} XP ({levelInfo.progressPercent}%)
             </span>
           </div>
@@ -151,8 +151,8 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
 
       {/* Curriculum Path Completion Progress */}
       <div className="mb-10">
-        <h2 className="text-xl font-black text-white mb-4 flex items-center gap-2">
-          <BookOpen className="w-5 h-5 text-[#1cb0f6]" />
+        <h2 className="text-xl font-black text-[#2B1B1A] mb-4 flex items-center gap-2">
+          <BookOpen className="w-5 h-5 text-[#5C1F2A]" />
           Curriculum Paths
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -163,7 +163,7 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
             return (
               <div
                 key={path.id}
-                className="p-5 rounded-3xl bg-[#0f1d38] border-2 border-[#1c325c] flex flex-col justify-between"
+                className="p-5 rounded-3xl bg-[#FFFDF9] border-2 border-[#E8DCCB] flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
@@ -172,12 +172,12 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
                     >
                       {path.difficulty}
                     </span>
-                    <span className="text-xs font-mono font-black text-[#1cb0f6]">
+                    <span className="text-xs font-mono font-black text-[#5C1F2A]">
                       {percent}%
                     </span>
                   </div>
-                  <h3 className="font-black text-base text-white mb-1">{path.title}</h3>
-                  <p className="text-xs text-slate-300 line-clamp-2 mb-4 font-medium">
+                  <h3 className="font-black text-base text-[#2B1B1A] mb-1">{path.title}</h3>
+                  <p className="text-xs text-[#4D3B38] line-clamp-2 mb-4 font-medium">
                     {path.shortDescription}
                   </p>
                 </div>
@@ -187,14 +187,14 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
                     height="sm"
                     color={percent === 100 ? 'emerald' : 'cyan'}
                   />
-                  <div className="flex justify-between items-center text-[11px] text-slate-400 font-bold mt-2">
+                  <div className="flex justify-between items-center text-[11px] text-[#857670] font-bold mt-2">
                     <span>
                       {isAvailable
                         ? `${completedCount} of ${path.totalLessons} completed`
                         : 'Coming soon'}
                     </span>
                     {percent === 100 && (
-                      <span className="text-emerald-400 font-black flex items-center gap-0.5">
+                      <span className="text-[#4F6B2A] font-black flex items-center gap-0.5">
                         <CheckCircle2 className="w-3.5 h-3.5" /> Mastered
                       </span>
                     )}
@@ -210,17 +210,17 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
       <div className="mb-10">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
           <div>
-            <h2 className="text-xl font-black text-white flex items-center gap-2">
-              <Award className="w-5 h-5 text-purple-400" />
+            <h2 className="text-xl font-black text-[#2B1B1A] flex items-center gap-2">
+              <Award className="w-5 h-5 text-[#2B1B1A]" />
               Badges & Milestones
             </h2>
-            <p className="text-xs text-slate-400 font-medium mt-0.5">
+            <p className="text-xs text-[#857670] font-medium mt-0.5">
               Unlock credentials and XP bonuses by completing lessons and maintaining accuracy.
             </p>
           </div>
 
           {/* Filter Pills */}
-          <div className="flex items-center gap-1 p-1 bg-[#0f1d38] border-2 border-[#1c325c] rounded-2xl text-xs font-black">
+          <div className="flex items-center gap-1 p-1 bg-[#FFFDF9] border-2 border-[#E8DCCB] rounded-2xl text-xs font-black">
             <button
               onClick={() => {
                 sound.playClick();
@@ -228,8 +228,8 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
               }}
               className={`px-3 py-1.5 rounded-xl transition-colors ${
                 selectedBadgeFilter === 'all'
-                  ? 'bg-[#1b3464] text-[#1cb0f6]'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-[#F1E6D6] text-[#5C1F2A]'
+                  : 'text-[#857670] hover:text-[#2B1B1A]'
               }`}
             >
               All ({BADGES.length})
@@ -241,8 +241,8 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
               }}
               className={`px-3 py-1.5 rounded-xl transition-colors ${
                 selectedBadgeFilter === 'unlocked'
-                  ? 'bg-purple-950 text-purple-300 border border-purple-800'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-[#FBE3E0] text-[#2B1B1A] border border-[#E8DCCB]'
+                  : 'text-[#857670] hover:text-[#2B1B1A]'
               }`}
             >
               Earned ({progress.earnedBadgeIds.length})
@@ -254,8 +254,8 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
               }}
               className={`px-3 py-1.5 rounded-xl transition-colors ${
                 selectedBadgeFilter === 'locked'
-                  ? 'bg-[#1b3464] text-slate-200'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-[#F1E6D6] text-[#2B1B1A]'
+                  : 'text-[#857670] hover:text-[#2B1B1A]'
               }`}
             >
               Locked ({BADGES.length - progress.earnedBadgeIds.length})
@@ -279,12 +279,12 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
       </div>
 
       {/* Danger Zone: Reset Progress with confirmation */}
-      <div className="pt-8 border-t-2 border-[#1c325c] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="pt-8 border-t-2 border-[#E8DCCB] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h4 className="text-sm font-black text-slate-300 uppercase tracking-wider">
+          <h4 className="text-sm font-black text-[#4D3B38] uppercase tracking-wider">
             Reset Demo Progress
           </h4>
-          <p className="text-xs text-slate-400 font-medium">
+          <p className="text-xs text-[#857670] font-medium">
             Clear all saved lesson completions, badges, and XP stored in your local browser.
           </p>
         </div>
@@ -294,7 +294,7 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
             sound.playClick();
             setShowResetModal(true);
           }}
-          className="px-5 py-2.5 rounded-2xl bg-[#0f1d38] hover:bg-rose-950/60 border-2 border-slate-700 hover:border-rose-500 text-slate-300 hover:text-rose-200 text-xs font-black uppercase tracking-wider transition-all flex items-center gap-1.5"
+          className="px-5 py-2.5 rounded-2xl bg-[#FFFDF9] hover:bg-[#FBE3E0]/60 border-2 border-[#E8DCCB] hover:border-[#C2414B] text-[#4D3B38] hover:text-[#B0303C] text-xs font-black uppercase tracking-wider transition-all flex items-center gap-1.5"
         >
           <RotateCcw className="w-4 h-4" />
           Reset Demo Data
@@ -304,14 +304,14 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
       {/* Reset Confirmation Modal */}
       {showResetModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-          <div className="max-w-md w-full bg-[#0f1d38] border-2 border-rose-500 rounded-3xl p-6 shadow-2xl">
-            <div className="w-14 h-14 rounded-2xl bg-rose-950 border-2 border-rose-500 text-rose-400 flex items-center justify-center mb-4 mx-auto">
+          <div className="max-w-md w-full bg-[#FFFDF9] border-2 border-[#C2414B] rounded-3xl p-6 shadow-2xl">
+            <div className="w-14 h-14 rounded-2xl bg-[#FBE3E0] border-2 border-[#C2414B] text-[#B0303C] flex items-center justify-center mb-4 mx-auto">
               <AlertTriangle className="w-8 h-8 stroke-[2.5]" />
             </div>
-            <h3 className="text-xl font-black text-white text-center mb-2">
+            <h3 className="text-xl font-black text-[#2B1B1A] text-center mb-2">
               Reset all demo progress?
             </h3>
-            <p className="text-xs sm:text-sm text-slate-300 text-center mb-6 leading-relaxed font-medium">
+            <p className="text-xs sm:text-sm text-[#4D3B38] text-center mb-6 leading-relaxed font-medium">
               This will permanently clear your earned XP, streak, completed lessons, and unlocked badges in your local browser.
             </p>
             <div className="flex gap-3">
@@ -320,7 +320,7 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
                   sound.playClick();
                   setShowResetModal(false);
                 }}
-                className="flex-1 py-3 rounded-2xl bg-[#142344] hover:bg-[#1a2e58] border-b-4 border-[#0c182e] text-slate-200 font-black text-xs uppercase tracking-wider active:translate-y-1 active:border-b-0"
+                className="flex-1 py-3 rounded-2xl bg-[#F6EFE4] hover:bg-[#F1E6D6] border-b-4 border-[#FFFDF9] text-[#2B1B1A] font-black text-xs uppercase tracking-wider active:translate-y-1 active:border-b-0"
               >
                 Cancel
               </button>
@@ -330,7 +330,7 @@ export const ProgressPage: React.FC<ProgressPageProps> = ({
                   onResetProgress();
                   setShowResetModal(false);
                 }}
-                className="flex-1 py-3 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs uppercase tracking-wider border-b-4 border-rose-800 active:translate-y-1 active:border-b-0 shadow-lg shadow-rose-950/50"
+                className="flex-1 py-3 rounded-2xl bg-[#C2414B] hover:bg-[#C2414B] text-[#2B1B1A] font-black text-xs uppercase tracking-wider border-b-4 border-[#B0303C] active:translate-y-1 active:border-b-0 shadow-lg shadow-[#C2414B]/50"
               >
                 Yes, Reset All
               </button>

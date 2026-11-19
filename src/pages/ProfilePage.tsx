@@ -186,9 +186,9 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
   if (loading) {
     return (
       <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 pt-3 sm:pt-5 pb-24 lg:pb-12 animate-fade-in">
-        <div className="rounded-3xl bg-[#0f1d38] border-2 border-[#1c325c] p-10 flex flex-col items-center gap-3">
-          <Loader2 className="w-8 h-8 text-[#1cb0f6] animate-spin" />
-          <p className="text-xs font-black uppercase tracking-wider text-slate-400">
+        <div className="rounded-3xl bg-[#FFFDF9] border-2 border-[#E8DCCB] p-10 flex flex-col items-center gap-3">
+          <Loader2 className="w-8 h-8 text-[#5C1F2A] animate-spin" />
+          <p className="text-xs font-black uppercase tracking-wider text-[#857670]">
             Loading your profile…
           </p>
         </div>
@@ -200,7 +200,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
     <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 pt-3 sm:pt-5 pb-24 lg:pb-12 animate-fade-in select-none">
       {/* Save confirmation toast */}
       {saved && (
-        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-2xl bg-emerald-500 text-slate-950 font-black text-sm uppercase tracking-wider shadow-2xl shadow-emerald-500/30 animate-fade-in flex items-center gap-2">
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-2xl bg-[#8DAA5B] text-[#2B1B1A] font-black text-sm uppercase tracking-wider shadow-2xl shadow-[#8DAA5B]/30 animate-fade-in flex items-center gap-2">
           <Check className="w-5 h-5 stroke-[3]" /> Profile changes saved successfully!
         </div>
       )}
@@ -209,19 +209,19 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
       {error && (
         <div
           role="alert"
-          className="mb-5 flex items-start gap-2.5 rounded-2xl bg-red-500/10 border-2 border-red-500/40 px-4 py-3"
+          className="mb-5 flex items-start gap-2.5 rounded-2xl bg-[#C2414B]/10 border-2 border-[#C2414B]/40 px-4 py-3"
         >
-          <AlertCircle className="w-4 h-4 text-red-300 shrink-0 mt-0.5" />
-          <p className="text-xs font-bold text-red-200">{error}</p>
+          <AlertCircle className="w-4 h-4 text-[#B0303C] shrink-0 mt-0.5" />
+          <p className="text-xs font-bold text-[#B0303C]">{error}</p>
         </div>
       )}
 
       {/* Profile Header Card */}
-      <div className="rounded-3xl bg-gradient-to-br from-[#0f1d38] via-[#132344] to-[#0f1d38] border-2 border-[#1c325c] shadow-2xl overflow-hidden mb-8">
+      <div className="rounded-3xl bg-gradient-to-br from-[#FFFDF9] via-[#F6EFE4] to-[#FFFDF9] border-2 border-[#E8DCCB] shadow-2xl overflow-hidden mb-8">
         {/* Cover / Banner */}
-        <div className="h-36 sm:h-44 bg-gradient-to-r from-[#0284c7] via-[#1cb0f6] to-[#7c3aed] relative overflow-hidden">
+        <div className="h-36 sm:h-44 bg-gradient-to-r from-[#3D1119] via-[#5C1F2A] to-[#5C1F2A] relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent opacity-60" />
-          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#0f1d38] to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#FFFDF9] to-transparent" />
         </div>
 
         {/* Avatar + Info */}
@@ -229,7 +229,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           <div className="flex flex-col sm:flex-row items-start sm:items-end gap-5">
             {/* Avatar */}
             <div className="relative group">
-              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl overflow-hidden border-4 border-[#0f1d38] bg-[#0c1a30] p-2 shadow-2xl ring-4 ring-[#1cb0f6]/40 flex items-center justify-center">
+              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl overflow-hidden border-4 border-[#FFFDF9] bg-[#FFFDF9] p-2 shadow-2xl ring-4 ring-[#5C1F2A]/40 flex items-center justify-center">
                 <img
                   src={formData.avatarUrl}
                   alt="Profile Avatar"
@@ -241,7 +241,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   sound.playClick();
                   setShowAvatarPicker(true);
                 }}
-                className="absolute bottom-1 right-1 p-2 rounded-xl bg-[#1cb0f6] text-slate-950 shadow-lg hover:bg-cyan-300 transition-all border-2 border-white cursor-pointer"
+                className="absolute bottom-1 right-1 p-2 rounded-xl bg-[#5C1F2A] text-[#FFF8EE] shadow-lg hover:bg-[#FBE3E0] transition-all border-2 border-white cursor-pointer"
                 title="Change Avatar"
               >
                 <Camera className="w-4 h-4" />
@@ -251,18 +251,18 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
             {/* Name + Stats */}
             <div className="flex-1 pt-2">
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
-                <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                <h1 className="text-2xl sm:text-3xl font-black text-[#2B1B1A] tracking-tight">
                   {formData.displayName || 'Your name'}
                 </h1>
-                <span className="text-[10px] uppercase font-black px-2.5 py-1 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white border border-purple-400/30 shadow-sm w-fit">
+                <span className="text-[10px] uppercase font-black px-2.5 py-1 rounded-full bg-gradient-to-r from-[#5C1F2A] to-[#5C1F2A] text-[#2B1B1A] border border-[#E8DCCB]/30 shadow-sm w-fit">
                   Level {levelInfo.level} • {levelInfo.title}
                 </span>
               </div>
-              <p className="text-sm text-slate-400 font-medium">
+              <p className="text-sm text-[#857670] font-medium">
                 {formData.username ? `@${formData.username}` : 'No username yet — add one below'}
               </p>
               {formData.bio && (
-                <p className="text-xs text-slate-300 mt-1 max-w-md font-medium">{formData.bio}</p>
+                <p className="text-xs text-[#4D3B38] mt-1 max-w-md font-medium">{formData.bio}</p>
               )}
             </div>
 
@@ -281,8 +281,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 disabled={saving}
                 className={`px-5 py-2.5 rounded-2xl font-black text-xs uppercase tracking-wider transition-all border-b-4 active:translate-y-1 active:border-b-0 flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed ${
                   isEditing
-                    ? 'bg-emerald-500 hover:bg-emerald-400 border-emerald-700 text-slate-950'
-                    : 'bg-[#1cb0f6] hover:bg-[#25b8fc] border-[#1899d6] text-slate-950'
+                    ? 'bg-[#8DAA5B] hover:bg-[#8DAA5B] border-[#8DAA5B] text-[#2B1B1A]'
+                    : 'bg-[#5C1F2A] hover:bg-[#5C1F2A] border-[#3D1119] text-[#FFF8EE]'
                 }`}
               >
                 {isEditing ? (
@@ -303,7 +303,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   sound.playClick();
                   onNavigateFriends?.();
                 }}
-                className="px-4 py-2.5 rounded-2xl bg-[#142344] hover:bg-[#1b315c] border-b-4 border-[#0c182e] text-[#1cb0f6] font-black text-xs uppercase tracking-wider active:translate-y-1 active:border-b-0 transition-all flex items-center gap-1.5"
+                className="px-4 py-2.5 rounded-2xl bg-[#F6EFE4] hover:bg-[#F1E6D6] border-b-4 border-[#FFFDF9] text-[#5C1F2A] font-black text-xs uppercase tracking-wider active:translate-y-1 active:border-b-0 transition-all flex items-center gap-1.5"
               >
                 <Users className="w-4 h-4" />
                 FRIENDS
@@ -312,20 +312,20 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           </div>
 
           {/* Stats Bar */}
-          <div className="flex flex-wrap items-center gap-3 mt-5 pt-4 border-t border-[#1c325c]">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-950/60 border border-amber-500/40 text-amber-300 font-black text-xs">
-              <Zap className="w-4 h-4 fill-amber-400" />
+          <div className="flex flex-wrap items-center gap-3 mt-5 pt-4 border-t border-[#E8DCCB]">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FBE9A6]/60 border border-[#F2B93B]/40 text-[#8A5A00] font-black text-xs">
+              <Zap className="w-4 h-4 fill-[#F2B93B]" />
               <span className="font-mono">{progress.totalXP} XP</span>
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-950/60 border border-orange-500/40 text-orange-400 font-black text-xs">
-              <Flame className="w-4 h-4 fill-orange-400" />
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FBE9A6]/60 border border-[#E9873A]/40 text-[#B5581B] font-black text-xs">
+              <Flame className="w-4 h-4 fill-[#E9873A]" />
               <span>{progress.currentStreak} day streak</span>
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-950/60 border border-purple-500/40 text-purple-300 font-black text-xs">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FBE3E0]/60 border border-[#E8DCCB]/40 text-[#2B1B1A] font-black text-xs">
               <Award className="w-4 h-4" />
               <span>{progress.earnedBadgeIds.length} badges earned</span>
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-cyan-950/60 border border-cyan-400/40 text-cyan-300 font-black text-xs">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FBE3E0]/60 border border-[#5C1F2A]/40 text-[#7A2B37] font-black text-xs">
               <GraduationCap className="w-4 h-4" />
               <span>{progress.completedLessonIds.length} lessons completed</span>
             </div>
@@ -334,7 +334,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
       </div>
 
       {/* Section Tabs */}
-      <div className="flex items-center gap-1 p-1 bg-[#0f1d38] border-2 border-[#1c325c] rounded-2xl text-xs font-black mb-6 w-fit">
+      <div className="flex items-center gap-1 p-1 bg-[#FFFDF9] border-2 border-[#E8DCCB] rounded-2xl text-xs font-black mb-6 w-fit">
         {[
           { id: 'general' as const, label: 'General Info', icon: <User className="w-3.5 h-3.5" /> },
           { id: 'privacy' as const, label: 'Privacy', icon: <Shield className="w-3.5 h-3.5" /> },
@@ -348,8 +348,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
             }}
             className={`px-4 py-2 rounded-xl transition-colors flex items-center gap-1.5 ${
               activeSection === tab.id
-                ? 'bg-[#1b3464] text-[#1cb0f6]'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-[#F1E6D6] text-[#5C1F2A]'
+                : 'text-[#857670] hover:text-[#2B1B1A]'
             }`}
           >
             {tab.icon}
@@ -362,16 +362,16 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
       {activeSection === 'general' && (
         <div className="space-y-6 animate-fade-in">
           {/* Personal Information Card */}
-          <div className="rounded-3xl bg-[#0f1d38] border-2 border-[#1c325c] p-6 shadow-lg">
+          <div className="rounded-3xl bg-[#FFFDF9] border-2 border-[#E8DCCB] p-6 shadow-lg">
             <div className="flex items-center justify-between mb-5">
-              <h3 className="text-sm font-black text-white uppercase tracking-wider flex items-center gap-2">
-                <User className="w-4 h-4 text-[#1cb0f6]" />
+              <h3 className="text-sm font-black text-[#2B1B1A] uppercase tracking-wider flex items-center gap-2">
+                <User className="w-4 h-4 text-[#5C1F2A]" />
                 Personal Information
               </h3>
               {!isEditing && (
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="text-xs font-bold text-[#1cb0f6] hover:underline flex items-center gap-1"
+                  className="text-xs font-bold text-[#5C1F2A] hover:underline flex items-center gap-1"
                 >
                   <Pencil className="w-3 h-3" /> Edit Fields
                 </button>
@@ -381,11 +381,11 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Display Name */}
               <div>
-                <label className="text-[11px] font-black uppercase tracking-wider text-slate-400 mb-1.5 block">
+                <label className="text-[11px] font-black uppercase tracking-wider text-[#857670] mb-1.5 block">
                   Display Name
                 </label>
                 <div className="relative">
-                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#857670]" />
                   <input
                     type="text"
                     value={formData.displayName}
@@ -393,8 +393,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     disabled={!isEditing}
                     className={`w-full pl-10 pr-4 py-3 rounded-2xl text-sm font-bold transition-all ${
                       isEditing
-                        ? 'bg-[#142344] border-2 border-[#1cb0f6] text-white focus:outline-none focus:ring-2 focus:ring-[#1cb0f6]/50'
-                        : 'bg-[#0c1a30] border-2 border-[#1c325c] text-slate-300'
+                        ? 'bg-[#F6EFE4] border-2 border-[#5C1F2A] text-[#2B1B1A] focus:outline-none focus:ring-2 focus:ring-[#5C1F2A]/50'
+                        : 'bg-[#FFFDF9] border-2 border-[#E8DCCB] text-[#4D3B38]'
                     }`}
                   />
                 </div>
@@ -402,11 +402,11 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
               {/* Username */}
               <div>
-                <label className="text-[11px] font-black uppercase tracking-wider text-slate-400 mb-1.5 block">
+                <label className="text-[11px] font-black uppercase tracking-wider text-[#857670] mb-1.5 block">
                   Username
                 </label>
                 <div className="relative">
-                  <AtSign className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <AtSign className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#857670]" />
                   <input
                     type="text"
                     value={formData.username}
@@ -417,19 +417,19 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     autoComplete="off"
                     className={`w-full pl-10 pr-4 py-3 rounded-2xl text-sm font-bold transition-all ${
                       isEditing
-                        ? `bg-[#142344] border-2 text-white focus:outline-none focus:ring-2 ${
+                        ? `bg-[#F6EFE4] border-2 text-[#2B1B1A] focus:outline-none focus:ring-2 ${
                             usernameProblem
-                              ? 'border-red-400 focus:ring-red-400/50'
-                              : 'border-[#1cb0f6] focus:ring-[#1cb0f6]/50'
+                              ? 'border-[#C2414B] focus:ring-[#C2414B]/50'
+                              : 'border-[#5C1F2A] focus:ring-[#5C1F2A]/50'
                           }`
-                        : 'bg-[#0c1a30] border-2 border-[#1c325c] text-slate-300'
+                        : 'bg-[#FFFDF9] border-2 border-[#E8DCCB] text-[#4D3B38]'
                     }`}
                   />
                 </div>
                 {isEditing && (
                   <p
                     className={`text-[11px] font-bold mt-1.5 ${
-                      usernameProblem ? 'text-red-300' : 'text-slate-500'
+                      usernameProblem ? 'text-[#B0303C]' : 'text-[#857670]'
                     }`}
                   >
                     {usernameProblem
@@ -443,31 +443,31 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
               {/* Email */}
               <div>
-                <label className="text-[11px] font-black uppercase tracking-wider text-slate-400 mb-1.5 block">
+                <label className="text-[11px] font-black uppercase tracking-wider text-[#857670] mb-1.5 block">
                   Email Address
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#857670]" />
                   <input
                     type="email"
                     value={user?.email ?? ''}
                     readOnly
                     disabled
-                    className="w-full pl-10 pr-4 py-3 rounded-2xl text-sm font-bold bg-[#0c1a30] border-2 border-[#1c325c] text-slate-400"
+                    className="w-full pl-10 pr-4 py-3 rounded-2xl text-sm font-bold bg-[#FFFDF9] border-2 border-[#E8DCCB] text-[#857670]"
                   />
                 </div>
-                <p className="text-[11px] font-bold text-slate-500 mt-1.5">
+                <p className="text-[11px] font-bold text-[#857670] mt-1.5">
                   Managed by your sign-in account.
                 </p>
               </div>
 
               {/* School */}
               <div>
-                <label className="text-[11px] font-black uppercase tracking-wider text-slate-400 mb-1.5 block">
+                <label className="text-[11px] font-black uppercase tracking-wider text-[#857670] mb-1.5 block">
                   High School / Academy
                 </label>
                 <div className="relative">
-                  <GraduationCap className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <GraduationCap className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#857670]" />
                   <input
                     type="text"
                     value={formData.school}
@@ -476,8 +476,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     placeholder="Your school"
                     className={`w-full pl-10 pr-4 py-3 rounded-2xl text-sm font-bold transition-all ${
                       isEditing
-                        ? 'bg-[#142344] border-2 border-[#1cb0f6] text-white focus:outline-none focus:ring-2 focus:ring-[#1cb0f6]/50'
-                        : 'bg-[#0c1a30] border-2 border-[#1c325c] text-slate-300'
+                        ? 'bg-[#F6EFE4] border-2 border-[#5C1F2A] text-[#2B1B1A] focus:outline-none focus:ring-2 focus:ring-[#5C1F2A]/50'
+                        : 'bg-[#FFFDF9] border-2 border-[#E8DCCB] text-[#4D3B38]'
                     }`}
                   />
                 </div>
@@ -485,7 +485,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
               {/* Grade */}
               <div>
-                <label className="text-[11px] font-black uppercase tracking-wider text-slate-400 mb-1.5 block">
+                <label className="text-[11px] font-black uppercase tracking-wider text-[#857670] mb-1.5 block">
                   Grade Level
                 </label>
                 <select
@@ -494,8 +494,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   disabled={!isEditing}
                   className={`w-full px-4 py-3 rounded-2xl text-sm font-bold transition-all appearance-none ${
                     isEditing
-                      ? 'bg-[#142344] border-2 border-[#1cb0f6] text-white focus:outline-none focus:ring-2 focus:ring-[#1cb0f6]/50'
-                      : 'bg-[#0c1a30] border-2 border-[#1c325c] text-slate-300'
+                      ? 'bg-[#F6EFE4] border-2 border-[#5C1F2A] text-[#2B1B1A] focus:outline-none focus:ring-2 focus:ring-[#5C1F2A]/50'
+                      : 'bg-[#FFFDF9] border-2 border-[#E8DCCB] text-[#4D3B38]'
                   }`}
                 >
                   <option value="">Not set</option>
@@ -508,11 +508,11 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
               {/* Location */}
               <div>
-                <label className="text-[11px] font-black uppercase tracking-wider text-slate-400 mb-1.5 block">
+                <label className="text-[11px] font-black uppercase tracking-wider text-[#857670] mb-1.5 block">
                   Location
                 </label>
                 <div className="relative">
-                  <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#857670]" />
                   <input
                     type="text"
                     value={formData.location}
@@ -521,8 +521,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     placeholder="City, State"
                     className={`w-full pl-10 pr-4 py-3 rounded-2xl text-sm font-bold transition-all ${
                       isEditing
-                        ? 'bg-[#142344] border-2 border-[#1cb0f6] text-white focus:outline-none focus:ring-2 focus:ring-[#1cb0f6]/50'
-                        : 'bg-[#0c1a30] border-2 border-[#1c325c] text-slate-300'
+                        ? 'bg-[#F6EFE4] border-2 border-[#5C1F2A] text-[#2B1B1A] focus:outline-none focus:ring-2 focus:ring-[#5C1F2A]/50'
+                        : 'bg-[#FFFDF9] border-2 border-[#E8DCCB] text-[#4D3B38]'
                     }`}
                   />
                 </div>
@@ -530,11 +530,11 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
               {/* Birthday */}
               <div>
-                <label className="text-[11px] font-black uppercase tracking-wider text-slate-400 mb-1.5 block">
+                <label className="text-[11px] font-black uppercase tracking-wider text-[#857670] mb-1.5 block">
                   Birthday
                 </label>
                 <div className="relative">
-                  <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#857670]" />
                   <input
                     type="date"
                     value={formData.birthday}
@@ -542,8 +542,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     disabled={!isEditing}
                     className={`w-full pl-10 pr-4 py-3 rounded-2xl text-sm font-bold transition-all ${
                       isEditing
-                        ? 'bg-[#142344] border-2 border-[#1cb0f6] text-white focus:outline-none focus:ring-2 focus:ring-[#1cb0f6]/50'
-                        : 'bg-[#0c1a30] border-2 border-[#1c325c] text-slate-300'
+                        ? 'bg-[#F6EFE4] border-2 border-[#5C1F2A] text-[#2B1B1A] focus:outline-none focus:ring-2 focus:ring-[#5C1F2A]/50'
+                        : 'bg-[#FFFDF9] border-2 border-[#E8DCCB] text-[#4D3B38]'
                     }`}
                   />
                 </div>
@@ -551,11 +551,11 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
               {/* Website */}
               <div>
-                <label className="text-[11px] font-black uppercase tracking-wider text-slate-400 mb-1.5 block">
+                <label className="text-[11px] font-black uppercase tracking-wider text-[#857670] mb-1.5 block">
                   Website / Portfolio
                 </label>
                 <div className="relative">
-                  <Globe className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <Globe className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#857670]" />
                   <input
                     type="url"
                     value={formData.website}
@@ -564,8 +564,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     placeholder="https://yoursite.com"
                     className={`w-full pl-10 pr-4 py-3 rounded-2xl text-sm font-bold transition-all ${
                       isEditing
-                        ? 'bg-[#142344] border-2 border-[#1cb0f6] text-white focus:outline-none focus:ring-2 focus:ring-[#1cb0f6]/50'
-                        : 'bg-[#0c1a30] border-2 border-[#1c325c] text-slate-300'
+                        ? 'bg-[#F6EFE4] border-2 border-[#5C1F2A] text-[#2B1B1A] focus:outline-none focus:ring-2 focus:ring-[#5C1F2A]/50'
+                        : 'bg-[#FFFDF9] border-2 border-[#E8DCCB] text-[#4D3B38]'
                     }`}
                   />
                 </div>
@@ -574,7 +574,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
             {/* Bio */}
             <div className="mt-4">
-              <label className="text-[11px] font-black uppercase tracking-wider text-slate-400 mb-1.5 block">
+              <label className="text-[11px] font-black uppercase tracking-wider text-[#857670] mb-1.5 block">
                 Bio
               </label>
               <textarea
@@ -584,8 +584,8 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 rows={3}
                 className={`w-full px-4 py-3 rounded-2xl text-sm font-bold transition-all resize-none ${
                   isEditing
-                    ? 'bg-[#142344] border-2 border-[#1cb0f6] text-white focus:outline-none focus:ring-2 focus:ring-[#1cb0f6]/50'
-                    : 'bg-[#0c1a30] border-2 border-[#1c325c] text-slate-300'
+                    ? 'bg-[#F6EFE4] border-2 border-[#5C1F2A] text-[#2B1B1A] focus:outline-none focus:ring-2 focus:ring-[#5C1F2A]/50'
+                    : 'bg-[#FFFDF9] border-2 border-[#E8DCCB] text-[#4D3B38]'
                 }`}
               />
             </div>
@@ -601,14 +601,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     if (profile) setFormData(toFormState(profile));
                   }}
                   disabled={saving}
-                  className="px-6 py-3 rounded-2xl bg-[#142344] hover:bg-[#1b315c] text-slate-300 font-black text-xs uppercase tracking-wider border-b-4 border-[#0c182e] active:translate-y-1 active:border-b-0 transition-all disabled:opacity-60"
+                  className="px-6 py-3 rounded-2xl bg-[#F6EFE4] hover:bg-[#F1E6D6] text-[#4D3B38] font-black text-xs uppercase tracking-wider border-b-4 border-[#FFFDF9] active:translate-y-1 active:border-b-0 transition-all disabled:opacity-60"
                 >
                   CANCEL
                 </button>
                 <button
                   onClick={() => void handleSave()}
                   disabled={saving || usernameProblem !== null}
-                  className="px-8 py-3 rounded-2xl bg-[#1cb0f6] hover:bg-[#25b8fc] text-slate-950 font-black text-xs uppercase tracking-wider border-b-4 border-[#1899d6] active:translate-y-1 active:border-b-0 transition-all shadow-lg shadow-cyan-500/25 flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="px-8 py-3 rounded-2xl bg-[#5C1F2A] hover:bg-[#5C1F2A] text-[#FFF8EE] font-black text-xs uppercase tracking-wider border-b-4 border-[#3D1119] active:translate-y-1 active:border-b-0 transition-all shadow-lg shadow-[#5C1F2A]/25 flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                   {saving ? 'SAVING…' : 'SAVE CHANGES'}
@@ -618,9 +618,9 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           </div>
 
           {/* Learning Preferences Card */}
-          <div className="rounded-3xl bg-[#0f1d38] border-2 border-[#1c325c] p-6 shadow-lg">
-            <h3 className="text-sm font-black text-white uppercase tracking-wider mb-5 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-purple-400" />
+          <div className="rounded-3xl bg-[#FFFDF9] border-2 border-[#E8DCCB] p-6 shadow-lg">
+            <h3 className="text-sm font-black text-[#2B1B1A] uppercase tracking-wider mb-5 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-[#2B1B1A]" />
               Learning Preferences
             </h3>
 
@@ -633,15 +633,15 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               ].map((pref) => (
                 <div
                   key={pref.label}
-                  className="flex items-center justify-between p-4 rounded-2xl bg-[#0c1a30] border-2 border-[#1c325c] hover:border-[#274885] transition-colors group cursor-pointer"
+                  className="flex items-center justify-between p-4 rounded-2xl bg-[#FFFDF9] border-2 border-[#E8DCCB] hover:border-[#F1E6D6] transition-colors group cursor-pointer"
                 >
                   <div>
-                    <span className="text-sm font-black text-white block">{pref.label}</span>
-                    <span className="text-[11px] text-slate-400 font-medium">{pref.desc}</span>
+                    <span className="text-sm font-black text-[#2B1B1A] block">{pref.label}</span>
+                    <span className="text-[11px] text-[#857670] font-medium">{pref.desc}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-[#1cb0f6]">{pref.value}</span>
-                    <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-[#1cb0f6] transition-colors" />
+                    <span className="text-xs font-bold text-[#5C1F2A]">{pref.value}</span>
+                    <ChevronRight className="w-4 h-4 text-[#857670] group-hover:text-[#5C1F2A] transition-colors" />
                   </div>
                 </div>
               ))}
@@ -653,9 +653,9 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
       {/* Privacy Settings */}
       {activeSection === 'privacy' && (
         <div className="space-y-6 animate-fade-in">
-          <div className="rounded-3xl bg-[#0f1d38] border-2 border-[#1c325c] p-6 shadow-lg">
-            <h3 className="text-sm font-black text-white uppercase tracking-wider mb-5 flex items-center gap-2">
-              <Shield className="w-4 h-4 text-emerald-400" />
+          <div className="rounded-3xl bg-[#FFFDF9] border-2 border-[#E8DCCB] p-6 shadow-lg">
+            <h3 className="text-sm font-black text-[#2B1B1A] uppercase tracking-wider mb-5 flex items-center gap-2">
+              <Shield className="w-4 h-4 text-[#4F6B2A]" />
               Privacy & Visibility
             </h3>
 
@@ -668,18 +668,18 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               ].map((setting) => (
                 <div
                   key={setting.label}
-                  className="flex items-center justify-between p-4 rounded-2xl bg-[#0c1a30] border-2 border-[#1c325c] hover:border-[#274885] transition-colors group cursor-pointer"
+                  className="flex items-center justify-between p-4 rounded-2xl bg-[#FFFDF9] border-2 border-[#E8DCCB] hover:border-[#F1E6D6] transition-colors group cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="text-slate-400">{setting.icon}</div>
+                    <div className="text-[#857670]">{setting.icon}</div>
                     <div>
-                      <span className="text-sm font-black text-white block">{setting.label}</span>
-                      <span className="text-[11px] text-slate-400 font-medium">{setting.desc}</span>
+                      <span className="text-sm font-black text-[#2B1B1A] block">{setting.label}</span>
+                      <span className="text-[11px] text-[#857670] font-medium">{setting.desc}</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-[#1cb0f6]">{setting.value}</span>
-                    <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-[#1cb0f6] transition-colors" />
+                    <span className="text-xs font-bold text-[#5C1F2A]">{setting.value}</span>
+                    <ChevronRight className="w-4 h-4 text-[#857670] group-hover:text-[#5C1F2A] transition-colors" />
                   </div>
                 </div>
               ))}
@@ -691,9 +691,9 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
       {/* Notification Settings */}
       {activeSection === 'notifications' && (
         <div className="space-y-6 animate-fade-in">
-          <div className="rounded-3xl bg-[#0f1d38] border-2 border-[#1c325c] p-6 shadow-lg">
-            <h3 className="text-sm font-black text-white uppercase tracking-wider mb-5 flex items-center gap-2">
-              <Bell className="w-4 h-4 text-amber-400" />
+          <div className="rounded-3xl bg-[#FFFDF9] border-2 border-[#E8DCCB] p-6 shadow-lg">
+            <h3 className="text-sm font-black text-[#2B1B1A] uppercase tracking-wider mb-5 flex items-center gap-2">
+              <Bell className="w-4 h-4 text-[#8A5A00]" />
               Notification Alerts
             </h3>
 
@@ -706,15 +706,15 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               ].map((notif) => (
                 <div
                   key={notif.label}
-                  className="flex items-center justify-between p-4 rounded-2xl bg-[#0c1a30] border-2 border-[#1c325c] hover:border-[#274885] transition-colors"
+                  className="flex items-center justify-between p-4 rounded-2xl bg-[#FFFDF9] border-2 border-[#E8DCCB] hover:border-[#F1E6D6] transition-colors"
                 >
                   <div>
-                    <span className="text-sm font-black text-white block">{notif.label}</span>
-                    <span className="text-[11px] text-slate-400 font-medium">{notif.desc}</span>
+                    <span className="text-sm font-black text-[#2B1B1A] block">{notif.label}</span>
+                    <span className="text-[11px] text-[#857670] font-medium">{notif.desc}</span>
                   </div>
                   <div
                     className={`w-12 h-7 rounded-full flex items-center transition-colors cursor-pointer ${
-                      notif.enabled ? 'bg-[#1cb0f6] justify-end' : 'bg-slate-700 justify-start'
+                      notif.enabled ? 'bg-[#5C1F2A] justify-end' : 'bg-[#F1E6D6] justify-start'
                     }`}
                   >
                     <div className="w-5 h-5 rounded-full bg-white shadow-md mx-1" />
@@ -727,18 +727,18 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
       )}
 
       {/* Account — Firebase session */}
-      <div className="rounded-3xl bg-[#0f1d38] border-2 border-[#1c325c] p-6 shadow-lg mt-6">
-        <h3 className="text-sm font-black text-white uppercase tracking-wider mb-5 flex items-center gap-2">
-          <Shield className="w-4 h-4 text-[#1cb0f6]" />
+      <div className="rounded-3xl bg-[#FFFDF9] border-2 border-[#E8DCCB] p-6 shadow-lg mt-6">
+        <h3 className="text-sm font-black text-[#2B1B1A] uppercase tracking-wider mb-5 flex items-center gap-2">
+          <Shield className="w-4 h-4 text-[#5C1F2A]" />
           Account
         </h3>
 
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-[#0c1a30] border-2 border-[#1c325c]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-[#FFFDF9] border-2 border-[#E8DCCB]">
           <div className="min-w-0">
-            <span className="text-[11px] text-slate-400 font-medium block uppercase tracking-wider">
+            <span className="text-[11px] text-[#857670] font-medium block uppercase tracking-wider">
               Signed in as
             </span>
-            <span className="text-sm font-black text-white block truncate">
+            <span className="text-sm font-black text-[#2B1B1A] block truncate">
               {user?.email ?? 'Unknown account'}
             </span>
           </div>
@@ -746,7 +746,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           <button
             onClick={() => void handleSignOut()}
             disabled={signingOut}
-            className="btn-3d shrink-0 bg-[#132344] hover:bg-[#1b3464] border-2 border-[#1c325c] hover:border-red-400/60 border-b-4 text-slate-200 hover:text-red-300 font-black text-xs uppercase tracking-wider rounded-2xl px-5 py-2.5 flex items-center justify-center gap-2 disabled:opacity-60"
+            className="btn-3d shrink-0 bg-[#F6EFE4] hover:bg-[#F1E6D6] border-2 border-[#E8DCCB] hover:border-[#C2414B]/60 border-b-4 text-[#2B1B1A] hover:text-[#B0303C] font-black text-xs uppercase tracking-wider rounded-2xl px-5 py-2.5 flex items-center justify-center gap-2 disabled:opacity-60"
           >
             <LogOut className="w-4 h-4 stroke-[2.5]" />
             {signingOut ? 'Logging out…' : 'Log out'}
@@ -756,7 +756,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
         {unsavedOnSignOut && (
           <div
             role="alert"
-            className="mt-3 p-3 rounded-2xl bg-amber-500/10 border border-amber-500/40 text-xs font-bold text-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+            className="mt-3 p-3 rounded-2xl bg-[#F2B93B]/10 border border-[#F2B93B]/40 text-xs font-bold text-[#8A5A00] flex flex-col sm:flex-row sm:items-center justify-between gap-3"
           >
             <span>
               Your latest progress hasn't been saved yet. Check your connection and retry, or sign out
@@ -765,13 +765,13 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
             <span className="flex gap-2 shrink-0">
               <button
                 onClick={() => void handleSignOut()}
-                className="px-3 py-1.5 rounded-xl bg-amber-400 text-slate-950 font-black uppercase tracking-wider"
+                className="px-3 py-1.5 rounded-xl bg-[#F2B93B] text-[#2B1B1A] font-black uppercase tracking-wider"
               >
                 Retry
               </button>
               <button
                 onClick={() => void handleSignOut(true)}
-                className="px-3 py-1.5 rounded-xl border border-amber-400/60 text-amber-200 font-black uppercase tracking-wider"
+                className="px-3 py-1.5 rounded-xl border border-[#F2B93B]/60 text-[#8A5A00] font-black uppercase tracking-wider"
               >
                 Sign out anyway
               </button>
@@ -779,7 +779,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           </div>
         )}
 
-        <p className="text-[11px] text-slate-500 font-medium mt-3">
+        <p className="text-[11px] text-[#857670] font-medium mt-3">
           Your learning progress is saved to your account.
         </p>
       </div>
@@ -787,21 +787,21 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
       {/* Avatar Picker Modal */}
       {showAvatarPicker && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-          <div className="max-w-md w-full bg-[#0f1d38] border-2 border-[#1cb0f6] rounded-3xl p-6 shadow-2xl">
+          <div className="max-w-md w-full bg-[#FFFDF9] border-2 border-[#5C1F2A] rounded-3xl p-6 shadow-2xl">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-black text-white flex items-center gap-2">
-                <Camera className="w-5 h-5 text-[#1cb0f6]" />
+              <h3 className="text-lg font-black text-[#2B1B1A] flex items-center gap-2">
+                <Camera className="w-5 h-5 text-[#5C1F2A]" />
                 Choose Mascot Avatar
               </h3>
               <button
                 onClick={() => setShowAvatarPicker(false)}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-white"
+                className="p-1.5 rounded-lg text-[#857670] hover:text-[#2B1B1A]"
               >
                 ✕
               </button>
             </div>
 
-            <p className="text-xs text-slate-300 mb-5 font-medium">
+            <p className="text-xs text-[#4D3B38] mb-5 font-medium">
               Pick your favorite blue cat mascot pose for your profile:
             </p>
 
@@ -812,14 +812,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   onClick={() => selectAvatar(opt.src)}
                   className={`p-2.5 rounded-2xl border-2 flex flex-col items-center gap-2 transition-all hover:scale-105 active:scale-95 ${
                     formData.avatarUrl === opt.src
-                      ? 'bg-[#1b3464] border-[#1cb0f6] ring-2 ring-[#1cb0f6]/50'
-                      : 'bg-[#142344] border-[#1f3764] hover:border-slate-400'
+                      ? 'bg-[#F1E6D6] border-[#5C1F2A] ring-2 ring-[#5C1F2A]/50'
+                      : 'bg-[#F6EFE4] border-[#F1E6D6] hover:border-[#E8DCCB]'
                   }`}
                 >
-                  <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#0c1a30] p-1.5 shadow-md flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#FFFDF9] p-1.5 shadow-md flex items-center justify-center">
                     <img src={opt.src} alt={opt.label} className="w-full h-full object-contain" />
                   </div>
-                  <span className="text-[10px] font-black text-slate-300 text-center">
+                  <span className="text-[10px] font-black text-[#4D3B38] text-center">
                     {opt.label}
                   </span>
                 </button>

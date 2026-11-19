@@ -83,8 +83,8 @@ export const UNIT_1_LESSONS: Lesson[] = [
         prompt: 'Classify each real-world technology into Narrow AI vs. Sci-Fi / Theoretical AGI',
         instruction: 'Click or tap an item, then choose its correct category.',
         categories: [
-          { id: 'narrow', name: 'Narrow AI (Exists Today)', color: 'border-cyan-500 text-cyan-300' },
-          { id: 'agi', name: 'Theoretical AGI (Sci-Fi / Future)', color: 'border-purple-500 text-purple-300' },
+          { id: 'narrow', name: 'Narrow AI (Exists Today)', color: 'border-[#5C1F2A] text-[#7A2B37]' },
+          { id: 'agi', name: 'Theoretical AGI (Sci-Fi / Future)', color: 'border-[#E8DCCB] text-[#2B1B1A]' },
         ],
         items: [
           { id: 'i1', text: 'Spam filter scanning email inbox', correctCategoryId: 'narrow' },
@@ -254,9 +254,9 @@ export const UNIT_1_LESSONS: Lesson[] = [
         prompt: 'Categorize each real-world AI application into its learning paradigm',
         instruction: 'Assign each task to Supervised, Unsupervised, or Reinforcement Learning.',
         categories: [
-          { id: 'sup', name: 'Supervised Learning', color: 'border-cyan-500 text-cyan-300' },
-          { id: 'unsup', name: 'Unsupervised Learning', color: 'border-purple-500 text-purple-300' },
-          { id: 'rl', name: 'Reinforcement Learning', color: 'border-emerald-500 text-emerald-300' },
+          { id: 'sup', name: 'Supervised Learning', color: 'border-[#5C1F2A] text-[#7A2B37]' },
+          { id: 'unsup', name: 'Unsupervised Learning', color: 'border-[#E8DCCB] text-[#2B1B1A]' },
+          { id: 'rl', name: 'Reinforcement Learning', color: 'border-[#8DAA5B] text-[#4F6B2A]' },
         ],
         items: [
           { id: 'i1', text: 'Classifying X-ray images labeled "Healthy" or "Pneumonia"', correctCategoryId: 'sup' },
@@ -459,8 +459,8 @@ export const UNIT_1_LESSONS: Lesson[] = [
         prompt: 'Evaluate these tasks: Is AI reliable today, or does it struggle / fail?',
         instruction: 'Sort each scenario into whether AI is reliable or prone to hallucinations / errors.',
         categories: [
-          { id: 'reliable', name: 'AI Excels & Is Reliable', color: 'border-emerald-500 text-emerald-300' },
-          { id: 'struggle', name: 'AI Struggles or Hallucinates', color: 'border-amber-500 text-amber-300' },
+          { id: 'reliable', name: 'AI Excels & Is Reliable', color: 'border-[#8DAA5B] text-[#4F6B2A]' },
+          { id: 'struggle', name: 'AI Struggles or Hallucinates', color: 'border-[#F2B93B] text-[#8A5A00]' },
         ],
         items: [
           { id: 'i1', text: 'Translating a Spanish paragraph into fluent English', correctCategoryId: 'reliable' },

@@ -33,7 +33,7 @@ const MODE_COPY: Record<AuthMode, { title: string; subtitle: string; cta: string
 };
 
 const inputClass =
-  'w-full bg-[#0c1a30] border-2 border-[#1f3764] focus:border-[#1cb0f6] rounded-2xl pl-11 pr-4 py-3.5 text-sm font-bold text-white placeholder:text-slate-500 outline-none transition-colors disabled:opacity-60';
+  'w-full bg-[#FFFDF9] border-2 border-[#F1E6D6] focus:border-[#5C1F2A] rounded-2xl pl-11 pr-4 py-3.5 text-sm font-bold text-[#2B1B1A] placeholder:text-[#857670] outline-none transition-colors disabled:opacity-60';
 
 export const AuthPage: React.FC<AuthPageProps> = ({ onBack, initialMode = 'login', onModeChange }) => {
   const { register, login, resetPassword } = useAuth();
@@ -95,7 +95,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onBack, initialMode = 'login
   return (
     <div className="min-h-screen w-full flex items-center justify-center px-4 py-10 animate-fade-in">
       {/* Ambient glow to match the landing hero */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[320px] bg-gradient-to-tr from-[#1cb0f6]/20 via-[#0284c7]/15 to-transparent blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[320px] bg-gradient-to-tr from-[#5C1F2A]/20 via-[#3D1119]/15 to-transparent blur-3xl pointer-events-none -z-10" />
 
       <div className="w-full max-w-md">
         {onBack && (
@@ -104,30 +104,30 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onBack, initialMode = 'login
               sound.playClick();
               onBack();
             }}
-            className="mb-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-wider text-slate-400 hover:text-[#1cb0f6] transition-colors"
+            className="mb-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#857670] hover:text-[#5C1F2A] transition-colors"
           >
             <ArrowLeft className="w-4 h-4 stroke-[3]" />
             Back
           </button>
         )}
 
-        <div className="bg-[#0f1d38] border-2 border-[#1c325c] rounded-3xl p-6 sm:p-8 shadow-2xl">
+        <div className="bg-[#FFFDF9] border-2 border-[#E8DCCB] rounded-3xl p-6 sm:p-8 shadow-2xl">
           <div className="flex flex-col items-center text-center mb-7">
             <img
               src="/mascot-cat-logo.png"
               alt=""
               className="w-20 h-20 object-contain mb-3 animate-float"
             />
-            <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-black text-[#2B1B1A] tracking-tight">
               {copy.title}
             </h1>
-            <p className="text-sm text-slate-300 font-medium mt-2 max-w-xs">{copy.subtitle}</p>
+            <p className="text-sm text-[#4D3B38] font-medium mt-2 max-w-xs">{copy.subtitle}</p>
           </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
             {mode === 'signup' && (
               <div className="relative">
-                <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#857670]" />
                 <input
                   type="text"
                   value={displayName}
@@ -141,7 +141,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onBack, initialMode = 'login
             )}
 
             <div className="relative">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#857670]" />
               <input
                 type="email"
                 value={email}
@@ -156,7 +156,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onBack, initialMode = 'login
 
             {mode !== 'reset' && (
               <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#857670]" />
                 <input
                   type="password"
                   value={password}
@@ -173,7 +173,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onBack, initialMode = 'login
             {error && (
               <p
                 role="alert"
-                className="text-xs font-bold text-red-300 bg-red-500/10 border border-red-500/40 rounded-xl px-3 py-2.5"
+                className="text-xs font-bold text-[#B0303C] bg-[#C2414B]/10 border border-[#C2414B]/40 rounded-xl px-3 py-2.5"
               >
                 {error}
               </p>
@@ -182,7 +182,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onBack, initialMode = 'login
             {notice && (
               <p
                 role="status"
-                className="text-xs font-bold text-sky-200 bg-[#1cb0f6]/10 border border-[#1cb0f6]/40 rounded-xl px-3 py-2.5"
+                className="text-xs font-bold text-[#7A2B37] bg-[#5C1F2A]/10 border border-[#5C1F2A]/40 rounded-xl px-3 py-2.5"
               >
                 {notice}
               </p>
@@ -191,27 +191,27 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onBack, initialMode = 'login
             <button
               type="submit"
               disabled={busy}
-              className="btn-3d w-full bg-[#1cb0f6] hover:bg-[#38bdf8] border-b-4 border-[#1899d6] text-slate-950 font-black text-sm uppercase tracking-wider rounded-2xl py-3.5 mt-1 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+              className="btn-3d w-full bg-[#5C1F2A] hover:bg-[#7A2B37] border-b-4 border-[#3D1119] text-[#FFF8EE] font-black text-sm uppercase tracking-wider rounded-2xl py-3.5 mt-1 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {busy && <Loader2 className="w-4 h-4 animate-spin" />}
               {busy ? 'PLEASE WAIT…' : copy.cta}
             </button>
           </form>
 
-          <div className="mt-6 pt-5 border-t border-[#1c325c] flex flex-col gap-2.5 text-center">
+          <div className="mt-6 pt-5 border-t border-[#E8DCCB] flex flex-col gap-2.5 text-center">
             {mode === 'login' && (
               <>
                 <button
                   onClick={() => switchMode('reset')}
-                  className="text-xs font-bold text-slate-400 hover:text-[#1cb0f6] transition-colors"
+                  className="text-xs font-bold text-[#857670] hover:text-[#5C1F2A] transition-colors"
                 >
                   Forgot your password?
                 </button>
-                <p className="text-xs font-bold text-slate-400">
+                <p className="text-xs font-bold text-[#857670]">
                   New here?{' '}
                   <button
                     onClick={() => switchMode('signup')}
-                    className="text-[#1cb0f6] hover:underline font-black"
+                    className="text-[#5C1F2A] hover:underline font-black"
                   >
                     Create an account
                   </button>
@@ -220,11 +220,11 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onBack, initialMode = 'login
             )}
 
             {mode === 'signup' && (
-              <p className="text-xs font-bold text-slate-400">
+              <p className="text-xs font-bold text-[#857670]">
                 Already have an account?{' '}
                 <button
                   onClick={() => switchMode('login')}
-                  className="text-[#1cb0f6] hover:underline font-black"
+                  className="text-[#5C1F2A] hover:underline font-black"
                 >
                   Log in
                 </button>
@@ -234,7 +234,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onBack, initialMode = 'login
             {mode === 'reset' && (
               <button
                 onClick={() => switchMode('login')}
-                className="text-xs font-bold text-slate-400 hover:text-[#1cb0f6] transition-colors"
+                className="text-xs font-bold text-[#857670] hover:text-[#5C1F2A] transition-colors"
               >
                 Back to log in
               </button>

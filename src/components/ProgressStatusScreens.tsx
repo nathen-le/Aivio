@@ -3,16 +3,16 @@ import { CloudOff, Loader2, RefreshCw, Download } from 'lucide-react';
 import type { UserProgress } from '../types/lesson';
 import { sound } from '../utils/sound';
 
-const shell = 'min-h-screen bg-[#0a1224] flex flex-col items-center justify-center gap-4 px-4 text-center';
+const shell = 'min-h-screen bg-[#FBF6EE] flex flex-col items-center justify-center gap-4 px-4 text-center';
 const primaryBtn =
-  'btn-3d bg-[#1cb0f6] hover:bg-[#38bdf8] border-b-4 border-[#1899d6] text-slate-950 font-black text-sm uppercase tracking-wider rounded-2xl px-6 py-3 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed';
+  'btn-3d bg-[#5C1F2A] hover:bg-[#7A2B37] border-b-4 border-[#3D1119] text-[#FFF8EE] font-black text-sm uppercase tracking-wider rounded-2xl px-6 py-3 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed';
 const secondaryBtn =
-  'btn-3d bg-[#0f1d38] hover:bg-[#1b3464] border-2 border-[#1c325c] border-b-4 text-slate-100 font-black text-xs uppercase tracking-wider rounded-2xl px-5 py-3 disabled:opacity-60 disabled:cursor-not-allowed';
+  'btn-3d bg-[#FFFDF9] hover:bg-[#F1E6D6] border-2 border-[#E8DCCB] border-b-4 text-[#2B1B1A] font-black text-xs uppercase tracking-wider rounded-2xl px-5 py-3 disabled:opacity-60 disabled:cursor-not-allowed';
 
 export const ProgressLoadingScreen: React.FC = () => (
   <div className={shell} role="status">
     <img src="/mascot-cat-logo.png" alt="" className="w-24 h-24 object-contain animate-float" />
-    <p className="text-xs font-black uppercase tracking-wider text-slate-400">Loading your progress…</p>
+    <p className="text-xs font-black uppercase tracking-wider text-[#857670]">Loading your progress…</p>
   </div>
 );
 
@@ -21,9 +21,9 @@ export const ProgressErrorScreen: React.FC<{ onRetry: () => void; onSignOut: () 
   onSignOut,
 }) => (
   <div className={shell} role="alert">
-    <CloudOff className="w-14 h-14 text-amber-400" />
-    <h1 className="text-2xl font-black text-white">We couldn't load your progress</h1>
-    <p className="text-sm text-slate-300 font-medium max-w-sm">
+    <CloudOff className="w-14 h-14 text-[#8A5A00]" />
+    <h1 className="text-2xl font-black text-[#2B1B1A]">We couldn't load your progress</h1>
+    <p className="text-sm text-[#4D3B38] font-medium max-w-sm">
       Check your connection and try again. Your saved progress is safe and nothing has been changed.
     </p>
     <div className="flex flex-col sm:flex-row gap-3 mt-2">
@@ -67,23 +67,23 @@ export const LegacyImportPrompt: React.FC<{
       <div
         role="dialog"
         aria-labelledby="import-title"
-        className="w-full max-w-md bg-[#0f1d38] border-2 border-[#1c325c] rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col items-center gap-3"
+        className="w-full max-w-md bg-[#FFFDF9] border-2 border-[#E8DCCB] rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col items-center gap-3"
       >
-        <Download className="w-10 h-10 text-[#1cb0f6]" />
-        <h1 id="import-title" className="text-xl sm:text-2xl font-black text-white">
+        <Download className="w-10 h-10 text-[#5C1F2A]" />
+        <h1 id="import-title" className="text-xl sm:text-2xl font-black text-[#2B1B1A]">
           Progress found on this device
         </h1>
-        <p className="text-sm text-slate-300 font-medium">
+        <p className="text-sm text-[#4D3B38] font-medium">
           This browser has Aivio progress saved from before accounts: {legacy.totalXP} XP,{' '}
           {legacy.completedLessonIds.length} completed lesson
           {legacy.completedLessonIds.length === 1 ? '' : 's'}, {legacy.earnedBadgeIds.length} badge
           {legacy.earnedBadgeIds.length === 1 ? '' : 's'}.
         </p>
-        <p className="text-xs text-slate-400 font-medium">
+        <p className="text-xs text-[#857670] font-medium">
           Import it only if it is yours. A copy stays on this device either way.
         </p>
         {failed && (
-          <p role="alert" className="text-xs font-bold text-red-300 bg-red-500/10 border border-red-500/40 rounded-xl px-3 py-2">
+          <p role="alert" className="text-xs font-bold text-[#B0303C] bg-[#C2414B]/10 border border-[#C2414B]/40 rounded-xl px-3 py-2">
             That didn't save. Check your connection and try again.
           </p>
         )}
@@ -104,7 +104,7 @@ export const LegacyImportPrompt: React.FC<{
 export const SaveErrorBanner: React.FC<{ onRetry: () => void }> = ({ onRetry }) => (
   <div
     role="status"
-    className="fixed top-3 left-1/2 -translate-x-1/2 z-[60] max-w-[calc(100vw-1.5rem)] flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-amber-500 text-slate-950 font-black text-xs shadow-2xl"
+    className="fixed top-3 left-1/2 -translate-x-1/2 z-[60] max-w-[calc(100vw-1.5rem)] flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-[#F2B93B] text-[#2B1B1A] font-black text-xs shadow-2xl"
   >
     <CloudOff className="w-4 h-4 shrink-0" />
     <span>Couldn't save your progress. Retrying…</span>

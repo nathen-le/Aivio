@@ -12,10 +12,10 @@ export const LEARNING_PATHS: LearningPath[] = [
     totalLessons: 5,
     status: 'available',
     colorTheme: {
-      primary: 'text-cyan-400',
-      border: 'border-cyan-500/40',
-      badge: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
-      bgGlow: 'from-cyan-500/10 via-transparent to-transparent',
+      primary: 'text-[#7A2B37]',
+      border: 'border-[#5C1F2A]/40',
+      badge: 'bg-[#5C1F2A]/20 text-[#7A2B37] border-[#5C1F2A]/30',
+      bgGlow: 'from-[#5C1F2A]/10 via-transparent to-transparent',
     },
     lessons: [
       {
@@ -71,10 +71,10 @@ export const LEARNING_PATHS: LearningPath[] = [
     totalLessons: 6,
     status: 'coming-soon',
     colorTheme: {
-      primary: 'text-purple-400',
-      border: 'border-purple-500/30',
-      badge: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
-      bgGlow: 'from-purple-500/10 via-transparent to-transparent',
+      primary: 'text-[#2B1B1A]',
+      border: 'border-[#E8DCCB]/30',
+      badge: 'bg-[#5C1F2A]/20 text-[#2B1B1A] border-[#E8DCCB]/30',
+      bgGlow: 'from-[#5C1F2A]/10 via-transparent to-transparent',
     },
     lessons: [
       { id: 'tools-1', title: 'Anatomy of an Effective Prompt', order: 1, xpReward: 60, estimatedMinutes: 6 },
@@ -96,10 +96,10 @@ export const LEARNING_PATHS: LearningPath[] = [
     totalLessons: 5,
     status: 'coming-soon',
     colorTheme: {
-      primary: 'text-emerald-400',
-      border: 'border-emerald-500/30',
-      badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
-      bgGlow: 'from-emerald-500/10 via-transparent to-transparent',
+      primary: 'text-[#4F6B2A]',
+      border: 'border-[#8DAA5B]/30',
+      badge: 'bg-[#8DAA5B]/20 text-[#4F6B2A] border-[#8DAA5B]/30',
+      bgGlow: 'from-[#8DAA5B]/10 via-transparent to-transparent',
     },
     lessons: [
       { id: 'ethics-1', title: 'Where Do Biases Come From?', order: 1, xpReward: 60, estimatedMinutes: 7 },
@@ -120,10 +120,10 @@ export const LEARNING_PATHS: LearningPath[] = [
     totalLessons: 7,
     status: 'coming-soon',
     colorTheme: {
-      primary: 'text-amber-400',
-      border: 'border-amber-500/30',
-      badge: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
-      bgGlow: 'from-amber-500/10 via-transparent to-transparent',
+      primary: 'text-[#8A5A00]',
+      border: 'border-[#F2B93B]/30',
+      badge: 'bg-[#F2B93B]/20 text-[#8A5A00] border-[#F2B93B]/30',
+      bgGlow: 'from-[#F2B93B]/10 via-transparent to-transparent',
     },
     lessons: [
       { id: 'learn-1', title: 'Perceptrons: The Artificial Neuron', order: 1, xpReward: 65, estimatedMinutes: 7 },
@@ -146,10 +146,10 @@ export const LEARNING_PATHS: LearningPath[] = [
     totalLessons: 6,
     status: 'coming-soon',
     colorTheme: {
-      primary: 'text-pink-400',
-      border: 'border-pink-500/30',
-      badge: 'bg-pink-500/20 text-pink-300 border-pink-500/30',
-      bgGlow: 'from-pink-500/10 via-transparent to-transparent',
+      primary: 'text-[#2B1B1A]',
+      border: 'border-[#E8DCCB]/30',
+      badge: 'bg-[#5C1F2A]/20 text-[#2B1B1A] border-[#E8DCCB]/30',
+      bgGlow: 'from-[#5C1F2A]/10 via-transparent to-transparent',
     },
     lessons: [
       { id: 'lab-1', title: 'Diffusion Models: Denoisers at Work', order: 1, xpReward: 65, estimatedMinutes: 7 },
@@ -171,10 +171,10 @@ export const LEARNING_PATHS: LearningPath[] = [
     totalLessons: 5,
     status: 'coming-soon',
     colorTheme: {
-      primary: 'text-blue-400',
-      border: 'border-blue-500/30',
-      badge: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
-      bgGlow: 'from-blue-500/10 via-transparent to-transparent',
+      primary: 'text-[#7A2B37]',
+      border: 'border-[#5C1F2A]/30',
+      badge: 'bg-[#5C1F2A]/20 text-[#7A2B37] border-[#5C1F2A]/30',
+      bgGlow: 'from-[#5C1F2A]/10 via-transparent to-transparent',
     },
     lessons: [
       { id: 'real-1', title: 'Computer Vision in Self-Driving Cars', order: 1, xpReward: 70, estimatedMinutes: 8 },

@@ -172,21 +172,21 @@ export const ConnectingRoadmap: React.FC<ConnectingRoadmapProps> = ({
       <defs>
         {/* Glow effect for completed active path */}
         <filter id="activeRoadGlow" x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#1cb0f6" floodOpacity="0.7" />
+          <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#5C1F2A" floodOpacity="0.7" />
         </filter>
 
         {/* Gradient for vibrant active learning trail */}
         <linearGradient id="activeTrailGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#38bdf8" />
-          <stop offset="50%" stopColor="#1cb0f6" />
-          <stop offset="100%" stopColor="#0284c7" />
+          <stop offset="0%" stopColor="#7A2B37" />
+          <stop offset="50%" stopColor="#5C1F2A" />
+          <stop offset="100%" stopColor="#3D1119" />
         </linearGradient>
 
         {/* Gradient for base road bed */}
         <linearGradient id="baseRoadGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#162a52" />
-          <stop offset="50%" stopColor="#122345" />
-          <stop offset="100%" stopColor="#0f1d3a" />
+          <stop offset="0%" stopColor="#E8DCCB" />
+          <stop offset="50%" stopColor="#DDCDB7" />
+          <stop offset="100%" stopColor="#CFBBA0" />
         </linearGradient>
       </defs>
 
@@ -194,7 +194,7 @@ export const ConnectingRoadmap: React.FC<ConnectingRoadmapProps> = ({
       <path
         d={fullPathD}
         fill="none"
-        stroke="#070e1c"
+        stroke="#FFFDF9"
         strokeWidth="24"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -215,7 +215,7 @@ export const ConnectingRoadmap: React.FC<ConnectingRoadmapProps> = ({
       <path
         d={fullPathD}
         fill="none"
-        stroke="#1c3769"
+        stroke="#C9B497"
         strokeWidth="14"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -225,7 +225,7 @@ export const ConnectingRoadmap: React.FC<ConnectingRoadmapProps> = ({
       <path
         d={fullPathD}
         fill="none"
-        stroke="#274d8f"
+        stroke="#FFFDF9"
         strokeWidth="3.5"
         strokeDasharray="6 8"
         strokeLinecap="round"
@@ -265,7 +265,7 @@ export const ConnectingRoadmap: React.FC<ConnectingRoadmapProps> = ({
                 cx={st.x}
                 cy={st.y + 1.5}
                 r="6.5"
-                fill="#070e1c"
+                fill="#FFFDF9"
                 opacity="0.6"
               />
               {/* Stepping stone body */}
@@ -273,8 +273,8 @@ export const ConnectingRoadmap: React.FC<ConnectingRoadmapProps> = ({
                 cx={st.x}
                 cy={st.y}
                 r="5.5"
-                fill={st.isCompleted ? '#38bdf8' : '#172f5c'}
-                stroke={st.isCompleted ? '#ffffff' : '#274b88'}
+                fill={st.isCompleted ? '#7A2B37' : '#F1E6D6'}
+                stroke={st.isCompleted ? '#ffffff' : '#E8DCCB'}
                 strokeWidth={st.isCompleted ? '1.5' : '1.5'}
               />
               {/* Inner highlight */}
@@ -282,7 +282,7 @@ export const ConnectingRoadmap: React.FC<ConnectingRoadmapProps> = ({
                 cx={st.x - 1}
                 cy={st.y - 1}
                 r="2"
-                fill={st.isCompleted ? '#ffffff' : '#2e5699'}
+                fill={st.isCompleted ? '#ffffff' : '#FFFDF9'}
                 opacity={st.isCompleted ? '0.8' : '0.4'}
               />
             </g>

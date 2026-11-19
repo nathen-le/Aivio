@@ -51,7 +51,7 @@ export const Mascot: React.FC<MascotProps> = ({
       {/* Speech bubble */}
       {speechBubble && (
         <div
-          className={`absolute z-20 max-w-xs px-3.5 py-2 rounded-2xl bg-slate-900/95 border border-cyan-500/40 text-slate-100 text-xs sm:text-sm font-medium shadow-xl shadow-cyan-950/40 backdrop-blur-md animate-fade-in ${
+          className={`absolute z-20 max-w-xs px-3.5 py-2 rounded-2xl bg-[#FFFDF9]/95 border border-[#5C1F2A]/40 text-[#2B1B1A] text-xs sm:text-sm font-medium shadow-xl shadow-[#5C1F2A]/40 backdrop-blur-md animate-fade-in ${
             speechPosition === 'top'
               ? 'bottom-full mb-3'
               : speechPosition === 'bottom'
@@ -63,7 +63,7 @@ export const Mascot: React.FC<MascotProps> = ({
         >
           {speechBubble}
           <div
-            className={`absolute w-2.5 h-2.5 bg-slate-900 border-r border-b border-cyan-500/40 rotate-45 ${
+            className={`absolute w-2.5 h-2.5 bg-[#FFFDF9] border-r border-b border-[#5C1F2A]/40 rotate-45 ${
               speechPosition === 'top'
                 ? 'top-full -mt-1.5 left-1/2 -translate-x-1/2'
                 : speechPosition === 'bottom'
@@ -84,7 +84,7 @@ export const Mascot: React.FC<MascotProps> = ({
         <img
           src={getMascotImage()}
           alt={`Aivo (${mood})`}
-          className="w-full h-full object-contain drop-shadow-[0_10px_20px_rgba(28,176,246,0.35)]"
+          className="w-full h-full object-contain drop-shadow-[0_10px_20px_rgba(92,31,42,0.35)]"
         />
       </div>
     </div>

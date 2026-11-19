@@ -24,21 +24,21 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   }[height];
 
   const colorStyles = {
-    cyan: 'bg-[#1cb0f6]',
-    purple: 'bg-[#a855f7]',
-    emerald: 'bg-[#58cc02]',
-    amber: 'bg-[#ffc800]',
+    cyan: 'bg-[#5C1F2A]',
+    purple: 'bg-[#5C1F2A]',
+    emerald: 'bg-[#8DAA5B]',
+    amber: 'bg-[#F2B93B]',
   }[color];
 
   return (
     <div className={`w-full ${className}`}>
       {showLabel && (
-        <div className="flex justify-between items-center text-xs font-black text-slate-300 mb-1.5">
+        <div className="flex justify-between items-center text-xs font-black text-[#4D3B38] mb-1.5">
           <span>PROGRESS</span>
-          <span className="font-mono text-[#1cb0f6]">{clamped}%</span>
+          <span className="font-mono text-[#5C1F2A]">{clamped}%</span>
         </div>
       )}
-      <div className={`w-full bg-[#132344] rounded-full overflow-hidden p-0.5 border-2 border-[#1c325c] ${heightClass} relative`}>
+      <div className={`w-full bg-[#F6EFE4] rounded-full overflow-hidden p-0.5 border-2 border-[#E8DCCB] ${heightClass} relative`}>
         <div
           className={`h-full rounded-full transition-all duration-300 ease-out relative overflow-hidden ${colorStyles}`}
           style={{ width: `${clamped}%` }}

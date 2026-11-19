@@ -68,18 +68,18 @@ export const MatchingActivity: React.FC<MatchingActivityProps> = ({
     <div className="w-full max-w-2xl mx-auto flex flex-col justify-between min-h-[460px] select-none">
       <div>
         <div className="flex items-center justify-between mb-3">
-          <span className="text-xs uppercase font-black tracking-wider px-3 py-1 rounded-full bg-[#132344] text-[#1cb0f6] border border-[#1cb0f6]/40">
+          <span className="text-xs uppercase font-black tracking-wider px-3 py-1 rounded-full bg-[#F6EFE4] text-[#5C1F2A] border border-[#5C1F2A]/40">
             Interactive Match
           </span>
-          <span className="text-xs text-slate-300 font-mono font-bold">
+          <span className="text-xs text-[#4D3B38] font-mono font-bold">
             {matchedPairs.length} / {block.pairs.length} Matched
           </span>
         </div>
 
-        <h3 className="text-xl sm:text-2xl font-black text-white mb-2">
+        <h3 className="text-xl sm:text-2xl font-black text-[#2B1B1A] mb-2">
           {block.prompt}
         </h3>
-        <p className="text-xs text-slate-300 mb-6 font-medium">
+        <p className="text-xs text-[#4D3B38] mb-6 font-medium">
           {block.instruction || 'Select an item on the left, then connect it to its match on the right.'}
         </p>
 
@@ -87,7 +87,7 @@ export const MatchingActivity: React.FC<MatchingActivityProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Left Column (Terms) */}
           <div className="space-y-3">
-            <span className="text-[11px] font-black text-sky-400 uppercase tracking-wider block">
+            <span className="text-[11px] font-black text-[#7A2B37] uppercase tracking-wider block">
               Terms
             </span>
             {block.pairs.map((pair) => {
@@ -105,17 +105,17 @@ export const MatchingActivity: React.FC<MatchingActivityProps> = ({
                   }}
                   className={`w-full p-4 rounded-2xl border-2 text-left text-xs sm:text-sm font-bold transition-all duration-150 border-b-4 ${
                     isMatched
-                      ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-300 opacity-60 cursor-default'
+                      ? 'bg-[#EEF3E3]/40 border-[#8DAA5B]/50 text-[#4F6B2A] opacity-60 cursor-default'
                       : isWrong
-                      ? 'bg-rose-950/80 border-rose-500 text-rose-200 animate-shake'
+                      ? 'bg-[#FBE3E0] border-[#C2414B] text-[#B0303C] animate-shake'
                       : isSelected
-                      ? 'bg-[#1b3464] border-[#1cb0f6] text-white ring-2 ring-[#1cb0f6] shadow-lg translate-y-[-2px]'
-                      : 'bg-[#132344] border-[#0c182e] text-slate-200 hover:bg-[#182b52] hover:border-[#1cb0f6]/40 active:translate-y-1 active:border-b-0'
+                      ? 'bg-[#F1E6D6] border-[#5C1F2A] text-[#2B1B1A] ring-2 ring-[#5C1F2A] shadow-lg translate-y-[-2px]'
+                      : 'bg-[#F6EFE4] border-[#FFFDF9] text-[#2B1B1A] hover:bg-[#F1E6D6] hover:border-[#5C1F2A]/40 active:translate-y-1 active:border-b-0'
                   }`}
                 >
                   <div className="flex items-center justify-between gap-2">
                     <span>{pair.left}</span>
-                    {isMatched && <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />}
+                    {isMatched && <CheckCircle2 className="w-5 h-5 text-[#4F6B2A] shrink-0" />}
                   </div>
                 </button>
               );
@@ -124,7 +124,7 @@ export const MatchingActivity: React.FC<MatchingActivityProps> = ({
 
           {/* Right Column (Matches) */}
           <div className="space-y-3">
-            <span className="text-[11px] font-black text-purple-400 uppercase tracking-wider block">
+            <span className="text-[11px] font-black text-[#2B1B1A] uppercase tracking-wider block">
               Definitions
             </span>
             {shuffledRights.map((item) => {
@@ -142,17 +142,17 @@ export const MatchingActivity: React.FC<MatchingActivityProps> = ({
                   }}
                   className={`w-full p-4 rounded-2xl border-2 text-left text-xs sm:text-sm font-medium transition-all duration-150 border-b-4 ${
                     isMatched
-                      ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-300 opacity-60 cursor-default'
+                      ? 'bg-[#EEF3E3]/40 border-[#8DAA5B]/50 text-[#4F6B2A] opacity-60 cursor-default'
                       : isWrong
-                      ? 'bg-rose-950/80 border-rose-500 text-rose-200 animate-shake'
+                      ? 'bg-[#FBE3E0] border-[#C2414B] text-[#B0303C] animate-shake'
                       : isSelected
-                      ? 'bg-purple-950 border-purple-400 text-purple-200 ring-2 ring-purple-500/50 shadow-lg translate-y-[-2px]'
-                      : 'bg-[#132344] border-[#0c182e] text-slate-200 hover:bg-[#182b52] hover:border-purple-400/40 active:translate-y-1 active:border-b-0'
+                      ? 'bg-[#FBE3E0] border-[#E8DCCB] text-[#2B1B1A] ring-2 ring-[#E8DCCB]/50 shadow-lg translate-y-[-2px]'
+                      : 'bg-[#F6EFE4] border-[#FFFDF9] text-[#2B1B1A] hover:bg-[#F1E6D6] hover:border-[#E8DCCB]/40 active:translate-y-1 active:border-b-0'
                   }`}
                 >
                   <div className="flex items-center justify-between gap-2">
                     <span>{item.right}</span>
-                    {isMatched && <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />}
+                    {isMatched && <CheckCircle2 className="w-5 h-5 text-[#4F6B2A] shrink-0" />}
                   </div>
                 </button>
               );
@@ -162,18 +162,18 @@ export const MatchingActivity: React.FC<MatchingActivityProps> = ({
       </div>
 
       {/* Completion Banner */}
-      <div className="mt-8 pt-4 border-t-2 border-[#1c325c]">
+      <div className="mt-8 pt-4 border-t-2 border-[#E8DCCB]">
         {isCompleted ? (
-          <div className="p-5 rounded-3xl bg-[#0d2a1f] border-2 border-emerald-500 flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in shadow-[0_10px_25px_rgba(16,185,129,0.3)]">
+          <div className="p-5 rounded-3xl bg-[#EEF3E3] border-2 border-[#8DAA5B] flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in shadow-[0_10px_25px_rgba(16,185,129,0.3)]">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-white/60 bg-black/40 p-1 shrink-0 flex items-center justify-center">
                 <img src="/mascot-cat-avatar.png" alt="Aivo" className="w-full h-full object-contain" />
               </div>
               <div>
-                <h4 className="font-black text-base text-white flex items-center gap-1.5">
-                  <Sparkles className="w-4 h-4 text-amber-400" /> Perfect Matching!
+                <h4 className="font-black text-base text-[#2B1B1A] flex items-center gap-1.5">
+                  <Sparkles className="w-4 h-4 text-[#8A5A00]" /> Perfect Matching!
                 </h4>
-                <p className="text-xs text-slate-200 mt-0.5">
+                <p className="text-xs text-[#2B1B1A] mt-0.5">
                   {block.explanation}
                 </p>
               </div>
@@ -183,21 +183,21 @@ export const MatchingActivity: React.FC<MatchingActivityProps> = ({
                 sound.playClick();
                 onContinue();
               }}
-              className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wider transition-all border-b-4 border-emerald-700 active:translate-y-1 active:border-b-0 flex items-center justify-center gap-2 shrink-0"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-[#8DAA5B] hover:bg-[#8DAA5B] text-[#2B1B1A] font-black text-xs sm:text-sm uppercase tracking-wider transition-all border-b-4 border-[#8DAA5B] active:translate-y-1 active:border-b-0 flex items-center justify-center gap-2 shrink-0"
             >
               <span>Continue</span>
               <ArrowRight className="w-4 h-4 stroke-[3]" />
             </button>
           </div>
         ) : (
-          <div className="flex items-center justify-between text-xs text-slate-400 font-bold">
+          <div className="flex items-center justify-between text-xs text-[#857670] font-bold">
             <span>
               {matchedPairs.length === 0
                 ? 'Select any item to begin matching'
                 : `${block.pairs.length - matchedPairs.length} remaining to match`}
             </span>
             {mistakesCount > 0 && (
-              <span className="text-amber-400 font-mono">
+              <span className="text-[#8A5A00] font-mono">
                 {mistakesCount} {mistakesCount === 1 ? 'mismatch' : 'mismatches'}
               </span>
             )}
